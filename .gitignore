@@ -348,3 +348,7 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/src/Digitalroot.Valheim.GBDungeonsDemo/Assets/potions.manifest
+/src/Digitalroot.Valheim.GBDungeonsDemo/Assets/potions
+/src/Digitalroot.Valheim.GBDungeonsDemo/Assets/Assets.manifest
+/src/Digitalroot.Valheim.GBDungeonsDemo/Assets/Assets
