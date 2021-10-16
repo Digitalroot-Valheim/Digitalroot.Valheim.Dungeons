@@ -6,7 +6,6 @@ on:
       - '.github/workflows/**'   
 jobs:
   build:
-    if: ${{ false }} # disable for now
     runs-on: windows-latest
     permissions:
       packages: write
