@@ -29,7 +29,14 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
       - name: Restore packages
-        run: nuget restore src/${{ env.SLN_FILE_NAME }}
+        run: nuget restore ${{GITHUB_WORKSPACE}}/src/${{ env.SLN_FILE_NAME }}
       - name: Build
-        run: dotnet build src/${{ env.SLN_FILE_NAME }} -c Release --no-restore
-        
+        run: dotnet build ${{GITHUB_WORKSPACE}}/src/${{ env.SLN_FILE_NAME }} -c Release --no-restore
+      - name: Rename
+        run: Get-ChildItem ${{GITHUB_WORKSPACE}}/src/Digitalroot.Valheim.GBDungeonsDemo/bin/*.zip | Rename-Item -NewName { $_.Name -replace '.zip','.${{GITHUB_RUN_ID}}.zip' }
+      - name: Publish
+      - uses: actions/upload-artifact@v2
+        with:
+          path: ${{GITHUB_WORKSPACE}}/src/Digitalroot.Valheim.GBDungeonsDemo/bin/Digitalroot.Valheim.DungeonsDemo.v1.0.0.zip
+          name: PreRelease
+          retention-days: 1
