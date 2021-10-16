@@ -41,5 +41,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           path: ${{ github.workspace }}/src/Digitalroot.Valheim.GBDungeonsDemo/bin/*.zip
-          name: PreRelease
+          name: Build-Artifacts
           retention-days: 1
