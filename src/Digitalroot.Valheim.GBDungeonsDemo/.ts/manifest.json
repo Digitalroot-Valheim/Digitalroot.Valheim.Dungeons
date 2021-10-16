@@ -1,0 +1,12 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Digitalroot-Valheim/Digitalroot.Valheim.Common.Interfaces/main/src/json/tsio-manifest.json",
+  "name": "%MOD_NAME%",
+  "author": "Digitalroot",
+  "description": "%DESC%",
+  "version_number": "%VERSION_NUMBER%",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.1600",
+    "ValheimModding-Jotunn-2.3.7"
+  ],
+  "website_url": "%GITHUB_URL%"
+}

@@ -6,8 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E5C5D2B9-639B-48CF-B5B0-E44FD7F24B1E}"
 	ProjectSection(SolutionItems) = preProject
 		..\.gitignore = ..\.gitignore
-		..\LICENSE = ..\LICENSE
-		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{E64D67E6-C2B6-471C-990D-2E9A91427B64}"
@@ -17,11 +15,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{E64D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{1960DCD1-3C51-48FF-BFF8-5FE4C3CBABB2}"
 	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\builder.yml = ..\.github\workflows\builder.yml
+		..\.github\workflows\ci.yml = ..\.github\workflows\ci.yml
 		..\.github\workflows\drafter.yml = ..\.github\workflows\drafter.yml
+		..\.github\workflows\main.yml = ..\.github\workflows\main.yml
 		..\.github\workflows\publish.yml = ..\.github\workflows\publish.yml
+		..\.github\workflows\quality-gate.yml = ..\.github\workflows\quality-gate.yml
+		..\.github\workflows\test-report.yml = ..\.github\workflows\test-report.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digitalroot.Valheim.DungeonsDemo", "Digitalroot.Valheim.GBDungeonsDemo\Digitalroot.Valheim.DungeonsDemo.csproj", "{C4041FCC-C04D-4AAA-B736-906E282BCF2E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{ECE65B8A-4208-4EC7-AC71-D853048978AA}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\LICENSE = ..\docs\LICENSE
+		..\docs\README.md = ..\docs\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +49,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E64D67E6-C2B6-471C-990D-2E9A91427B64} = {E5C5D2B9-639B-48CF-B5B0-E44FD7F24B1E}
 		{1960DCD1-3C51-48FF-BFF8-5FE4C3CBABB2} = {E64D67E6-C2B6-471C-990D-2E9A91427B64}
+		{ECE65B8A-4208-4EC7-AC71-D853048978AA} = {E5C5D2B9-639B-48CF-B5B0-E44FD7F24B1E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {46DD4389-95C4-4F57-BB16-2A9A816F46B9}

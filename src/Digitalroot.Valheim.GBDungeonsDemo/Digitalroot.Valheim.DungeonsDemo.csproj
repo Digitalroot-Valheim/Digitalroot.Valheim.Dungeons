@@ -401,6 +401,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Assets\op_dungeons" />
     <EmbeddedResource Include="Assets\op_dungeons.manifest" />
+    <None Include=".ts\manifest.json" />
     <None Include="FodyWeavers.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -412,6 +413,8 @@
     <Analyzer Include="..\packages\ErrorProne.NET.CoreAnalyzers.0.1.2\analyzers\dotnet\cs\RuntimeContracts.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".nx\description.bbcode.txt" />
+    <Content Include=".ts\icon.png" />
     <Content Include="FodyWeavers.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
