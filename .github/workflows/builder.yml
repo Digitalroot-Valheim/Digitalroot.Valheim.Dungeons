@@ -33,10 +33,13 @@ jobs:
       - name: Build
         run: dotnet build ${{GITHUB_WORKSPACE}}/src/${{ env.SLN_FILE_NAME }} -c Release --no-restore
       - name: Rename
-        run: Get-ChildItem ${{GITHUB_WORKSPACE}}/src/Digitalroot.Valheim.GBDungeonsDemo/bin/*.zip | Rename-Item -NewName { $_.Name -replace '.zip','.${{GITHUB_RUN_ID}}.zip' }
+        uses: Amadevus/pwsh-script@v2.0.1
+        id: rename-zip
+        with:
+            script: Get-ChildItem ${{GITHUB_WORKSPACE}}/src/Digitalroot.Valheim.GBDungeonsDemo/bin/*.zip | Rename-Item -NewName { $_.Name -replace '.zip','.${{GITHUB_RUN_ID}}.zip' }
       - name: Publish
       - uses: actions/upload-artifact@v2
         with:
-          path: ${{GITHUB_WORKSPACE}}/src/Digitalroot.Valheim.GBDungeonsDemo/bin/Digitalroot.Valheim.DungeonsDemo.v1.0.0.zip
+          path: ${{GITHUB_WORKSPACE}}/src/Digitalroot.Valheim.GBDungeonsDemo/bin/*.zip
           name: PreRelease
           retention-days: 1
