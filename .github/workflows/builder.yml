@@ -36,9 +36,9 @@ jobs:
         uses: Amadevus/pwsh-script@v2.0.1
         id: rename-zip
         with:
-            script: Get-ChildItem ${{GITHUB_WORKSPACE}}/src/Digitalroot.Valheim.GBDungeonsDemo/bin/*.zip | Rename-Item -NewName { $_.Name -replace '.zip','.${{GITHUB_RUN_ID}}.zip' }
+          script: Get-ChildItem ${{GITHUB_WORKSPACE}}/src/Digitalroot.Valheim.GBDungeonsDemo/bin/*.zip | Rename-Item -NewName { $_.Name -replace '.zip','.${{GITHUB_RUN_ID}}.zip' }
       - name: Publish
-      - uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2
         with:
           path: ${{GITHUB_WORKSPACE}}/src/Digitalroot.Valheim.GBDungeonsDemo/bin/*.zip
           name: PreRelease
