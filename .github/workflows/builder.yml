@@ -29,9 +29,9 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
       - name: Restore packages
-        run: nuget restore ${{GITHUB_WORKSPACE}}/src/${{ env.SLN_FILE_NAME }}
+        run: nuget restore ./src/${{ env.SLN_FILE_NAME }}
       - name: Build
-        run: dotnet build ${{GITHUB_WORKSPACE}}/src/${{ env.SLN_FILE_NAME }} -c Release --no-restore
+        run: dotnet build ./src/${{ env.SLN_FILE_NAME }} -c Release --no-restore
       #- name: Rename
       #  uses: Amadevus/pwsh-script@v2.0.1
       #  id: rename-zip
