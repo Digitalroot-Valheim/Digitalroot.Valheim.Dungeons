@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3569481433
+CRC: 1768524695
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: cbe4636d83a57c80530e723ea8cc2a8f
+    Hash: e69faef42d860d59bcbb6f67bd136d29
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 6c68c61ffcb945c6658fd0acf34c08c6
+    Hash: c38b4c5f54b2925df4ebd1b5091d22b6
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -25,87 +25,25 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 48
   Script: {instanceID: 0}
-- Class: 54
-  Script: {instanceID: 0}
 - Class: 64
   Script: {instanceID: 0}
 - Class: 65
   Script: {instanceID: 0}
-- Class: 74
-  Script: {instanceID: 0}
-- Class: 82
-  Script: {instanceID: 0}
-- Class: 83
-  Script: {instanceID: 0}
-- Class: 90
-  Script: {instanceID: 0}
-- Class: 91
-  Script: {instanceID: 0}
-- Class: 95
-  Script: {instanceID: 0}
 - Class: 108
   Script: {instanceID: 0}
 - Class: 114
-  Script: {fileID: 11500000, guid: 1e052b106f9b5da4ca44e87465568fa3, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 1e90a43063982db49999e24bf5fc73a1, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 6427bf403e17cad4f9943fd866717cf8, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: a637cf40c65eaec4194d1b1b26c109b3, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: a42a395137aba1d4a8a18bd46991fe33, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: b9e06c713a0984045a33139aa907d1a3, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: dc684f71b632a1c46afefd79316e6fa1, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 9f68b0f13874692458ffa90ccb819bda, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: b342d0f18ea3ecd48ad438e438acbf4f, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 57b31245b607e064a87d9eecf44fd8ee, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: e42e5506c5d43954db7f135ab74fc286, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 25428276426a7124088167701c6e5b3a, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: 1115f586e702802499f1bfc1daf691a2, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: d42a1837ec8260847aec990dc00957ea, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: fed4e3879932ae141bd6fa35b0c676f8, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 5f89b7382fcb4f04f9e9e825ddc03fca, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: f6572a68b24d6a445a11bb858266a395, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 8d0d6d78b14887249a8f47f70568d092, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 9e1d0c6ac5af3dd429e6b25b8891b0bd, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 5344b9cae38968b4e954b7dd6898bf58, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 4f91382ba6ee3fe419d2399c1c0e99c8, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 617d211c43335ed48b4fc3a0d68378aa, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: a63b193c09bf10841843187acb97d5e7, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: ca0a14cd6e0a10f458cb9d37e0165f38, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 1a19caed456925a48855fa67272eae6f, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: afc1b66f1b740dd45945eeab0454ce81, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: 4ae645cf7e4d3654ba91cbc4d11149bb, type: 3}
 - Class: 115
   Script: {instanceID: 0}
-- Class: 134
-  Script: {instanceID: 0}
 - Class: 136
-  Script: {instanceID: 0}
-- Class: 137
   Script: {instanceID: 0}
 - Class: 198
   Script: {instanceID: 0}
@@ -113,9 +51,7 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 205
   Script: {instanceID: 0}
-- Class: 213
-  Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/Dungeon Builder/The Cave/GBDungeon Prefab/DungeonDemo.prefab
+- Assets/OdinPlusTeam/Projects/OdinPlus.EmptyDungeons/OdinsHollow/PrefabInstance/OdinsHollow.prefab
 Dependencies: []

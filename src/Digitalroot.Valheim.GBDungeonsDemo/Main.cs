@@ -62,7 +62,7 @@ namespace Digitalroot.Valheim.DungeonsDemo
         // }
 
 #endif
-        PrefabManager.Instance.AddPrefab(new CustomPrefab(_assetBundle.LoadAsset<GameObject>("DungeonDemo"), false));
+        PrefabManager.Instance.AddPrefab(new CustomPrefab(_assetBundle.LoadAsset<GameObject>("OdinsHollow"), false));
 
         _harmony = Harmony.CreateAndPatchAll(typeof(Main).Assembly, Guid);
       }
