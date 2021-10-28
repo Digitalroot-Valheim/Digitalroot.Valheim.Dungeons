@@ -3,6 +3,7 @@ using Digitalroot.CustomMonoBehaviours;
 using Digitalroot.Valheim.Common;
 using HarmonyLib;
 using JetBrains.Annotations;
+using Jotunn;
 using Jotunn.Entities;
 using Jotunn.Managers;
 using Jotunn.Utils;
@@ -23,6 +24,7 @@ namespace Digitalroot.Valheim.DungeonsDemo
     private Harmony _harmony;
     private AssetBundle _assetBundle;
     public static Main Instance;
+    private const string OdinsHollow = nameof(OdinsHollow);
 
     public Main()
     {
@@ -53,25 +55,48 @@ namespace Digitalroot.Valheim.DungeonsDemo
           Log.Trace(Main.Instance, scene);
           SceneManager.LoadSceneAsync(System.IO.Path.GetFileNameWithoutExtension(scene), LoadSceneMode.Additive);
         }
-        
+
         foreach (var assetName in _assetBundle.GetAllAssetNames())
         {
           Log.Trace(Main.Instance, assetName);
         }
-
-        // foreach (var go in Resources.FindObjectsOfTypeAll<GameObject>())
-        // {
-        //   Log.Trace(Main.Instance, $"{go.scene.path}:{go.scene.name}:{go.name}");
-        // }
-
 #endif
-        PrefabManager.Instance.AddPrefab(new CustomPrefab(_assetBundle.LoadAsset<GameObject>("OdinsHollow"), true));
+        PrefabManager.Instance.AddPrefab(new CustomPrefab(_assetBundle.LoadAsset<GameObject>(OdinsHollow), true));
+
+        // PrefabManager.OnVanillaPrefabsAvailable += OnVanillaPrefabsAvailable;
 
         _harmony = Harmony.CreateAndPatchAll(typeof(Main).Assembly, Guid);
       }
       catch (Exception e)
       {
         Log.Error(Instance, e);
+      }
+    }
+
+    private void OnVanillaPrefabsAvailable()
+    {
+      try
+      {
+        Log.Trace(Main.Instance, $"{Main.Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}");
+        var odinsHollow = PrefabManager.Instance.GetPrefab(OdinsHollow);
+
+        Log.Trace(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] odinsHollow == null : {odinsHollow == null}");
+        Log.Trace(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] odinsHollow == null : {odinsHollow == null}");
+
+        var spawnPools = odinsHollow.GetComponentsInChildren<TrapSpawnPool>();
+
+        foreach (var spawnPool in spawnPools)
+        {
+          spawnPool.FixReferences();
+        }
+      }
+      catch (Exception e)
+      {
+        Log.Error(Instance, e);
+      }
+      finally
+      {
+        PrefabManager.OnVanillaPrefabsAvailable -= OnVanillaPrefabsAvailable;
       }
     }
 
