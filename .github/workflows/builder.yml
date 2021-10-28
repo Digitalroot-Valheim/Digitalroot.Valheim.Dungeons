@@ -26,6 +26,8 @@ jobs:
         uses: nuget/setup-nuget@v1
         with:
           nuget-version: latest
+      - name: Add BepInEx NuGet Source
+        run: nuget sources add -name "BepInEx" -Source https://nuget.bepinex.dev/v3/index.json
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
       - name: Restore packages
