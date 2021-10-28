@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using Digitalroot.CustomMonoBehaviours;
 using Digitalroot.Valheim.Common;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -42,6 +43,8 @@ namespace Digitalroot.Valheim.DungeonsDemo
       {
         Log.Trace(Main.Instance, $"{Main.Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}");
 
+        RepositoryLoader.LoadAssembly("Digitalroot.Valheim.TrapSpawners.dll");
+
         _assetBundle = AssetUtils.LoadAssetBundleFromResources("op_dungeons", typeof(Main).Assembly);
 
 #if DEBUG
@@ -62,7 +65,7 @@ namespace Digitalroot.Valheim.DungeonsDemo
         // }
 
 #endif
-        PrefabManager.Instance.AddPrefab(new CustomPrefab(_assetBundle.LoadAsset<GameObject>("OdinsHollow"), false));
+        PrefabManager.Instance.AddPrefab(new CustomPrefab(_assetBundle.LoadAsset<GameObject>("OdinsHollow"), true));
 
         _harmony = Harmony.CreateAndPatchAll(typeof(Main).Assembly, Guid);
       }

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\JotunnLib.2.3.7\build\JotunnLib.props" Condition="Exists('..\packages\JotunnLib.2.3.7\build\JotunnLib.props')" />
+  <Import Project="..\packages\JotunnLib.2.3.9\build\JotunnLib.props" Condition="Exists('..\packages\JotunnLib.2.3.9\build\JotunnLib.props')" />
   <Import Project="..\packages\ILMerge.Fody.1.18.0\build\ILMerge.Fody.props" Condition="Exists('..\packages\ILMerge.Fody.1.18.0\build\ILMerge.Fody.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -40,8 +40,8 @@
     <LangVersion>9</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony, Version=2.5.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\HarmonyX.2.5.5\lib\net45\0Harmony.dll</HintPath>
+    <Reference Include="0Harmony, Version=2.5.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HarmonyX.2.5.7\lib\net45\0Harmony.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -88,6 +88,9 @@
       <HintPath>..\packages\Pfhoenix.Valheim.ModProjectReferences.1.0.9\lib\net46\bepinex.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Digitalroot.CMB.RepositoryLoader, Version=1.0.0.0, Culture=en-US, processorArchitecture=MSIL">
+      <HintPath>..\packages\Digitalroot.CustomMonoBehaviours.1.0.1\lib\net462\Digitalroot.CMB.RepositoryLoader.dll</HintPath>
+    </Reference>
     <Reference Include="Digitalroot.Valheim.Common.AssemblyInfo, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Digitalroot.Valheim.Common.AssemblyInfo.1.0.1\lib\net462\Digitalroot.Valheim.Common.AssemblyInfo.dll</HintPath>
       <Private>False</Private>
@@ -109,8 +112,8 @@
       <HintPath>..\packages\ILMerge.Fody.1.18.0\lib\net45\ILMerge.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Jotunn, Version=2.3.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\JotunnLib.2.3.7\lib\net462\Jotunn.dll</HintPath>
+    <Reference Include="Jotunn, Version=2.3.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\JotunnLib.2.3.9\lib\net462\Jotunn.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Mono.Cecil, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
@@ -417,6 +420,12 @@
     <Content Include=".ts\icon.png" />
     <Content Include="FodyWeavers.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Digitalroot.Valheim.TrapSpawners\Digitalroot.Valheim.TrapSpawners.csproj">
+      <Project>{56a31091-b241-48fe-98db-d625c8847d16}</Project>
+      <Name>Digitalroot.Valheim.TrapSpawners</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
@@ -435,16 +444,8 @@
     <Message Text="RefreshVars Called" Importance="high" />
     <ItemGroup>
       <DigitalrootSourceFiles Include="$(TargetDir)**\*.*" />
-    </ItemGroup>
-    <ItemGroup>
       <DigitalrootBuildFiles Include="$(TargetDir)..\$(ProjectName)\$(ProjectName)\$(ProjectName).dll" />
     </ItemGroup>
-  </Target>
-  <Target Name="ScriptEnginePostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'ScriptEngine'" DependsOnTargets="RefreshVars">
-    <Message Text="DebugPostBuild Called" Importance="high" />
-    <Message Text="Copying assemblies to C:\Program Files (x86)\Steam\steamapps\common\Valheim\BepInEx\scripts\" Importance="high" />
-    <CallTarget Targets="RefreshVars" />
-    <Copy SourceFiles="@(DigitalrootSourceFiles)" DestinationFiles="@(DigitalrootSourceFiles->'C:\Program Files (x86)\Steam\steamapps\common\Valheim\BepInEx\scripts\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" OverwriteReadOnlyFiles="true" />
   </Target>
   <Target Name="DebugPostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Debug'" DependsOnTargets="RefreshVars">
     <Message Text="DebugPostBuild Called" Importance="high" />
@@ -469,13 +470,13 @@
     <Message Text="Creating Zip file $(TargetDir)..\$(ProjectName).v$([System.Version]::Parse(%(DigitalrootAssemblyIdentities.Version)).ToString(3)).zip" Importance="high" />
     <ZipDirectory SourceDirectory="$(TargetDir)..\$(ProjectName)" DestinationFile="$(TargetDir)..\$(ProjectName).v$([System.Version]::Parse(%(DigitalrootAssemblyIdentities.Version)).ToString(3)).zip" />
   </Target>
-  <Import Project="..\packages\Fody.6.5.3\build\Fody.targets" Condition="Exists('..\packages\Fody.6.5.3\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Fody.6.5.3\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.5.3\build\Fody.targets'))" />
     <Error Condition="!Exists('..\packages\ILMerge.Fody.1.18.0\build\ILMerge.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILMerge.Fody.1.18.0\build\ILMerge.Fody.props'))" />
-    <Error Condition="!Exists('..\packages\JotunnLib.2.3.7\build\JotunnLib.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\JotunnLib.2.3.7\build\JotunnLib.props'))" />
+    <Error Condition="!Exists('..\packages\Fody.6.6.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.6.0\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\JotunnLib.2.3.9\build\JotunnLib.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\JotunnLib.2.3.9\build\JotunnLib.props'))" />
   </Target>
+  <Import Project="..\packages\Fody.6.6.0\build\Fody.targets" Condition="Exists('..\packages\Fody.6.6.0\build\Fody.targets')" />
 </Project>

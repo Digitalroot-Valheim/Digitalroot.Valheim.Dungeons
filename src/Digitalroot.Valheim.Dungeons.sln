@@ -25,12 +25,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digitalroot.Valheim.DungeonsDemo", "Digitalroot.Valheim.GBDungeonsDemo\Digitalroot.Valheim.DungeonsDemo.csproj", "{C4041FCC-C04D-4AAA-B736-906E282BCF2E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{56A31091-B241-48FE-98DB-D625C8847D16} = {56A31091-B241-48FE-98DB-D625C8847D16}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{ECE65B8A-4208-4EC7-AC71-D853048978AA}"
 	ProjectSection(SolutionItems) = preProject
 		..\docs\LICENSE = ..\docs\LICENSE
 		..\docs\README.md = ..\docs\README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digitalroot.Valheim.TrapSpawners", "Digitalroot.Valheim.TrapSpawners\Digitalroot.Valheim.TrapSpawners.csproj", "{56A31091-B241-48FE-98DB-D625C8847D16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +47,10 @@ Global
 		{C4041FCC-C04D-4AAA-B736-906E282BCF2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4041FCC-C04D-4AAA-B736-906E282BCF2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4041FCC-C04D-4AAA-B736-906E282BCF2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56A31091-B241-48FE-98DB-D625C8847D16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56A31091-B241-48FE-98DB-D625C8847D16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56A31091-B241-48FE-98DB-D625C8847D16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56A31091-B241-48FE-98DB-D625C8847D16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
