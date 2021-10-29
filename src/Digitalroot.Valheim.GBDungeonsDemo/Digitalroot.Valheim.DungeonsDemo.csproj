@@ -101,12 +101,18 @@
     <Reference Include="Digitalroot.Valheim.Common.Log, Version=1.1.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Digitalroot.Valheim.Common.Log.1.1.6\lib\net462\Digitalroot.Valheim.Common.Log.dll</HintPath>
     </Reference>
+    <Reference Include="Digitalroot.Valheim.Common.Names, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Digitalroot.Valheim.Common.Names.1.4.2\lib\net462\Digitalroot.Valheim.Common.Names.dll</HintPath>
+    </Reference>
     <Reference Include="Digitalroot.Valheim.Common.Utils, Version=1.0.11.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Digitalroot.Valheim.Common.Utils.1.0.11\lib\net462\Digitalroot.Valheim.Common.Utils.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="fastJSON, Version=2.4.0.0, Culture=neutral, PublicKeyToken=6b75a806b86095cd, processorArchitecture=MSIL">
       <HintPath>..\packages\fastJSON.2.4.0.4\lib\net40\fastJSON.dll</HintPath>
+    </Reference>
+    <Reference Include="FSMSharp.Valheim, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FSMSharp.Valheim.1.0.2\lib\net462\FSMSharp.Valheim.dll</HintPath>
     </Reference>
     <Reference Include="ILMerge, Version=1.18.0.0, Culture=neutral, PublicKeyToken=4d0e9a1cbec0d397, processorArchitecture=MSIL">
       <HintPath>..\packages\ILMerge.Fody.1.18.0\lib\net45\ILMerge.dll</HintPath>

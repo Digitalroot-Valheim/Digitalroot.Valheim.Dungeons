@@ -1,9 +1,10 @@
 ﻿using BepInEx;
 using Digitalroot.CustomMonoBehaviours;
 using Digitalroot.Valheim.Common;
+using Digitalroot.Valheim.Common.Names.Vanilla;
+using Digitalroot.Valheim.TrapSpawners;
 using HarmonyLib;
 using JetBrains.Annotations;
-using Jotunn;
 using Jotunn.Entities;
 using Jotunn.Managers;
 using Jotunn.Utils;
@@ -19,11 +20,14 @@ namespace Digitalroot.Valheim.DungeonsDemo
   {
     public const string Version = "1.0.0";
     public const string Name = "Digitalroot Dungeons Demo";
+    // ReSharper disable once MemberCanBePrivate.Global
     public const string Guid = "digitalroot.mods.DungeonsDemo";
     public const string Namespace = "Digitalroot.Valheim." + nameof(DungeonsDemo);
     private Harmony _harmony;
     private AssetBundle _assetBundle;
+    // ReSharper disable once MemberCanBePrivate.Global
     public static Main Instance;
+    // ReSharper disable once IdentifierTypo
     private const string OdinsHollow = nameof(OdinsHollow);
 
     public Main()
@@ -63,7 +67,7 @@ namespace Digitalroot.Valheim.DungeonsDemo
 #endif
         PrefabManager.Instance.AddPrefab(new CustomPrefab(_assetBundle.LoadAsset<GameObject>(OdinsHollow), true));
 
-        // PrefabManager.OnVanillaPrefabsAvailable += OnVanillaPrefabsAvailable;
+        PrefabManager.OnVanillaPrefabsAvailable += OnVanillaPrefabsAvailable;
 
         _harmony = Harmony.CreateAndPatchAll(typeof(Main).Assembly, Guid);
       }
@@ -78,17 +82,20 @@ namespace Digitalroot.Valheim.DungeonsDemo
       try
       {
         Log.Trace(Main.Instance, $"{Main.Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}");
+
+        // ReSharper disable once IdentifierTypo
         var odinsHollow = PrefabManager.Instance.GetPrefab(OdinsHollow);
-
+        // ReSharper disable once StringLiteralTypo
         Log.Trace(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] odinsHollow == null : {odinsHollow == null}");
-        Log.Trace(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] odinsHollow == null : {odinsHollow == null}");
+        
 
-        var spawnPools = odinsHollow.GetComponentsInChildren<TrapSpawnPool>();
+        var globalSpawnPool = odinsHollow?.transform.Find("GlobalSpawnPool")?.gameObject?.GetComponent<TrapSpawnPool>();
+        Log.Trace(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] globalSpawnPool == null : {globalSpawnPool == null}");
 
-        foreach (var spawnPool in spawnPools)
-        {
-          spawnPool.FixReferences();
-        }
+        globalSpawnPool?.m_spawnPoolPrefabs.Clear(); // Remove anything already in the GSP.
+        globalSpawnPool?.m_spawnPoolPrefabs.Add(PrefabManager.Cache.GetPrefab<GameObject>(EnemyNames.SkeletonPoison));
+        globalSpawnPool?.m_spawnPoolPrefabs.Add(PrefabManager.Cache.GetPrefab<GameObject>(EnemyNames.Blob));
+        
       }
       catch (Exception e)
       {

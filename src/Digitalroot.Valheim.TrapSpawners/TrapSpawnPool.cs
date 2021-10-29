@@ -1,10 +1,16 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[AddComponentMenu("Traps/Spawn Pool", 32)]
-public class TrapSpawnPool : MonoBehaviour
+// ReSharper disable once IdentifierTypo
+namespace Digitalroot.Valheim.TrapSpawners
 {
-  [SerializeField, Tooltip("Collection of all the prefabs that can spawn")]
-  public List<GameObject> m_spawnPoolPrefabs = new List<GameObject>(0);
-
+  [AddComponentMenu("Traps/Spawn Pool", 32)]
+  // ReSharper disable once ClassNeverInstantiated.Global
+  public class TrapSpawnPool : MonoBehaviour
+  {
+    [SerializeField, Tooltip("Collection of all the prefabs that can spawn")]
+    // ReSharper disable once InconsistentNaming
+    // ReSharper disable once FieldCanBeMadeReadOnly.Global
+    public List<GameObject> m_spawnPoolPrefabs = new List<GameObject>(0);
+  }
 }
