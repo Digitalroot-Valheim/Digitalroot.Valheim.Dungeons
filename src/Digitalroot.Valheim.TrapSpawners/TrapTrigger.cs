@@ -20,31 +20,39 @@ namespace Digitalroot.Valheim.TrapSpawners
     [Header("Trigger Spawn Pool"), SerializeField]
     // ReSharper disable once InconsistentNaming
 #pragma warning disable 649
-    private bool m_useTriggerSpawnPool;
+    // ReSharper disable once MemberCanBePrivate.Global
+    // ReSharper disable once UnassignedField.Global
+    public bool m_useTriggerSpawnPool;
 #pragma warning restore 649
 
     [SerializeField]
     // ReSharper disable once InconsistentNaming
     // ReSharper disable once FieldCanBeMadeReadOnly.Local
-    private List<GameObject> m_spawnPoolPrefabs = new List<GameObject>(0);
+    // ReSharper disable once MemberCanBePrivate.Global
+    // ReSharper disable once FieldCanBeMadeReadOnly.Global
+    public List<GameObject> m_spawnPoolPrefabs = new List<GameObject>(0);
 
     [Header("Global Spawn Pool"), SerializeField]
     // ReSharper disable once InconsistentNaming
 #pragma warning disable 649
-    private bool m_useGlobalSpawnPool;
+    // ReSharper disable once UnassignedField.Global
+    // ReSharper disable once MemberCanBePrivate.Global
+    public bool m_useGlobalSpawnPool; // ToDo: Wrap this in a public toggle method. 
 #pragma warning restore 649
 
     [SerializeField] 
     // ReSharper disable once InconsistentNaming
 #pragma warning disable 649
-    private GameObject m_globalSpawnPoolPrefab;
+    // ReSharper disable once MemberCanBePrivate.Global
+    // ReSharper disable once UnassignedField.Global
+    public GameObject m_globalSpawnPoolPrefab;
 #pragma warning restore 649
 
     [UsedImplicitly]
     public void OnTriggerEnter(Collider other)
     {
       if (_isTriggered) return;
-      // _isTriggered = true;
+      _isTriggered = true;
       if (m_trapSpawners.Count < 1) return;
 
       List<GameObject> spawnPool = null;

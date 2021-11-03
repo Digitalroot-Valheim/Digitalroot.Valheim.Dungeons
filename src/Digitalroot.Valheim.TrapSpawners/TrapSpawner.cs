@@ -38,7 +38,8 @@ namespace Digitalroot.Valheim.TrapSpawners
       {
         var rnd = Random.Range(0, spawnPoolPrefabs.Count);
         // Debug.Log($"rnd : {rnd}");
-        var go = Instantiate(spawnPoolPrefabs[rnd], transform.parent.transform);
+        
+        var go = Instantiate(spawnPoolPrefabs[rnd], transform.root);
         go.transform.localPosition = transform.localPosition;
         go.transform.localPosition += Vector3.up * 0.25f;
 
