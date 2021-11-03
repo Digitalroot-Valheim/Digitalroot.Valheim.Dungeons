@@ -1,0 +1,68 @@
+ManifestFileVersion: 0
+CRC: 1037333561
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: fa88038317bb7a672df5ec3d09bf8ab5
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 262d17844622a51f6a511ec3a3cda924
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 64
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 108
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 199696882, guid: 9477bca0cb1adbf42a2c33c4457f4b96, type: 3}
+- Class: 114
+  Script: {fileID: 634867514, guid: 9477bca0cb1adbf42a2c33c4457f4b96, type: 3}
+- Class: 114
+  Script: {fileID: 2066508104, guid: 9477bca0cb1adbf42a2c33c4457f4b96, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b342d0f18ea3ecd48ad438e438acbf4f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e42e5506c5d43954db7f135ab74fc286, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1115f586e702802499f1bfc1daf691a2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5344b9cae38968b4e954b7dd6898bf58, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4f91382ba6ee3fe419d2399c1c0e99c8, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ca0a14cd6e0a10f458cb9d37e0165f38, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4ae645cf7e4d3654ba91cbc4d11149bb, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 136
+  Script: {instanceID: 0}
+- Class: 198
+  Script: {instanceID: 0}
+- Class: 199
+  Script: {instanceID: 0}
+- Class: 205
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/_OdinPlusTeam/Projects/OdinPlus.EmptyDungeons/OdinsHollow/PrefabInstance/OdinsPlusTeamsDungeons.prefab
+- Assets/_OdinPlusTeam/Projects/OdinPlus.EmptyDungeons/OdinsHollow/PrefabInstance/OdinsHollow.prefab
+Dependencies: []

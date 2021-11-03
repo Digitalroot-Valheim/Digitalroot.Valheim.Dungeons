@@ -15,7 +15,8 @@ namespace Digitalroot.Valheim.TrapSpawners
     // ReSharper disable once IdentifierTypo
     // ReSharper disable once FieldCanBeMadeReadOnly.Local
     // ReSharper disable once CollectionNeverUpdated.Local
-    private List<GameObject> m_trapSpawners = new List<GameObject>(0);
+    // ReSharper disable once FieldCanBeMadeReadOnly.Global
+    public List<GameObject> m_trapSpawners = new List<GameObject>(0);
 
     [Header("Trigger Spawn Pool"), SerializeField]
     // ReSharper disable once InconsistentNaming
@@ -56,15 +57,18 @@ namespace Digitalroot.Valheim.TrapSpawners
       if (m_trapSpawners.Count < 1) return;
 
       List<GameObject> spawnPool = null;
-      if (m_useGlobalSpawnPool) // Global Pool
+      switch (m_useGlobalSpawnPool)
       {
-        var globalSpawnPool = m_globalSpawnPoolPrefab.GetComponent<TrapSpawnPool>();
-        spawnPool = globalSpawnPool.m_spawnPoolPrefabs;
-      }
-
-      if (!m_useGlobalSpawnPool && m_useTriggerSpawnPool) // Trigger Pool
-      {
-        spawnPool = m_spawnPoolPrefabs;
+        // Global Pool
+        case true:
+          var globalSpawnPool = m_globalSpawnPoolPrefab.GetComponent<TrapSpawnPool>();
+          spawnPool = globalSpawnPool.m_spawnPoolPrefabs;
+          break;
+        
+        // Trigger Pool
+        case false when m_useTriggerSpawnPool:
+          spawnPool = m_spawnPoolPrefabs;
+          break;
       }
 
       // ReSharper disable once IdentifierTypo
