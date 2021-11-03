@@ -430,6 +430,7 @@
     <Content Include=".nx\description.bbcode.txt" />
     <Content Include=".ts\icon.png" />
     <Content Include="FodyWeavers.xml" />
+    <Content Include="imgs\map.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Digitalroot.Valheim.TrapSpawners\Digitalroot.Valheim.TrapSpawners.csproj">
