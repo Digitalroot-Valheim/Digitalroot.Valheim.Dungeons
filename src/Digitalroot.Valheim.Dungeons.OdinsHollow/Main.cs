@@ -2,6 +2,7 @@
 using Digitalroot.CustomMonoBehaviours;
 using Digitalroot.Valheim.Common;
 using Digitalroot.Valheim.Common.Names.Vanilla;
+using Digitalroot.Valheim.Dungeons.Common;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Jotunn.Entities;
@@ -11,6 +12,7 @@ using System;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Debug = System.Diagnostics.Debug;
 
 namespace Digitalroot.Valheim.Dungeons.OdinsHollow
 {
@@ -31,6 +33,7 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
 
     // ReSharper disable once IdentifierTypo
     private const string OdinsHollow = nameof(OdinsHollow);
+    private Dungeon _dungeon;
 
     public Main()
     {
@@ -83,15 +86,21 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
       try
       {
         Log.Trace(Main.Instance, $"{Main.Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}");
+        var dungeonPrefab = PrefabManager.Instance.GetPrefab(OdinsHollow);
+        Log.Trace(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] dungeonPrefab == null : {dungeonPrefab == null}");
+        Debug.Assert(dungeonPrefab != null, nameof(dungeonPrefab) + " != null");
+        
+        // Configure
+        _dungeon = new Dungeon(OdinsHollow, dungeonPrefab);
+        _dungeon.SetEnableTrace(EnableTrace);
+        _dungeon.AddDungeonBossRoom(DungeonsRoomNames.BlueRoom);
 
-        // ReSharper disable once IdentifierTypo
-        var odinsHollow = PrefabManager.Instance.GetPrefab(OdinsHollow);
-        // ReSharper disable once StringLiteralTypo
-        Log.Trace(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] odinsHollow == null : {odinsHollow == null}");
-
-        SeedGlobalSpawnPoolIfNecessary(odinsHollow);
-
-        SeedSpawnPoolsFor(new DungeonBossRoom(DungeonsRoomNames.BlueRoom, odinsHollow));
+        // Seed
+        SeedGlobalSpawnPoolIfNecessary();
+        foreach (var dungeonDungeonBossRoom in _dungeon.DungeonBossRooms)
+        {
+          SeedSpawnPoolsFor(dungeonDungeonBossRoom);
+        }
       }
       catch (Exception e)
       {
@@ -119,48 +128,46 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
 
     #region Spawn Pool Seeding
 
-    private void SeedGlobalSpawnPoolIfNecessary(GameObject odinsHollow)
+    private void SeedGlobalSpawnPoolIfNecessary()
     {
       Log.Trace(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Seeding Global Spawn Pool");
-      // var globalSpawnPool = odinsHollow?.transform.Find("GlobalSpawnPool")?.gameObject?.GetComponent<TrapSpawnPool>();
-      var globalSpawnPool = new GlobalSpawnPool(odinsHollow);
-      Log.Trace(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] globalSpawnPool.SpawnPool == null : {globalSpawnPool.SpawnPool == null}");
+      Log.Trace(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] _dungeon.GlobalSpawnPool == null : {_dungeon.GlobalSpawnPool == null}");
+      Log.Trace(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] _dungeon.GlobalSpawnPool.SpawnPool == null : {_dungeon.GlobalSpawnPool?.SpawnPool == null}");
 
-      if (!globalSpawnPool.SpawnPool)
+      if (!_dungeon.GlobalSpawnPool?.SpawnPool)
       {
         Log.Trace(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Skipping Seeding of Global Spawn Pool");
         return;
       }
 
-      // globalSpawnPool.FixReferences(); // JVL Mocks Broken
-
-      globalSpawnPool.Clear(); // Remove anything already in the GSP.
-      globalSpawnPool.AddEnemy(EnemyNames.SkeletonPoison);
-      globalSpawnPool.AddEnemy(EnemyNames.Blob);
-      globalSpawnPool.AddEnemy(EnemyNames.BlobElite);
-      globalSpawnPool.AddEnemy(EnemyNames.Draugr);
-      globalSpawnPool.AddEnemy(EnemyNames.DraugrElite);
-      globalSpawnPool.AddEnemy(EnemyNames.DraugrRanged);
-      globalSpawnPool.AddEnemy(PrefabNames.SkeletonNoArcher);
-      globalSpawnPool.AddEnemy(PrefabNames.SkeletonNoArcher);
-      globalSpawnPool.AddEnemy(PrefabNames.SkeletonNoArcher);
-      globalSpawnPool.AddEnemy(PrefabNames.SkeletonNoArcher);
-      globalSpawnPool.AddPrefab(PrefabNames.BonePileSpawner);
-      globalSpawnPool.AddPrefab(PrefabNames.SpawnerDraugrPile);
+      _dungeon.GlobalSpawnPool?.Clear(); // Remove anything already in the GSP.
+      _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.SkeletonPoison);
+      _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.Blob);
+      _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.BlobElite);
+      _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.Draugr);
+      _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.DraugrElite);
+      _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.DraugrRanged);
+      _dungeon.GlobalSpawnPool?.AddEnemy(PrefabNames.SkeletonNoArcher);
+      _dungeon.GlobalSpawnPool?.AddEnemy(PrefabNames.SkeletonNoArcher);
+      _dungeon.GlobalSpawnPool?.AddEnemy(PrefabNames.SkeletonNoArcher);
+      _dungeon.GlobalSpawnPool?.AddEnemy(PrefabNames.SkeletonNoArcher);
+      _dungeon.GlobalSpawnPool?.AddPrefab(PrefabNames.BonePileSpawner);
+      _dungeon.GlobalSpawnPool?.AddPrefab(PrefabNames.SpawnerDraugrPile);
     }
 
     private void SeedSpawnPoolsFor(DungeonBossRoom room)
     {
       Log.Trace(Main.Instance, $"Seeding bosses for {room.Name}");
       Log.Trace(Main.Instance, $"Room Health Check [{room.Name}]");
-      Log.Trace(Main.Instance, $"room.MiniBossSpawnPoint == null [{room.MiniBossSpawnPoint == null}]");
+      Log.Trace(Main.Instance, $"room.BossSpawnPoint == null [{room.BossSpawnPoint == null}]");
       // ReSharper disable once IdentifierTypo
       // var miniBossSpawner = odinsHollow?.transform.Find(room.Name)?.Find(room.MiniBossSpawnPointName).gameObject?.GetComponent<TrapSpawner>();
       // Log.Trace(Main.Instance, $"miniBossSpawner == null : {miniBossSpawner == null}");
-      if (room.MiniBossSpawnPoint != null)
+      if (room.BossSpawnPoint != null)
       {
-        room.MiniBossSpawnPoint.m_ignoreSpawnPoolOverrides = true; // true | false
-        room.MiniBossSpawnPoint.m_spawnPoolPrefabs.Add(ConfigureAsBoss(PrefabManager.Cache.GetPrefab<GameObject>(EnemyNames.DraugrElite)));
+        room.AddBoss(EnemyNames.DraugrElite, true);
+        room.BossSpawnPoint.m_ignoreSpawnPoolOverrides = true; // true | false
+        room.BossSpawnPoint.m_spawnPoolPrefabs.Add(ConfigureAsBoss());
       }
 
       SeedSpawnPoolsFor(room as DungeonRoom);
@@ -168,7 +175,6 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
 
     private void SeedSpawnPoolsFor(DungeonRoom room)
     {
-      
       Log.Trace(Main.Instance, $"Seeding trash for {room.Name}");
       Log.Trace(Main.Instance, $"Room Health Check [{room.Name}]");
       Log.Trace(Main.Instance, $"room.RoomSpawnPool == null : {room.RoomSpawnPool == null}");
@@ -188,32 +194,6 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
         room.RoomSpawnPool?.m_spawnPoolPrefabs?.Add(ConfigureAsTrash(PrefabManager.Cache.GetPrefab<GameObject>(EnemyNames.DraugrRanged)));
       }
     }
-
-    
-    private GameObject ConfigureAsBoss(GameObject prefab)
-    {
-      Log.Trace(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] prefab == null : {prefab == null}");
-      Log.Trace(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] prefab?.name : {prefab?.name}");
-      if (prefab == null) return null;
-      prefab.transform.localScale *= 2;
-      var character = prefab.GetComponent<Character>();
-      Log.Trace(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] character == null : {character == null}");
-      // character?.SetLevel(4); // Need to do this at spawn time. 
-      return prefab;
-    }
-
-    private GameObject ConfigureAsTrash(GameObject prefab)
-    {
-      Log.Trace(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] prefab == null : {prefab == null}");
-      Log.Trace(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] prefab?.name : {prefab?.name}");
-      if (prefab == null) return null;
-      // prefab.transform.localScale *= 2;
-      var character = prefab.GetComponent<Character>();
-      Log.Trace(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] character == null : {character == null}");
-      // character?.SetLevel(3); // Need to do this at spawn time. 
-      return prefab;
-    }
-
     #endregion
 
     #region Implementation of ITraceableLogging

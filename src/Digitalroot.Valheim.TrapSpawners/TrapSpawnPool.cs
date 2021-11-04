@@ -12,5 +12,7 @@ namespace Digitalroot.Valheim.TrapSpawners
     // ReSharper disable once InconsistentNaming
     // ReSharper disable once FieldCanBeMadeReadOnly.Global
     public List<GameObject> m_spawnPoolPrefabs = new List<GameObject>(0);
+
+    public void Clear() => m_spawnPoolPrefabs.Clear();
   }
 }

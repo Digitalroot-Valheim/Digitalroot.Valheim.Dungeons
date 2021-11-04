@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Digitalroot.Valheim.Dungeons.OdinsHollow
+namespace Digitalroot.Valheim.Dungeons.Common
 {
   public class DungeonRoom
   {
