@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Digitalroot.Valheim.Dungeons.Common
+namespace Digitalroot.Valheim.Dungeons.Common.SpawnPools
 {
   public interface ISpawnPool
   {
@@ -31,15 +31,17 @@ namespace Digitalroot.Valheim.Dungeons.Common
     void AddBoss(string prefabName);
 
     /// <summary>
-    /// Adds a prefab without trash configuration.
+    /// Adds a prefab without configuration.
     /// </summary>
     /// <param name="prefab"></param>
     void AddPrefab(GameObject prefab);
 
     /// <summary>
-    /// Adds a prefab and configures it as trash.
+    /// Adds a prefab without configuration.
     /// </summary>
     /// <param name="prefabName"></param>
     void AddPrefab(string prefabName);
+
+    int SpawnPoolCount();
   }
 }

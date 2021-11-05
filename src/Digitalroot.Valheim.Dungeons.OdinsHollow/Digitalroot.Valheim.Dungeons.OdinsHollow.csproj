@@ -465,7 +465,7 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-  <Target Name="BeforeBuild" Condition="'$(Configuration)' == 'Release'">
+  <Target Name="BeforeBuild" Condition="'$(Configuration)' == 'Release|OdinsHollowRelease'">
     <Message Text="BeforeBuild Called" Importance="high" />
     <ItemGroup>
       <BuildFiles Include="$(TargetDir)..\$(ProjectName)\$(ProjectName)\$(ProjectName).dll" />
@@ -481,13 +481,13 @@
       <DigitalrootBuildFiles Include="$(TargetDir)..\$(ProjectName)\$(ProjectName)\$(ProjectName).dll" />
     </ItemGroup>
   </Target>
-  <Target Name="DebugPostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Debug'" DependsOnTargets="RefreshVars">
+  <Target Name="DebugPostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Debug|OdinsHollowDebug'" DependsOnTargets="RefreshVars">
     <Message Text="DebugPostBuild Called" Importance="high" />
     <Message Text="Copying assemblies to C:\Program Files (x86)\Steam\steamapps\common\Valheim\BepInEx\plugins\$(ProjectName)\" Importance="high" />
     <CallTarget Targets="RefreshVars" />
     <Copy SourceFiles="@(DigitalrootSourceFiles)" DestinationFiles="@(DigitalrootSourceFiles->'C:\Program Files (x86)\Steam\steamapps\common\Valheim\BepInEx\plugins\$(ProjectName)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" OverwriteReadOnlyFiles="true" />
   </Target>
-  <Target Name="ReleasePostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Release'" DependsOnTargets="RefreshVars">
+  <Target Name="ReleasePostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Release|OdinsHollowRelease'" DependsOnTargets="RefreshVars">
     <Message Text="ReleasePostBuild Called" Importance="high" />
     <CallTarget Targets="RefreshVars" />
     <MakeDir Directories="$(TargetDir)..\$(ProjectName)\$(ProjectName)" />

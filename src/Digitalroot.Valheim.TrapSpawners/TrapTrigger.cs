@@ -80,5 +80,39 @@ namespace Digitalroot.Valheim.TrapSpawners
         trapSpawner?.DoSpawn(spawnPool); // null = use Spawners Pool
       }
     }
+
+    public void SetUseTriggerSpawnPool(bool value)
+    {
+      m_useTriggerSpawnPool = value;
+    }
+
+    public void SetIsTriggered(bool value)
+    {
+      _isTriggered = value;
+    }
+
+    public void SetUseGlobalSpawnPool(bool value)
+    {
+      m_useGlobalSpawnPool = value;
+    }
+
+    public void SetGlobalSpawnPool(GameObject value, bool enable = true)
+    {
+      m_globalSpawnPoolPrefab = value;
+      SetUseGlobalSpawnPool(enable);
+    }
+
+    public void ClearSpawnPool()
+    {
+      m_spawnPoolPrefabs.Clear();
+    }
+
+    public void AddToSpawnPool(GameObject prefab)
+    {
+      m_spawnPoolPrefabs.Add(prefab);
+    }
+
+    public int SpawnPoolCount() => m_spawnPoolPrefabs.Count;
+
   }
 }

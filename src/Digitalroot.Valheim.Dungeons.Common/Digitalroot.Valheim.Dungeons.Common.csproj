@@ -382,16 +382,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dungeon.cs" />
-    <Compile Include="DungeonBossRoom.cs" />
-    <Compile Include="DungeonRoom.cs" />
-    <Compile Include="DungeonsUtils.cs" />
-    <Compile Include="GlobalSpawnPool.cs" />
-    <Compile Include="ISpawnPool.cs" />
+    <Compile Include="Rooms\DungeonBossRoom.cs" />
+    <Compile Include="Rooms\DungeonRoom.cs" />
+    <Compile Include="TrapProxies\AbstractProxy.cs" />
+    <Compile Include="TrapProxies\TrapTriggerProxy.cs" />
+    <Compile Include="Utils\DungeonsUtils.cs" />
+    <Compile Include="SpawnPools\GlobalSpawnPool.cs" />
+    <Compile Include="SpawnPools\ISpawnPool.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RoomSpawnPool.cs" />
-    <Compile Include="SpawnPool.cs" />
-    <Compile Include="TrapSpawnerProxy.cs" />
-    <Compile Include="TrapSpawnPoolProxy.cs" />
+    <Compile Include="SpawnPools\RoomSpawnPool.cs" />
+    <Compile Include="TrapProxies\TrapSpawnerProxy.cs" />
+    <Compile Include="TrapProxies\TrapSpawnPoolProxy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -408,6 +409,7 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

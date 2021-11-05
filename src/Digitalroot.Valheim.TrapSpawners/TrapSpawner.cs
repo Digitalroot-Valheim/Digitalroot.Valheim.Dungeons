@@ -76,7 +76,7 @@ namespace Digitalroot.Valheim.TrapSpawners
         for (var i = 0; i < quantity; i++)
         {
           var rnd = Random.Range(0, spawnPoolPrefabs.Count);
-          Debug.Log($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}] ({i} of {quantity}), Using {rnd} from range {quantityMin} - {quantityMax}, Spawn Pool size: {spawnPoolPrefabs.Count}");
+          Debug.Log($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}] ({i + 1} of {quantity}), Using {rnd} from range 0 - {spawnPoolPrefabs.Count}, Spawn Pool size: {spawnPoolPrefabs.Count}");
 
           if (spawnPoolPrefabs.Count == 0)
           {
@@ -90,8 +90,8 @@ namespace Digitalroot.Valheim.TrapSpawners
             rnd = 0;
           }
 
-          var go = Instantiate(spawnPoolPrefabs[rnd], transform.root);
-          go.transform.position = transform.position;
+          var go = Instantiate(spawnPoolPrefabs[rnd], transform);
+          // go.transform.position = transform.position;
 
           switch (i)
           {
@@ -125,7 +125,7 @@ namespace Digitalroot.Valheim.TrapSpawners
 
           // Fix Scale
           go.transform.localScale *= m_scaleSize;
-          go.transform.localPosition += Vector3.up * 0.25f * m_scaleSize;
+          go.transform.localPosition += Vector3.up * 0.25f;
 
           Debug.Log($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}] Spawning: {go.name} @ {go.transform.position}, Scale: {go.transform.localScale}, Level: {level}");
         }
@@ -136,19 +136,13 @@ namespace Digitalroot.Valheim.TrapSpawners
       }
     }
 
-    public void SetIgnoreSpawnPoolOverrides(bool value)
-    {
-      m_ignoreSpawnPoolOverrides = value;
-    }
+    public void SetIgnoreSpawnPoolOverrides(bool value) => m_ignoreSpawnPoolOverrides = value;
 
-    public void ClearSpawnPool()
-    {
-      m_spawnPoolPrefabs.Clear();
-    }
+    public void ClearSpawnPool() => m_spawnPoolPrefabs.Clear();
 
-    public void AddToSpawnPool(GameObject prefab)
-    {
-      m_spawnPoolPrefabs.Add(prefab);
-    }
+    public void AddToSpawnPool(GameObject prefab) => m_spawnPoolPrefabs.Add(prefab);
+
+    public int SpawnPoolCount() => m_spawnPoolPrefabs.Count;
+
   }
 }

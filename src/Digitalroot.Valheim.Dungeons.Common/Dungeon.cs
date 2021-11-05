@@ -1,4 +1,6 @@
 ﻿using Digitalroot.Valheim.Common;
+using Digitalroot.Valheim.Dungeons.Common.Rooms;
+using Digitalroot.Valheim.Dungeons.Common.SpawnPools;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
@@ -56,7 +58,6 @@ namespace Digitalroot.Valheim.Dungeons.Common
     public void SetEnableTrace(bool value)
     {
       EnableTrace = value;
-      GlobalSpawnPool.SetEnableTrace(value);
       foreach (var dungeonBossRoom in DungeonBossRooms)
       {
         dungeonBossRoom.SetEnableTrace(value);

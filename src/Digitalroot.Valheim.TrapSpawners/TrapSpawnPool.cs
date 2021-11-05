@@ -14,5 +14,10 @@ namespace Digitalroot.Valheim.TrapSpawners
     public List<GameObject> m_spawnPoolPrefabs = new List<GameObject>(0);
 
     public void Clear() => m_spawnPoolPrefabs.Clear();
+
+    public void AddToSpawnPool(GameObject prefab)
+    {
+      m_spawnPoolPrefabs.Add(prefab);
+    }
   }
 }

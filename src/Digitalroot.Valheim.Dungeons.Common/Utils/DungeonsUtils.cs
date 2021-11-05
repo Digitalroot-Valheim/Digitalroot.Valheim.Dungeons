@@ -2,7 +2,7 @@
 using System.Reflection;
 using UnityEngine;
 
-namespace Digitalroot.Valheim.Dungeons.Common
+namespace Digitalroot.Valheim.Dungeons.Common.Utils
 {
   public static class DungeonsUtils
   {
