@@ -452,12 +452,12 @@
     <ProjectReference Include="..\Digitalroot.Valheim.Dungeons.Common\Digitalroot.Valheim.Dungeons.Common.csproj">
       <Project>{a7951e8a-cea6-409f-a491-6592442b3307}</Project>
       <Name>Digitalroot.Valheim.Dungeons.Common</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\Digitalroot.Valheim.TrapSpawners\Digitalroot.Valheim.TrapSpawners.csproj">
       <Project>{56a31091-b241-48fe-98db-d625c8847d16}</Project>
       <Name>Digitalroot.Valheim.TrapSpawners</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -465,7 +465,7 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-  <Target Name="BeforeBuild" Condition="'$(Configuration)' == 'Release|OdinsHollowRelease'">
+  <Target Name="BeforeBuild" Condition="'$(Configuration)' == 'Release' or '$(Configuration)' == 'OdinsHollowRelease'">
     <Message Text="BeforeBuild Called" Importance="high" />
     <ItemGroup>
       <BuildFiles Include="$(TargetDir)..\$(ProjectName)\$(ProjectName)\$(ProjectName).dll" />
@@ -481,13 +481,13 @@
       <DigitalrootBuildFiles Include="$(TargetDir)..\$(ProjectName)\$(ProjectName)\$(ProjectName).dll" />
     </ItemGroup>
   </Target>
-  <Target Name="DebugPostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Debug|OdinsHollowDebug'" DependsOnTargets="RefreshVars">
+  <Target Name="DebugPostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Debug' or '$(Configuration)' == 'OdinsHollowDebug'" DependsOnTargets="RefreshVars">
     <Message Text="DebugPostBuild Called" Importance="high" />
     <Message Text="Copying assemblies to C:\Program Files (x86)\Steam\steamapps\common\Valheim\BepInEx\plugins\$(ProjectName)\" Importance="high" />
     <CallTarget Targets="RefreshVars" />
     <Copy SourceFiles="@(DigitalrootSourceFiles)" DestinationFiles="@(DigitalrootSourceFiles->'C:\Program Files (x86)\Steam\steamapps\common\Valheim\BepInEx\plugins\$(ProjectName)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" OverwriteReadOnlyFiles="true" />
   </Target>
-  <Target Name="ReleasePostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Release|OdinsHollowRelease'" DependsOnTargets="RefreshVars">
+  <Target Name="ReleasePostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Release' or '$(Configuration)' == 'OdinsHollowRelease'" DependsOnTargets="RefreshVars">
     <Message Text="ReleasePostBuild Called" Importance="high" />
     <CallTarget Targets="RefreshVars" />
     <MakeDir Directories="$(TargetDir)..\$(ProjectName)\$(ProjectName)" />
