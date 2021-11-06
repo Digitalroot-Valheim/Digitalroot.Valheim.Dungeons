@@ -160,18 +160,10 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
     {
       Log.Trace(Main.Instance, $"Seeding bosses for {room.Name}");
       Log.Trace(Main.Instance, $"Room Health Check [{room.Name}]");
-      Log.Trace(Main.Instance, $"room.RoomBossSpawnPoints == null [{room.RoomBossSpawnPoints == null}]");
-      Log.Trace(Main.Instance, $"room.RoomBossSpawnPoints?.Count [{room.RoomBossSpawnPoints?.Count}]");
-      Log.Trace(Main.Instance, $"room.RoomBossSpawnPool == null [{room.RoomBossSpawnPool == null}]");
+      Log.Trace(Main.Instance, $"room.RoomBossSpawnPoints == null [{room.RoomBossSpawnPoint == null}]");
       Log.Trace(Main.Instance, $"room.RoomBossTrigger == null [{room.RoomBossTrigger == null}]");
-      // ReSharper disable once IdentifierTypo
-      // var miniBossSpawner = odinsHollow?.transform.Find(room.Name)?.Find(room.MiniBossSpawnPointName).gameObject?.GetComponent<TrapSpawner>();
-      // Log.Trace(Main.Instance, $"miniBossSpawner == null : {miniBossSpawner == null}");
-      if (room.RoomBossSpawnPoints?.FirstOrDefault() != null)
-      {
-        room.FirstBossSpawnPoint.AddBoss(EnemyNames.DraugrElite);
-        room.FirstBossSpawnPoint.SetIgnoreSpawnPoolOverrides(true); // true | false
-      }
+
+      room.RoomBossSpawnPoint?.AddBoss(EnemyNames.DraugrElite);
 
       SeedSpawnPoolsFor(room as DungeonRoom);
     }
