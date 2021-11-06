@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="1862.5px" preserveAspectRatio="none" style="width:1032px;height:1862px;background:#00000000;" version="1.1" viewBox="0 0 1032 1862" width="1032.2917px" zoomAndPan="magnify"><defs><linearGradient id="gwb2g765cumbw0" x1="50%" x2="50%" y1="0%" y2="100%"><stop offset="0%" stop-color="#2FA4E7"/><stop offset="100%" stop-color="#2683B9"/></linearGradient></defs><g><!--MD5=[40b59830e5076ac913c4a0004142dc16]
+cluster TrapTrigger--><polygon points="347.9167,785.4167,358.3333,775,691.6667,775,691.6667,1270.8333,681.25,1281.25,347.9167,1281.25,347.9167,785.4167" style="stroke:#343A40;stroke-width:1.5625;fill:none;"/><line style="stroke:#343A40;stroke-width:1.5625;fill:none;" x1="681.25" x2="691.6667" y1="785.4167" y2="775"/><line style="stroke:#343A40;stroke-width:1.5625;fill:none;" x1="347.9167" x2="681.25" y1="785.4167" y2="785.4167"/><line style="stroke:#343A40;stroke-width:1.5625;fill:none;" x1="681.25" x2="681.25" y1="785.4167" y2="1281.25"/><text fill="#343A40" font-family="Verdana" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="110.4167" x="460.4167" y="805.3528">Spawn Trigger</text><!--MD5=[383c12db38e01dd0edb82b3602b3c032]
+cluster GlobalSpawnPool--><polygon points="157.2917,1514.0625,167.7083,1503.6458,476.0417,1503.6458,476.0417,1681.7708,465.625,1692.1875,157.2917,1692.1875,157.2917,1514.0625" style="stroke:#343A40;stroke-width:1.5625;fill:none;"/><line style="stroke:#343A40;stroke-width:1.5625;fill:none;" x1="465.625" x2="476.0417" y1="1514.0625" y2="1503.6458"/><line style="stroke:#343A40;stroke-width:1.5625;fill:none;" x1="157.2917" x2="465.625" y1="1514.0625" y2="1514.0625"/><line style="stroke:#343A40;stroke-width:1.5625;fill:none;" x1="465.625" x2="465.625" y1="1514.0625" y2="1692.1875"/><text fill="#343A40" font-family="Verdana" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="136.4583" x="244.2708" y="1533.9986">Global Spawn Pool</text><!--MD5=[5f55478e591a8fe5e4fe1d787ef24c26]
+cluster TrapSpawner--><polygon points="615.625,1351.0417,626.0417,1340.625,951.0417,1340.625,951.0417,1844.7917,940.625,1855.2083,615.625,1855.2083,615.625,1351.0417" style="stroke:#343A40;stroke-width:1.5625;fill:none;"/><line style="stroke:#343A40;stroke-width:1.5625;fill:none;" x1="940.625" x2="951.0417" y1="1351.0417" y2="1340.625"/><line style="stroke:#343A40;stroke-width:1.5625;fill:none;" x1="615.625" x2="940.625" y1="1351.0417" y2="1351.0417"/><line style="stroke:#343A40;stroke-width:1.5625;fill:none;" x1="940.625" x2="940.625" y1="1351.0417" y2="1855.2083"/><text fill="#343A40" font-family="Verdana" font-size="12.5" font-weight="bold" lengthAdjust="spacing" textLength="92.7083" x="732.8125" y="1370.9778">Spawn Point</text><!--MD5=[94ca666a74bd8ecb10b3bd08e535bdcc]
+class TrapTrigger--><rect codeLine="5" height="440.4622" id="TrapTrigger" rx="4.1667" ry="4.1667" style="stroke:#2FA4E7;stroke-width:1.0416666666666667;fill:none;" width="310.4167" x="364.5833" y="823.9583"/><rect fill="url(#gwb2g765cumbw0)" height="35.3841" rx="4.1667" ry="4.1667" style="stroke:url(#gwb2g765cumbw0);stroke-width:1.0416666666666667;" width="310.4167" x="364.5833" y="823.9583"/><rect fill="url(#gwb2g765cumbw0)" height="4.1667" style="stroke:url(#gwb2g765cumbw0);stroke-width:1.0416666666666667;" width="310.4167" x="364.5833" y="855.1758"/><rect codeLine="5" fill="none" height="440.4622" id="TrapTrigger" rx="4.1667" ry="4.1667" style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" width="310.4167" x="364.5833" y="823.9583"/><ellipse cx="473.4375" cy="841.6504" fill="#EDF0F2" rx="10.4167" ry="10.4167" style="stroke:#BABDBF;stroke-width:1.0416666666666667;"/><path d="M475.3743,838.265 C474.6908,837.9395 474.2513,837.8418 473.6003,837.8418 C471.6797,837.8418 470.1986,839.3555 470.1986,841.3574 L470.1986,842.1875 C470.1986,844.0918 471.7611,845.4753 473.877,845.4753 C474.7721,845.4753 475.6348,845.2474 476.1719,844.8405 C476.6113,844.5475 476.8392,844.222 476.8392,843.929 C476.8392,843.6035 476.5462,843.3105 476.2207,843.3105 C476.0579,843.3105 475.9115,843.3757 475.765,843.5059 C475.4232,843.8639 475.4232,843.8639 475.293,843.929 C474.9837,844.1243 474.4792,844.222 473.9095,844.222 C472.4121,844.222 471.4518,843.4082 471.4518,842.1549 L471.4518,841.3574 C471.4518,840.0391 472.3796,839.0788 473.6491,839.0788 C474.0723,839.0788 474.528,839.1927 474.8698,839.388 C475.2279,839.5833 475.3581,839.7461 475.4232,840.0391 C475.472,840.3483 475.4883,840.4297 475.5859,840.5273 C475.6836,840.6413 475.8626,840.7064 476.0254,840.7064 C476.237,840.7064 476.416,840.6087 476.5462,840.446 C476.6276,840.332 476.6602,840.2018 476.6602,839.8763 L476.6602,838.8346 C476.6602,838.5254 476.6439,838.4277 476.5625,838.3138 C476.4486,838.1185 476.2533,838.0046 476.0254,838.0046 C475.8138,838.0046 475.6673,838.0859 475.5046,838.3138 L475.3743,838.265 Z " fill="#000000"/><text fill="#F8F9FA" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="73.9583" x="498.4375" y="845.9778">TrapTrigger</text><line style="stroke:#2FA4E7;stroke-width:1.5625;" x1="365.625" x2="673.9583" y1="859.3424" y2="859.3424"/><rect fill="none" height="6.25" style="stroke:#C82930;stroke-width:1.0416666666666667;" width="6.25" x="372.9167" y="867.6758"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="109.375" x="389.5833" y="879.3533">_isTriggered : bool</text><ellipse cx="376.0417" cy="894.5557" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;fill:none;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="223.9583" x="389.5833" y="903.1082">m_trapSpawners : List&lt;GameObject&gt;</text><ellipse cx="376.0417" cy="946.2321" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;fill:none;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="177.0833" x="389.5833" y="954.7846">m_useTriggerSpawnPool: bool</text><ellipse cx="376.0417" cy="969.987" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;fill:none;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="247.9167" x="389.5833" y="978.5395">m_spawnPoolPrefabs : List&lt;GameObject&gt;</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="365.625" x2="457.8125" y1="927.063" y2="927.063"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="365.625" x2="457.8125" y1="929.1463" y2="929.1463"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="113.5417" x="463.0208" y="930.5089">Trigger Spawn Pool</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="581.7708" x2="673.9583" y1="927.063" y2="927.063"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="581.7708" x2="673.9583" y1="929.1463" y2="929.1463"/><ellipse cx="376.0417" cy="1021.6634" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;fill:none;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="172.9167" x="389.5833" y="1030.216">m_useGlobalSpawnPool: bool</text><ellipse cx="376.0417" cy="1045.4183" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;fill:none;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="240.625" x="389.5833" y="1053.9708">m_globalSpawnPoolPrefab : GameObject</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="365.625" x2="459.8958" y1="1002.4943" y2="1002.4943"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="365.625" x2="459.8958" y1="1004.5776" y2="1004.5776"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="109.375" x="465.1042" y="1005.9402">Global Spawn Pool</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="579.6875" x2="673.9583" y1="1002.4943" y2="1002.4943"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="579.6875" x2="673.9583" y1="1004.5776" y2="1004.5776"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="365.625" x2="673.9583" y1="1066.0482" y2="1066.0482"/><ellipse cx="376.0417" cy="1077.5065" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="220.8333" x="389.5833" y="1086.0591">AddToSpawnPool(GameObject) : void</text><ellipse cx="376.0417" cy="1101.2614" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="139.5833" x="389.5833" y="1109.8139">ClearSpawnPool() : void</text><ellipse cx="376.0417" cy="1125.0163" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="179.1667" x="389.5833" y="1133.5688">OnTriggerEnter(Collider) : void</text><ellipse cx="376.0417" cy="1148.7712" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="273.9583" x="389.5833" y="1157.3237">SetGlobalSpawnPool(GameObject, bool) : void</text><ellipse cx="376.0417" cy="1172.526" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="157.2917" x="389.5833" y="1181.0786">SetIsTriggered(bool) : void</text><ellipse cx="376.0417" cy="1196.2809" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="214.5833" x="389.5833" y="1204.8335">SetUseGlobalSpawnPool(bool) : void</text><ellipse cx="376.0417" cy="1220.0358" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="218.75" x="389.5833" y="1228.5884">SetUseTriggerSpawnPool(bool) : void</text><ellipse cx="376.0417" cy="1243.7907" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="132.2917" x="389.5833" y="1252.3432">SpawnPoolCount() : int</text><!--MD5=[f350ee2740e79956249ef300b291ba87]
+class TrapSpawnPool--><rect codeLine="27" height="123.3154" id="TrapSpawnPool" rx="4.1667" ry="4.1667" style="stroke:#2FA4E7;stroke-width:1.0416666666666667;fill:none;" width="284.375" x="174.4792" y="1552.6042"/><rect fill="url(#gwb2g765cumbw0)" height="35.3841" rx="4.1667" ry="4.1667" style="stroke:url(#gwb2g765cumbw0);stroke-width:1.0416666666666667;" width="284.375" x="174.4792" y="1552.6042"/><rect fill="url(#gwb2g765cumbw0)" height="4.1667" style="stroke:url(#gwb2g765cumbw0);stroke-width:1.0416666666666667;" width="284.375" x="174.4792" y="1583.8216"/><rect codeLine="27" fill="none" height="123.3154" id="TrapSpawnPool" rx="4.1667" ry="4.1667" style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" width="284.375" x="174.4792" y="1552.6042"/><ellipse cx="259.375" cy="1570.2962" fill="#EDF0F2" rx="10.4167" ry="10.4167" style="stroke:#BABDBF;stroke-width:1.0416666666666667;"/><path d="M261.3118,1566.9108 C260.6283,1566.5853 260.1888,1566.4876 259.5378,1566.4876 C257.6172,1566.4876 256.1361,1568.0013 256.1361,1570.0033 L256.1361,1570.8333 C256.1361,1572.7376 257.6986,1574.1211 259.8145,1574.1211 C260.7096,1574.1211 261.5723,1573.8932 262.1094,1573.4863 C262.5488,1573.1934 262.7767,1572.8678 262.7767,1572.5749 C262.7767,1572.2493 262.4837,1571.9564 262.1582,1571.9564 C261.9954,1571.9564 261.849,1572.0215 261.7025,1572.1517 C261.3607,1572.5098 261.3607,1572.5098 261.2305,1572.5749 C260.9212,1572.7702 260.4167,1572.8678 259.847,1572.8678 C258.3496,1572.8678 257.3893,1572.054 257.3893,1570.8008 L257.3893,1570.0033 C257.3893,1568.6849 258.3171,1567.7246 259.5866,1567.7246 C260.0098,1567.7246 260.4655,1567.8385 260.8073,1568.0339 C261.1654,1568.2292 261.2956,1568.3919 261.3607,1568.6849 C261.4095,1568.9941 261.4258,1569.0755 261.5234,1569.1732 C261.6211,1569.2871 261.8001,1569.3522 261.9629,1569.3522 C262.1745,1569.3522 262.3535,1569.2546 262.4837,1569.0918 C262.5651,1568.9779 262.5977,1568.8477 262.5977,1568.5221 L262.5977,1567.4805 C262.5977,1567.1712 262.5814,1567.0736 262.5,1566.9596 C262.3861,1566.7643 262.1908,1566.6504 261.9629,1566.6504 C261.7513,1566.6504 261.6048,1566.7318 261.4421,1566.9596 L261.3118,1566.9108 Z " fill="#000000"/><text fill="#F8F9FA" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="95.8333" x="284.375" y="1574.6236">TrapSpawnPool</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="175.5208" x2="457.8125" y1="1587.9883" y2="1587.9883"/><ellipse cx="185.9375" cy="1599.4466" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;fill:none;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="247.9167" x="199.4792" y="1607.9992">m_spawnPoolPrefabs : List&lt;GameObject&gt;</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="175.5208" x2="457.8125" y1="1620.0765" y2="1620.0765"/><ellipse cx="185.9375" cy="1631.5348" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="220.8333" x="199.4792" y="1640.0874">AddToSpawnPool(GameObject) : void</text><ellipse cx="185.9375" cy="1655.2897" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="76.0417" x="199.4792" y="1663.8423">Clear() : void</text><!--MD5=[19d0e7e636c81f0b7a55cd5eeafdbffc]
+class TrapSpawner--><rect codeLine="35" height="448.7956" id="TrapSpawner" rx="4.1667" ry="4.1667" style="stroke:#2FA4E7;stroke-width:1.0416666666666667;fill:none;" width="302.0833" x="632.2917" y="1389.5833"/><rect fill="url(#gwb2g765cumbw0)" height="35.3841" rx="4.1667" ry="4.1667" style="stroke:url(#gwb2g765cumbw0);stroke-width:1.0416666666666667;" width="302.0833" x="632.2917" y="1389.5833"/><rect fill="url(#gwb2g765cumbw0)" height="4.1667" style="stroke:url(#gwb2g765cumbw0);stroke-width:1.0416666666666667;" width="302.0833" x="632.2917" y="1420.8008"/><rect codeLine="35" fill="none" height="448.7956" id="TrapSpawner" rx="4.1667" ry="4.1667" style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" width="302.0833" x="632.2917" y="1389.5833"/><ellipse cx="732.2917" cy="1407.2754" fill="#EDF0F2" rx="10.4167" ry="10.4167" style="stroke:#BABDBF;stroke-width:1.0416666666666667;"/><path d="M734.2285,1403.89 C733.5449,1403.5645 733.1055,1403.4668 732.4544,1403.4668 C730.5339,1403.4668 729.0527,1404.9805 729.0527,1406.9824 L729.0527,1407.8125 C729.0527,1409.7168 730.6152,1411.1003 732.7311,1411.1003 C733.6263,1411.1003 734.4889,1410.8724 735.026,1410.4655 C735.4655,1410.1725 735.6934,1409.847 735.6934,1409.554 C735.6934,1409.2285 735.4004,1408.9355 735.0749,1408.9355 C734.9121,1408.9355 734.7656,1409.0007 734.6191,1409.1309 C734.2773,1409.4889 734.2773,1409.4889 734.1471,1409.554 C733.8379,1409.7493 733.3333,1409.847 732.7637,1409.847 C731.2663,1409.847 730.306,1409.0332 730.306,1407.7799 L730.306,1406.9824 C730.306,1405.6641 731.2337,1404.7038 732.5033,1404.7038 C732.9264,1404.7038 733.3822,1404.8177 733.724,1405.013 C734.082,1405.2083 734.2122,1405.3711 734.2773,1405.6641 C734.3262,1405.9733 734.3424,1406.0547 734.4401,1406.1523 C734.5378,1406.2663 734.7168,1406.3314 734.8796,1406.3314 C735.0911,1406.3314 735.2702,1406.2337 735.4004,1406.071 C735.4818,1405.957 735.5143,1405.8268 735.5143,1405.5013 L735.5143,1404.4596 C735.5143,1404.1504 735.498,1404.0527 735.4167,1403.9388 C735.3027,1403.7435 735.1074,1403.6296 734.8796,1403.6296 C734.668,1403.6296 734.5215,1403.7109 734.3587,1403.9388 L734.2285,1403.89 Z " fill="#000000"/><text fill="#F8F9FA" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="83.3333" x="757.2917" y="1411.6028">TrapSpawner</text><line style="stroke:#2FA4E7;stroke-width:1.5625;" x1="633.3333" x2="933.3333" y1="1424.9674" y2="1424.9674"/><ellipse cx="643.75" cy="1464.3473" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;fill:none;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="107.2917" x="657.2917" y="1472.8999">m_quantityMin: int</text><ellipse cx="643.75" cy="1488.1022" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;fill:none;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="111.4583" x="657.2917" y="1496.6548">m_quantityMax: int</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="633.3333" x2="753.125" y1="1445.1782" y2="1445.1782"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="633.3333" x2="753.125" y1="1447.2616" y2="1447.2616"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="50" x="758.3333" y="1448.6242">Quantity</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="813.5417" x2="933.3333" y1="1445.1782" y2="1445.1782"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="813.5417" x2="933.3333" y1="1447.2616" y2="1447.2616"/><ellipse cx="643.75" cy="1539.7786" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;fill:none;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="89.5833" x="657.2917" y="1548.3312">m_levelMin: int</text><ellipse cx="643.75" cy="1563.5335" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;fill:none;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="93.75" x="657.2917" y="1572.0861">m_levelMax: int</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="633.3333" x2="761.4583" y1="1520.6095" y2="1520.6095"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="633.3333" x2="761.4583" y1="1522.6929" y2="1522.6929"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="33.3333" x="766.6667" y="1524.0555">Level</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="805.2083" x2="933.3333" y1="1520.6095" y2="1520.6095"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="805.2083" x2="933.3333" y1="1522.6929" y2="1522.6929"/><ellipse cx="643.75" cy="1615.21" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;fill:none;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="97.9167" x="657.2917" y="1623.7625">m_scaleSize: int</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="633.3333" x2="745.8333" y1="1596.0409" y2="1596.0409"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="633.3333" x2="745.8333" y1="1598.1242" y2="1598.1242"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="64.5833" x="751.0417" y="1599.4868">Scale Size</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="820.8333" x2="933.3333" y1="1596.0409" y2="1596.0409"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="820.8333" x2="933.3333" y1="1598.1242" y2="1598.1242"/><rect fill="none" height="6.25" style="stroke:#C82930;stroke-width:1.0416666666666667;" width="6.25" x="640.625" y="1663.7614"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="209.375" x="657.2917" y="1675.4389">m_ignoreSpawnPoolOverrides: bool</text><rect fill="none" height="6.25" style="stroke:#C82930;stroke-width:1.0416666666666667;" width="6.25" x="640.625" y="1687.5163"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="247.9167" x="657.2917" y="1699.1938">m_spawnPoolPrefabs : List&lt;GameObject&gt;</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="633.3333" x2="727.0833" y1="1647.7173" y2="1647.7173"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="633.3333" x2="727.0833" y1="1649.8006" y2="1649.8006"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="102.0833" x="732.2917" y="1651.1632">Local Spawn Pool</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="839.5833" x2="933.3333" y1="1647.7173" y2="1647.7173"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="839.5833" x2="933.3333" y1="1649.8006" y2="1649.8006"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="633.3333" x2="933.3333" y1="1711.2712" y2="1711.2712"/><ellipse cx="643.75" cy="1722.7295" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="220.8333" x="657.2917" y="1731.282">AddToSpawnPool(GameObject) : void</text><ellipse cx="643.75" cy="1746.4844" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="139.5833" x="657.2917" y="1755.0369">ClearSpawnPool() : void</text><ellipse cx="643.75" cy="1770.2393" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="265.625" x="657.2917" y="1778.7918">DoSpawn(List&lt;GameObject&gt;, int, int, int, int)</text><ellipse cx="643.75" cy="1793.9941" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="250" x="657.2917" y="1802.5467">SetIgnoreSpawnPoolOverrides(bool) : void</text><ellipse cx="643.75" cy="1817.749" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="132.2917" x="657.2917" y="1826.3016">SpawnPoolCount() : int</text><!--MD5=[26d1fcb834c644aa7a88aa031368844f]
+class AbstractProxy--><rect codeLine="56" height="119.1488" id="AbstractProxy" rx="4.1667" ry="4.1667" style="stroke:#2FA4E7;stroke-width:1.0416666666666667;fill:none;" width="215.625" x="411.9792" y="10.4167"/><rect fill="url(#gwb2g765cumbw0)" height="35.3841" rx="4.1667" ry="4.1667" style="stroke:url(#gwb2g765cumbw0);stroke-width:1.0416666666666667;" width="215.625" x="411.9792" y="10.4167"/><rect fill="url(#gwb2g765cumbw0)" height="4.1667" style="stroke:url(#gwb2g765cumbw0);stroke-width:1.0416666666666667;" width="215.625" x="411.9792" y="41.6341"/><rect codeLine="56" fill="none" height="119.1488" id="AbstractProxy" rx="4.1667" ry="4.1667" style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" width="215.625" x="411.9792" y="10.4167"/><ellipse cx="426.5625" cy="28.1087" fill="#8FB961" rx="10.4167" ry="10.4167" style="stroke:#FFFFFF;stroke-width:1.0416666666666667;"/><path d="M428.1087,29.2643 L428.4017,29.9805 L428.1087,29.9805 C427.7995,29.9805 427.7018,29.9967 427.5879,30.0781 C427.4089,30.1758 427.2949,30.4036 427.2949,30.6152 C427.2949,30.8105 427.3926,30.9896 427.5553,31.1035 C427.6693,31.2012 427.8158,31.2337 428.1087,31.2337 L429.8503,31.2337 C430.1107,31.2337 430.2734,31.2012 430.3711,31.1523 C430.5664,31.0384 430.6803,30.8268 430.6803,30.6152 C430.6803,30.4036 430.5827,30.2246 430.4199,30.1107 C430.2897,30.013 430.1758,29.9805 429.834,29.9805 L427.3438,23.9421 L424.6419,23.9421 C424.3001,23.9421 424.2188,23.9583 424.1048,24.0397 C423.9095,24.1536 423.8118,24.3652 423.8118,24.5768 C423.8118,24.7721 423.9095,24.9512 424.0723,25.0814 C424.1862,25.179 424.3164,25.1953 424.6419,25.1953 L425.4232,25.1953 L423.4863,29.9805 C423.1771,29.9805 423.0632,29.9967 422.9492,30.0781 C422.7702,30.1758 422.6563,30.4036 422.6563,30.6152 C422.6563,31.0221 422.9329,31.2337 423.4863,31.2337 L425.1465,31.2337 C425.4069,31.2337 425.5697,31.2012 425.6673,31.1523 C425.8464,31.0384 425.9603,30.8268 425.9603,30.6152 C425.9603,30.4036 425.8626,30.2246 425.6999,30.0944 C425.5859,30.013 425.472,29.9805 425.1465,29.9805 L424.8535,29.9805 L425.1465,29.2643 L428.1087,29.2643 Z M427.6042,28.0111 L425.6348,28.0111 L426.6276,25.6022 L427.6042,28.0111 Z " fill="#000000"/><text fill="#F8F9FA" font-family="Verdana" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="87.5" x="445.3125" y="32.4361">AbstractProxy</text><rect height="27.0508" style="stroke:#343A40;stroke-width:1.0416666666666667;fill:none;stroke-dasharray:2.0,2.0;" width="84.375" x="546.3542" y="7.2917"/><text fill="#343A40" font-family="Verdana" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="71.875" x="552.6042" y="25.1444">TProxyType</text><line style="stroke:#2FA4E7;stroke-width:1.5625;" x1="413.0208" x2="626.5625" y1="45.8008" y2="45.8008"/><polygon fill="none" points="423.4375,52.0508,427.6042,56.2174,423.4375,60.3841,419.2708,56.2174" style="stroke:#B38D22;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="145.8333" x="436.9792" y="65.8117">RealObject : TProxyType</text><polygon fill="#FFFF44" points="423.4375,103.7272,427.6042,107.8939,423.4375,112.0605,419.2708,107.8939" style="stroke:#B38D22;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="158.3333" x="436.9792" y="117.4881">AbstractProxy(TProxyType)</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="413.0208" x2="503.6458" y1="89.7664" y2="89.7664"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="413.0208" x2="503.6458" y1="91.8498" y2="91.8498"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="21.875" x="508.8542" y="93.2124">ctor</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="535.9375" x2="626.5625" y1="89.7664" y2="89.7664"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="535.9375" x2="626.5625" y1="91.8498" y2="91.8498"/><!--MD5=[20fd395d1ffd1c5a19f7aec539d3f607]
+class TrapSpawnerProxy--><rect codeLine="62" height="388.7858" id="TrapSpawnerProxy" rx="4.1667" ry="4.1667" style="stroke:#2FA4E7;stroke-width:1.0416666666666667;fill:none;" width="309.375" x="711.9792" y="850"/><rect fill="url(#gwb2g765cumbw0)" height="35.3841" rx="4.1667" ry="4.1667" style="stroke:url(#gwb2g765cumbw0);stroke-width:1.0416666666666667;" width="309.375" x="711.9792" y="850"/><rect fill="url(#gwb2g765cumbw0)" height="4.1667" style="stroke:url(#gwb2g765cumbw0);stroke-width:1.0416666666666667;" width="309.375" x="711.9792" y="881.2174"/><rect codeLine="62" fill="none" height="388.7858" id="TrapSpawnerProxy" rx="4.1667" ry="4.1667" style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" width="309.375" x="711.9792" y="850"/><ellipse cx="750" cy="867.6921" fill="#EDF0F2" rx="10.4167" ry="10.4167" style="stroke:#BABDBF;stroke-width:1.0416666666666667;"/><path d="M751.9368,864.3066 C751.2533,863.9811 750.8138,863.8835 750.1628,863.8835 C748.2422,863.8835 746.7611,865.3971 746.7611,867.3991 L746.7611,868.2292 C746.7611,870.1335 748.3236,871.5169 750.4395,871.5169 C751.3346,871.5169 752.1973,871.2891 752.7344,870.8822 C753.1738,870.5892 753.4017,870.2637 753.4017,869.9707 C753.4017,869.6452 753.1087,869.3522 752.7832,869.3522 C752.6204,869.3522 752.474,869.4173 752.3275,869.5475 C751.9857,869.9056 751.9857,869.9056 751.8555,869.9707 C751.5462,870.166 751.0417,870.2637 750.472,870.2637 C748.9746,870.2637 748.0143,869.4499 748.0143,868.1966 L748.0143,867.3991 C748.0143,866.0807 748.9421,865.1204 750.2116,865.1204 C750.6348,865.1204 751.0905,865.2344 751.4323,865.4297 C751.7904,865.625 751.9206,865.7878 751.9857,866.0807 C752.0345,866.39 752.0508,866.4714 752.1484,866.569 C752.2461,866.6829 752.4251,866.748 752.5879,866.748 C752.7995,866.748 752.9785,866.6504 753.1087,866.4876 C753.1901,866.3737 753.2227,866.2435 753.2227,865.918 L753.2227,864.8763 C753.2227,864.5671 753.2064,864.4694 753.125,864.3555 C753.0111,864.1602 752.8158,864.0462 752.5879,864.0462 C752.3763,864.0462 752.2298,864.1276 752.0671,864.3555 L751.9368,864.3066 Z " fill="#000000"/><text fill="#F8F9FA" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="117.7083" x="773.9583" y="872.0194">TrapSpawnerProxy</text><rect height="27.0508" style="stroke:#343A40;stroke-width:1.0416666666666667;fill:none;stroke-dasharray:2.0,2.0;" width="95.8333" x="928.6458" y="846.875"/><text fill="#343A40" font-family="Verdana" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="83.3333" x="934.8958" y="864.7278">TrapSpawner</text><line style="stroke:#2FA4E7;stroke-width:1.5625;" x1="713.0208" x2="1020.3125" y1="885.3841" y2="885.3841"/><rect fill="none" height="6.25" style="stroke:#C82930;stroke-width:1.0416666666666667;" width="6.25" x="720.3125" y="893.7174"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="180.2083" x="736.9792" y="905.395">RoomSpawnPointName : string</text><ellipse cx="723.4375" cy="948.5189" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="196.875" x="736.9792" y="957.0714">TrapSpawnerProxy(TrapSpawner)</text><ellipse cx="723.4375" cy="972.2738" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="272.9167" x="736.9792" y="980.8263">TrapSpawnerProxy(GameObject, string, string)</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="713.0208" x2="850.5208" y1="929.3498" y2="929.3498"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="713.0208" x2="850.5208" y1="931.4331" y2="931.4331"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="21.875" x="855.7292" y="932.7957">ctor</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="882.8125" x2="1020.3125" y1="929.3498" y2="929.3498"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="882.8125" x2="1020.3125" y1="931.4331" y2="931.4331"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="713.0208" x2="1020.3125" y1="992.9036" y2="992.9036"/><rect fill="#F24D5C" height="6.25" style="stroke:#C82930;stroke-width:1.0416666666666667;" width="6.25" x="720.3125" y="1001.237"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" text-decoration="underline" textLength="170.8333" x="736.9792" y="1012.9145">GetPath(string, string) : string</text><ellipse cx="723.4375" cy="1028.1169" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="76.0417" x="736.9792" y="1036.6694">Clear() : void</text><ellipse cx="723.4375" cy="1051.8717" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="184.375" x="736.9792" y="1060.4243">AddEnemy(GameObject) : void</text><ellipse cx="723.4375" cy="1075.6266" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="141.6667" x="736.9792" y="1084.1792">AddEnemy(string) : void</text><ellipse cx="723.4375" cy="1099.3815" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="170.8333" x="736.9792" y="1107.9341">AddBoss(GameObject) : void</text><ellipse cx="723.4375" cy="1123.1364" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="128.125" x="736.9792" y="1131.6889">AddBoss(string) : void</text><ellipse cx="723.4375" cy="1146.8913" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="180.2083" x="736.9792" y="1155.4438">AddPrefab(GameObject) : void</text><ellipse cx="723.4375" cy="1170.6462" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="137.5" x="736.9792" y="1179.1987">AddPrefab(string) : void</text><ellipse cx="723.4375" cy="1194.401" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="132.2917" x="736.9792" y="1202.9536">SpawnPoolCount() : int</text><ellipse cx="723.4375" cy="1218.1559" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="250" x="736.9792" y="1226.7085">SetIgnoreSpawnPoolOverrides(bool) : void</text><!--MD5=[c82600da850e6247cafdd351d6c0edaf]
+class TrapTriggerProxy--><rect codeLine="80" height="483.8053" id="TrapTriggerProxy" rx="4.1667" ry="4.1667" style="stroke:#2FA4E7;stroke-width:1.0416666666666667;fill:none;" width="310.4167" x="364.5833" y="217.7083"/><rect fill="url(#gwb2g765cumbw0)" height="35.3841" rx="4.1667" ry="4.1667" style="stroke:url(#gwb2g765cumbw0);stroke-width:1.0416666666666667;" width="310.4167" x="364.5833" y="217.7083"/><rect fill="url(#gwb2g765cumbw0)" height="4.1667" style="stroke:url(#gwb2g765cumbw0);stroke-width:1.0416666666666667;" width="310.4167" x="364.5833" y="248.9258"/><rect codeLine="80" fill="none" height="483.8053" id="TrapTriggerProxy" rx="4.1667" ry="4.1667" style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" width="310.4167" x="364.5833" y="217.7083"/><ellipse cx="412.5" cy="235.4004" fill="#EDF0F2" rx="10.4167" ry="10.4167" style="stroke:#BABDBF;stroke-width:1.0416666666666667;"/><path d="M414.4368,232.015 C413.7533,231.6895 413.3138,231.5918 412.6628,231.5918 C410.7422,231.5918 409.2611,233.1055 409.2611,235.1074 L409.2611,235.9375 C409.2611,237.8418 410.8236,239.2253 412.9395,239.2253 C413.8346,239.2253 414.6973,238.9974 415.2344,238.5905 C415.6738,238.2975 415.9017,237.972 415.9017,237.679 C415.9017,237.3535 415.6087,237.0605 415.2832,237.0605 C415.1204,237.0605 414.974,237.1257 414.8275,237.2559 C414.4857,237.6139 414.4857,237.6139 414.3555,237.679 C414.0462,237.8743 413.5417,237.972 412.972,237.972 C411.4746,237.972 410.5143,237.1582 410.5143,235.9049 L410.5143,235.1074 C410.5143,233.7891 411.4421,232.8288 412.7116,232.8288 C413.1348,232.8288 413.5905,232.9427 413.9323,233.138 C414.2904,233.3333 414.4206,233.4961 414.4857,233.7891 C414.5345,234.0983 414.5508,234.1797 414.6484,234.2773 C414.7461,234.3913 414.9251,234.4564 415.0879,234.4564 C415.2995,234.4564 415.4785,234.3587 415.6087,234.196 C415.6901,234.082 415.7227,233.9518 415.7227,233.6263 L415.7227,232.5846 C415.7227,232.2754 415.7064,232.1777 415.625,232.0638 C415.5111,231.8685 415.3158,231.7546 415.0879,231.7546 C414.8763,231.7546 414.7298,231.8359 414.5671,232.0638 L414.4368,232.015 Z " fill="#000000"/><text fill="#F8F9FA" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="108.3333" x="437.5" y="239.7278">TrapTriggerProxy</text><rect height="27.0508" style="stroke:#343A40;stroke-width:1.0416666666666667;fill:none;stroke-dasharray:2.0,2.0;" width="85.4167" x="592.7083" y="214.5833"/><text fill="#343A40" font-family="Verdana" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="72.9167" x="598.9583" y="232.4361">TrapTrigger</text><line style="stroke:#2FA4E7;stroke-width:1.5625;" x1="365.625" x2="673.9583" y1="253.0924" y2="253.0924"/><rect fill="none" height="6.25" style="stroke:#C82930;stroke-width:1.0416666666666667;" width="6.25" x="372.9167" y="261.4258"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="150" x="389.5833" y="273.1033">RoomTriggerName: string</text><ellipse cx="376.0417" cy="316.2272" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="186.4583" x="389.5833" y="324.7798">TrapTriggerProxy(TrapSpawner)</text><ellipse cx="376.0417" cy="339.9821" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="262.5" x="389.5833" y="348.5346">TrapTriggerProxy(GameObject, string, string)</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="365.625" x2="503.6458" y1="297.0581" y2="297.0581"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="365.625" x2="503.6458" y1="299.1414" y2="299.1414"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="21.875" x="508.8542" y="300.504">ctor</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="535.9375" x2="673.9583" y1="297.0581" y2="297.0581"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="535.9375" x2="673.9583" y1="299.1414" y2="299.1414"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="365.625" x2="673.9583" y1="360.612" y2="360.612"/><rect fill="#F24D5C" height="6.25" style="stroke:#C82930;stroke-width:1.0416666666666667;" width="6.25" x="372.9167" y="368.9453"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" text-decoration="underline" textLength="170.8333" x="389.5833" y="380.6229">GetPath(string, string) : string</text><ellipse cx="376.0417" cy="395.8252" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="76.0417" x="389.5833" y="404.3777">Clear() : void</text><ellipse cx="376.0417" cy="419.5801" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="184.375" x="389.5833" y="428.1326">AddEnemy(GameObject) : void</text><ellipse cx="376.0417" cy="443.335" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="141.6667" x="389.5833" y="451.8875">AddEnemy(string) : void</text><ellipse cx="376.0417" cy="467.0898" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="170.8333" x="389.5833" y="475.6424">AddBoss(GameObject) : void</text><ellipse cx="376.0417" cy="490.8447" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="128.125" x="389.5833" y="499.3973">AddBoss(string) : void</text><ellipse cx="376.0417" cy="514.5996" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="180.2083" x="389.5833" y="523.1522">AddPrefab(GameObject) : void</text><ellipse cx="376.0417" cy="538.3545" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="137.5" x="389.5833" y="546.907">AddPrefab(string) : void</text><ellipse cx="376.0417" cy="562.1094" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="132.2917" x="389.5833" y="570.6619">SpawnPoolCount() : int</text><ellipse cx="376.0417" cy="585.8643" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="218.75" x="389.5833" y="594.4168">SetUseTriggerSpawnPool(bool) : void</text><ellipse cx="376.0417" cy="609.6191" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="157.2917" x="389.5833" y="618.1717">SetIsTriggered(bool) : void</text><ellipse cx="376.0417" cy="633.374" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="214.5833" x="389.5833" y="641.9266">SetUseGlobalSpawnPool(bool) : void</text><ellipse cx="376.0417" cy="657.1289" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="273.9583" x="389.5833" y="665.6815">SetGlobalSpawnPool(GameObject, bool) : void</text><ellipse cx="376.0417" cy="680.8838" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="248.9583" x="389.5833" y="689.4363">GetSpawners() : List&lt;TrapSpawnerProxy&gt;</text><!--MD5=[84db898f0d4caa2eda328f3b21e5859a]
+class TrapSpawnPoolProxy--><rect codeLine="102" height="365.0309" id="TrapSpawnPoolProxy" rx="4.1667" ry="4.1667" style="stroke:#2FA4E7;stroke-width:1.0416666666666667;fill:none;" width="320.8333" x="7.2917" y="861.9792"/><rect fill="url(#gwb2g765cumbw0)" height="35.3841" rx="4.1667" ry="4.1667" style="stroke:url(#gwb2g765cumbw0);stroke-width:1.0416666666666667;" width="320.8333" x="7.2917" y="861.9792"/><rect fill="url(#gwb2g765cumbw0)" height="4.1667" style="stroke:url(#gwb2g765cumbw0);stroke-width:1.0416666666666667;" width="320.8333" x="7.2917" y="893.1966"/><rect codeLine="102" fill="none" height="365.0309" id="TrapSpawnPoolProxy" rx="4.1667" ry="4.1667" style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" width="320.8333" x="7.2917" y="861.9792"/><ellipse cx="39.2188" cy="879.6712" fill="#EDF0F2" rx="10.4167" ry="10.4167" style="stroke:#BABDBF;stroke-width:1.0416666666666667;"/><path d="M41.1556,876.2858 C40.472,875.9603 40.0326,875.8626 39.3815,875.8626 C37.4609,875.8626 35.9798,877.3763 35.9798,879.3783 L35.9798,880.2083 C35.9798,882.1126 37.5423,883.4961 39.6582,883.4961 C40.5534,883.4961 41.416,883.2682 41.9531,882.8613 C42.3926,882.5684 42.6204,882.2428 42.6204,881.9499 C42.6204,881.6243 42.3275,881.3314 42.002,881.3314 C41.8392,881.3314 41.6927,881.3965 41.5462,881.5267 C41.2044,881.8848 41.2044,881.8848 41.0742,881.9499 C40.765,882.1452 40.2604,882.2428 39.6908,882.2428 C38.1934,882.2428 37.2331,881.429 37.2331,880.1758 L37.2331,879.3783 C37.2331,878.0599 38.1608,877.0996 39.4303,877.0996 C39.8535,877.0996 40.3092,877.2135 40.651,877.4089 C41.0091,877.6042 41.1393,877.7669 41.2044,878.0599 C41.2533,878.3691 41.2695,878.4505 41.3672,878.5482 C41.4648,878.6621 41.6439,878.7272 41.8066,878.7272 C42.0182,878.7272 42.1973,878.6296 42.3275,878.4668 C42.4089,878.3529 42.4414,878.2227 42.4414,877.8971 L42.4414,876.8555 C42.4414,876.5462 42.4251,876.4486 42.3438,876.3346 C42.2298,876.1393 42.0345,876.0254 41.8066,876.0254 C41.5951,876.0254 41.4486,876.1068 41.2858,876.3346 L41.1556,876.2858 Z " fill="#000000"/><text fill="#F8F9FA" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="130.2083" x="61.8229" y="883.9986">TrapSpawnPoolProxy</text><rect height="27.0508" style="stroke:#343A40;stroke-width:1.0416666666666667;fill:none;stroke-dasharray:2.0,2.0;" width="108.3333" x="222.9167" y="858.8542"/><text fill="#343A40" font-family="Verdana" font-size="12.5" font-style="italic" lengthAdjust="spacing" textLength="95.8333" x="229.1667" y="876.7069">TrapSpawnPool</text><line style="stroke:#2FA4E7;stroke-width:1.5625;" x1="8.3333" x2="327.0833" y1="897.3633" y2="897.3633"/><rect fill="none" height="6.25" style="stroke:#C82930;stroke-width:1.0416666666666667;" width="6.25" x="15.625" y="905.6966"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="171.875" x="32.2917" y="917.3742">RoomSpawnPoolName: string</text><ellipse cx="18.75" cy="960.498" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="208.3333" x="32.2917" y="969.0506">TrapSpawnPoolProxy(TrapSpawner)</text><ellipse cx="18.75" cy="984.2529" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="284.375" x="32.2917" y="992.8055">TrapSpawnPoolProxy(GameObject, string, string)</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="8.3333" x2="151.5625" y1="941.3289" y2="941.3289"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="8.3333" x2="151.5625" y1="943.4123" y2="943.4123"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="21.875" x="156.7708" y="944.7749">ctor</text><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="183.8542" x2="327.0833" y1="941.3289" y2="941.3289"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="183.8542" x2="327.0833" y1="943.4123" y2="943.4123"/><line style="stroke:#2FA4E7;stroke-width:1.0416666666666667;" x1="8.3333" x2="327.0833" y1="1004.8828" y2="1004.8828"/><rect fill="#F24D5C" height="6.25" style="stroke:#C82930;stroke-width:1.0416666666666667;" width="6.25" x="15.625" y="1013.2161"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" text-decoration="underline" textLength="170.8333" x="32.2917" y="1024.8937">GetPath(string, string) : string</text><ellipse cx="18.75" cy="1040.096" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="76.0417" x="32.2917" y="1048.6486">Clear() : void</text><ellipse cx="18.75" cy="1063.8509" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="184.375" x="32.2917" y="1072.4035">AddEnemy(GameObject) : void</text><ellipse cx="18.75" cy="1087.6058" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="141.6667" x="32.2917" y="1096.1583">AddEnemy(string) : void</text><ellipse cx="18.75" cy="1111.3607" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="170.8333" x="32.2917" y="1119.9132">AddBoss(GameObject) : void</text><ellipse cx="18.75" cy="1135.1156" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="128.125" x="32.2917" y="1143.6681">AddBoss(string) : void</text><ellipse cx="18.75" cy="1158.8704" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="180.2083" x="32.2917" y="1167.423">AddPrefab(GameObject) : void</text><ellipse cx="18.75" cy="1182.6253" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="137.5" x="32.2917" y="1191.1779">AddPrefab(string) : void</text><ellipse cx="18.75" cy="1206.3802" fill="#84BE84" rx="3.125" ry="3.125" style="stroke:#038048;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="11.4583" lengthAdjust="spacing" textLength="132.2917" x="32.2917" y="1214.9328">SpawnPoolCount() : int</text><!--MD5=[2ff01d11aeba6fc02aaf42a879434af0]
+reverse link AbstractProxy to TrapSpawnerProxy--><path codeLine="120" d="M627.85,142.9167 C652.8281,164.2813 676.9677,189.5833 693.75,217.7083 C809.9677,412.4479 848.8542,673.7083 861.4417,849.7167 " fill="none" id="AbstractProxy-backto-TrapSpawnerProxy" style="stroke:#2FA4E7;stroke-width:3.125;"/><polygon fill="none" points="622.899,148.2917,611.3844,129.4583,632.1292,137,622.899,148.2917" style="stroke:#2FA4E7;stroke-width:3.125;"/><polygon fill="#343A40" points="847.6508,455.9234,847.6907,463.8487,852.3415,462.3117,847.6508,455.9234" style="stroke:#343A40;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="21.875" x="863.5417" y="464.2069">is a</text><!--MD5=[171359277ad947e7af7a4c558c15f6a7]
+reverse link AbstractProxy to TrapTriggerProxy--><path codeLine="121" d="M519.7917,150.2396 C519.7917,170.5938 519.7917,193.5625 519.7917,217.5521 " fill="none" id="AbstractProxy-backto-TrapTriggerProxy" style="stroke:#2FA4E7;stroke-width:3.125;"/><polygon fill="none" points="512.5,150.0937,519.7917,129.2604,527.0833,150.0937,512.5,150.0937" style="stroke:#2FA4E7;stroke-width:3.125;"/><polygon fill="#343A40" points="523.9583,169.7754,521.5092,177.313,526.4074,177.313,523.9583,169.7754" style="stroke:#343A40;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="21.875" x="538.5417" y="178.2694">is a</text><!--MD5=[6035e31a36931db0a11050d1fe09cb0f]
+reverse link AbstractProxy to TrapSpawnPoolProxy--><path codeLine="122" d="M393.6385,129.6354 C357.7521,152.2813 322.1552,181.5833 298.9583,217.7083 C174.0969,412.1771 153.7906,684.1563 156.276,861.951 " fill="none" id="AbstractProxy-backto-TrapSpawnPoolProxy" style="stroke:#2FA4E7;stroke-width:3.125;"/><polygon fill="none" points="390.1802,123.2083,411.7938,118.7292,397.6927,135.7083,390.1802,123.2083" style="stroke:#2FA4E7;stroke-width:3.125;"/><polygon fill="#343A40" points="304.4097,455.9159,299.7559,462.3311,304.4154,463.8414,304.4097,455.9159" style="stroke:#343A40;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="21.875" x="317.7083" y="464.2069">is a</text><!--MD5=[b0f1ebe085a5a8780ebf773653ff2b26]
+reverse link TrapSpawnPoolProxy to TrapSpawnPool--><path codeLine="123" d="M216.7333,1232.1542 C245.8333,1343.0604 280.826,1476.4271 300.7344,1552.301 " fill="none" id="TrapSpawnPoolProxy-backto-TrapSpawnPool" style="stroke:#800080;stroke-width:3.125;stroke-dasharray:7.0,7.0;"/><rect height="10.4167" style="stroke:#800080;stroke-width:1.5625;fill:none;" width="10.4167" x="210.1438" y="1221.6823"/><polygon fill="#343A40" points="243.7658,1315.4723,244.2217,1307.56,239.4839,1308.8031,243.7658,1315.4723" style="stroke:#343A40;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="51.0417" x="257.2917" y="1315.7694">controls</text><!--MD5=[494da57a39a7d9167611cc686fe9c715]
+reverse link TrapSpawnerProxy to TrapSpawner--><path codeLine="124" d="M837.4844,1244.1188 C830.5865,1291.1115 823.1854,1341.5313 816.1385,1389.5344 " fill="none" id="TrapSpawnerProxy-backto-TrapSpawner" style="stroke:#800080;stroke-width:3.125;stroke-dasharray:7.0,7.0;"/><rect height="10.4167" style="stroke:#800080;stroke-width:1.5625;fill:none;" width="10.4167" x="833.0708" y="1233.4927"/><polygon fill="#343A40" points="830.6449,1315.5645,834.1627,1308.4626,829.3164,1307.7512,830.6449,1315.5645" style="stroke:#343A40;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="51.0417" x="845.8333" y="1315.7694">controls</text><!--MD5=[503df4998fbf9063ecafe4ddca90d867]
+reverse link TrapTriggerProxy to TrapTrigger--><path codeLine="125" d="M519.7917,706.4896 C519.7917,745.4375 519.7917,785.4792 519.7917,823.7604 " fill="none" id="TrapTriggerProxy-backto-TrapTrigger" style="stroke:#800080;stroke-width:3.125;stroke-dasharray:7.0,7.0;"/><rect height="10.4167" style="stroke:#800080;stroke-width:1.5625;fill:none;" width="10.4167" x="514.5833" y="696.0417"/><polygon fill="#343A40" points="523.9583,749.9837,526.4074,742.4462,521.5092,742.4462,523.9583,749.9837" style="stroke:#343A40;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="51.0417" x="538.5417" y="750.1444">controls</text><!--MD5=[a216f329086d986cc2c3a711e0d50cdf]
+reverse link TrapTrigger to TrapSpawnPool--><path codeLine="126" d="M436.6771,1277.6063 C400.8271,1377.8021 361.8042,1486.8656 338.2938,1552.5771 " fill="none" id="TrapTrigger-backto-TrapSpawnPool" style="stroke:#FF0000;stroke-width:3.125;"/><polygon points="441.2583,1264.8031,435.2295,1269.2839,437.0468,1276.5723,443.0756,1272.0915,441.2583,1264.8031" style="stroke:#FF0000;stroke-width:3.125;fill:none;"/><polygon fill="#343A40" points="427.763,1315.3652,432.6082,1309.0933,427.9963,1307.4431,427.763,1315.3652" style="stroke:#343A40;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="47.9167" x="443.75" y="1315.7694">has 0..1</text><!--MD5=[b7567b05892fd60e0b72887e1197685a]
+reverse link TrapTrigger to TrapSpawner--><path codeLine="127" d="M627.4906,1277.3115 C644.6813,1314.3438 662.4385,1352.5948 679.5365,1389.4271 " fill="none" id="TrapTrigger-backto-TrapSpawner" style="stroke:#FF0000;stroke-width:3.125;"/><polygon points="621.6833,1264.8031,620.5359,1272.2265,626.947,1276.1408,628.0944,1268.7174,621.6833,1264.8031" style="stroke:#FF0000;stroke-width:3.125;fill:none;"/><polygon fill="#343A40" points="648.6294,1315.2214,647.6771,1307.3533,643.2342,1309.4158,648.6294,1315.2214" style="stroke:#343A40;stroke-width:1.0416666666666667;"/><text fill="#343A40" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="47.9167" x="661.4583" y="1315.7694">has 0..*</text><!--MD5=[0ecbddd48831d18c57476d0ab4e37213]
+@startuml
+!theme cerulean-outline
+'skinparam groupInheritance 3
+
+package "Spawn Trigger" as TrapTrigger <<Node>> {
+  class TrapTrigger {
+     - _isTriggered : bool
+     + m_trapSpawners : List<GameObject>
+     == Trigger Spawn Pool ==
+     + m_useTriggerSpawnPool: bool
+     + m_spawnPoolPrefabs : List<GameObject>
+     == Global Spawn Pool ==
+     + m_useGlobalSpawnPool: bool
+     + m_globalSpawnPoolPrefab : GameObject
+     - -
+     + AddToSpawnPool(GameObject) : void
+     + ClearSpawnPool() : void
+     + OnTriggerEnter(Collider) : void
+     + SetGlobalSpawnPool(GameObject, bool) : void
+     + SetIsTriggered(bool) : void
+     + SetUseGlobalSpawnPool(bool) : void
+     + SetUseTriggerSpawnPool(bool) : void
+     + SpawnPoolCount() : int
+  }
+}
+
+package "Global Spawn Pool" as GlobalSpawnPool <<Node>> {
+  class TrapSpawnPool {
+     + m_spawnPoolPrefabs : List<GameObject>
+     + AddToSpawnPool(GameObject) : void
+     + Clear() : void
+  }
+}
+
+package "Spawn Point" as TrapSpawner <<Node>> {
+  class TrapSpawner {
+     == Quantity ==
+     + m_quantityMin: int
+     + m_quantityMax: int
+     == Level ==
+     + m_levelMin: int
+     + m_levelMax: int
+     == Scale Size ==
+     + m_scaleSize: int
+     == Local Spawn Pool ==
+     - m_ignoreSpawnPoolOverrides: bool
+     - m_spawnPoolPrefabs : List<GameObject>
+     - -
+     + AddToSpawnPool(GameObject) : void
+     + ClearSpawnPool() : void
+     + DoSpawn(List<GameObject>, int, int, int, int)
+     + SetIgnoreSpawnPoolOverrides(bool) : void
+     + SpawnPoolCount() : int
+  }
+}
+
+abstract class AbstractProxy<TProxyType> {
+  # RealObject : TProxyType
+  == ctor ==
+  # AbstractProxy(TProxyType)
+}
+
+class TrapSpawnerProxy <TrapSpawner>{
+  - RoomSpawnPointName : string
+  == ctor ==
+  + TrapSpawnerProxy(TrapSpawner)
+  + TrapSpawnerProxy(GameObject, string, string)
+  - -
+  - {static} GetPath(string, string) : string
+  + Clear() : void
+  + AddEnemy(GameObject) : void
+  + AddEnemy(string) : void
+  + AddBoss(GameObject) : void
+  + AddBoss(string) : void
+  + AddPrefab(GameObject) : void
+  + AddPrefab(string) : void
+  + SpawnPoolCount() : int
+  + SetIgnoreSpawnPoolOverrides(bool) : void
+}
+
+class TrapTriggerProxy<TrapTrigger>{
+  - RoomTriggerName: string
+  == ctor ==
+  + TrapTriggerProxy(TrapSpawner)
+  + TrapTriggerProxy(GameObject, string, string)
+  - -
+  - {static} GetPath(string, string) : string
+  + Clear() : void
+  + AddEnemy(GameObject) : void
+  + AddEnemy(string) : void
+  + AddBoss(GameObject) : void
+  + AddBoss(string) : void
+  + AddPrefab(GameObject) : void
+  + AddPrefab(string) : void
+  + SpawnPoolCount() : int
+  + SetUseTriggerSpawnPool(bool) : void
+  + SetIsTriggered(bool) : void
+  + SetUseGlobalSpawnPool(bool) : void
+  + SetGlobalSpawnPool(GameObject, bool) : void
+  + GetSpawners() : List<TrapSpawnerProxy>
+}
+
+class TrapSpawnPoolProxy<TrapSpawnPool>{
+  - RoomSpawnPoolName: string
+  == ctor ==
+  + TrapSpawnPoolProxy(TrapSpawner)
+  + TrapSpawnPoolProxy(GameObject, string, string)
+  - -
+  - {static} GetPath(string, string) : string
+  + Clear() : void
+  + AddEnemy(GameObject) : void
+  + AddEnemy(string) : void
+  + AddBoss(GameObject) : void
+  + AddBoss(string) : void
+  + AddPrefab(GameObject) : void
+  + AddPrefab(string) : void
+  + SpawnPoolCount() : int
+}
+
+
+AbstractProxy <|-down- TrapSpawnerProxy : < is a
+AbstractProxy <|-down- TrapTriggerProxy: < is a
+AbstractProxy <|-down- TrapSpawnPoolProxy: < is a
+TrapSpawnPool .up.# TrapSpawnPoolProxy #purple : < controls
+TrapSpawner .up.# TrapSpawnerProxy #purple : < controls
+TrapTrigger .up.# TrapTriggerProxy #purple : < controls
+TrapTrigger o- - TrapSpawnPool #red : has 0..1 >
+TrapTrigger o- - TrapSpawner #red : has 0..* >
+'Dungeon *-up- TrapSpawnPool #red : has 0..1 >
+@enduml
+
+@startuml
+
+
+
+skinparam backgroundColor transparent
+skinparam useBetaStyle false
+
+
+
+
+
+
+
+skinparam defaultFontName       "Verdana"
+skinparam defaultFontSize       12
+skinparam dpi                   100
+skinparam shadowing             false
+skinparam roundcorner           8
+skinparam ParticipantPadding    40
+skinparam BoxPadding            40
+skinparam Padding               5
+skinparam ArrowColor            #868E96
+skinparam stereotype {
+    CBackgroundColor #EDF0F2
+    CBorderColor #BABDBF
+    ABackgroundColor #8FB961
+    ABorderColor $SUCCESS_DARK
+    IBackgroundColor #D2494E
+    IBorderColor $DANGER_DARK
+    EBackgroundColor #E47833
+    EBorderColor $WARNING_DARK
+    NBackgroundColor #35638F
+    NBorderColor $INFO_DARK
+}
+skinparam title {
+	FontColor	                 #2FA4E7
+	BorderColor	                 #BABDBF
+	FontSize	    	         20
+	BorderRoundCorner            8
+	BorderThickness 	         1
+	BackgroundColor              transparent
+}
+
+skinparam legend {
+	BackgroundColor transparent
+	BorderColor #BABDBF
+	FontColor #343A40
+}
+
+skinparam swimlane {
+	BorderColor #033C73
+	BorderThickness 2
+	TitleBackgroundColor  #EDF0F2-#E9ECEF
+	TitleFontColor #2FA4E7
+}
+
+
+skinparam activity {
+		FontColor #2FA4E7
+	BorderColor #2FA4E7
+	BackgroundColor transparent
+	BarColor #73A839
+	StartColor #033C73
+	EndColor #033C73
+	DiamondBackgroundColor transparent
+  	DiamondBorderColor #BABDBF
+	DiamondFontColor #BABDBF
+}
+
+
+skinparam participant {
+		FontColor #2FA4E7
+	BorderColor #2FA4E7
+	BackgroundColor transparent
+	ParticipantBorderThickness 2
+}
+
+
+skinparam actor {
+		FontColor #2FA4E7
+	BorderColor #2FA4E7
+	BackgroundColor transparent
+}
+
+
+skinparam arrow {
+	Thickness 3
+	Color #2FA4E7
+	FontColor #343A40
+}
+
+
+skinparam sequence {
+	BorderColor #2FA4E7
+	TitleFontColor #2FA4E7
+	BackgroundColor transparent
+	StartColor #2FA4E7
+	EndColor #2FA4E7
+	BoxBackgroundColor transparent
+	BoxBorderColor #868E96
+	BoxFontColor #343A40
+	DelayFontColor #343A40
+	LifeLineBorderColor #BABDBF
+	LifeLineBorderThickness 2
+	LifeLineBackgroundColor transparent
+	GroupBorderColor #868E96
+	GroupFontColor #343A40
+	GroupHeaderFontColor #033C73
+	DividerBackgroundColor transparent
+    DividerBorderColor #868E96
+    DividerBorderThickness 2
+    DividerFontColor #343A40
+	ReferenceBackgroundColor transparent
+	ReferenceBorderColor #868E96
+	ReferenceFontColor #343A40
+	ReferenceHeaderFontColor #033C73
+	StereotypeFontColor #2FA4E7
+}
+
+
+skinparam partition {
+	BorderColor #2FA4E7
+	FontColor #2FA4E7
+	BackgroundColor transparent
+}
+
+
+skinparam collections {
+		FontColor #2FA4E7
+	BorderColor #2FA4E7
+	BackgroundColor transparent
+}
+
+
+skinparam control {
+		FontColor #2FA4E7
+	BorderColor #2FA4E7
+	BackgroundColor transparent
+}
+
+
+skinparam entity {
+		FontColor #2FA4E7
+	BorderColor #2FA4E7
+	BackgroundColor transparent
+}
+
+
+skinparam boundary {
+		FontColor #2FA4E7
+	BorderColor #2FA4E7
+	BackgroundColor transparent
+}
+
+
+skinparam agent {
+	BackgroundColor transparent
+	BorderColor #999999
+	FontColor #333333
+}
+
+
+skinparam note {
+	BorderThickness 1
+	BackgroundColor transparent
+	BorderColor #033C73
+	FontColor #033C73
+}
+
+
+skinparam artifact {
+	BackgroundColor transparent
+	BorderColor #868E96
+	FontColor #868E96
+}
+
+
+skinparam component {
+		FontColor #2FA4E7
+	BorderColor #2FA4E7
+	BackgroundColor transparent
+}
+
+
+skinparam interface {
+	BackgroundColor  transparent
+	BorderColor  #C71C22
+	FontColor #343A40
+}
+
+
+skinparam storage {
+	BackgroundColor transparent
+  	BorderColor #DD5600
+	FontColor #DD5600
+}
+
+
+skinparam node {
+	BackgroundColor transparent
+	BorderColor #343A40
+	FontColor #343A40
+}
+
+
+skinparam cloud {
+	BackgroundColor #F2FCFE-#eeeeee
+	BorderColor #F2FCFE
+	FontColor #343A40
+}
+
+
+skinparam database {
+		FontColor #2FA4E7
+	BorderColor #2FA4E7
+	BackgroundColor transparent
+}
+
+
+skinparam class {
+		FontColor #2FA4E7
+	BorderColor #2FA4E7
+	BackgroundColor transparent
+	FontColor #F8F9FA
+	HeaderBackgroundColor #2FA4E7-#2683B9
+	StereotypeFontColor #343A40
+	BorderThickness 1
+	AttributeFontColor #343A40
+	AttributeFontSize 11
+}
+
+
+skinparam object {
+		FontColor #2FA4E7
+	BorderColor #2FA4E7
+	BackgroundColor transparent
+	StereotypeFontColor #343A40
+	BorderThickness 1
+	AttributeFontColor #BABDBF
+	AttributeFontSize 11
+}
+
+
+skinparam usecase {
+		FontColor #2FA4E7
+	BorderColor #2FA4E7
+	BackgroundColor transparent
+	BorderThickness 2
+	StereotypeFontColor #2FA4E7
+}
+
+
+skinparam rectangle {
+		FontColor #2FA4E7
+	BorderColor #2FA4E7
+	BackgroundColor transparent
+	BorderThickness 2
+	StereotypeFontColor #2FA4E7
+}
+
+
+skinparam package {
+	BackgroundColor transparent
+  	BorderColor #2FA4E7
+	FontColor #2FA4E7
+	BorderThickness 2
+}
+
+
+skinparam folder {
+	BackgroundColor transparent
+  	BorderColor #DD5600
+	FontColor #DD5600
+	BorderThickness 2
+}
+
+
+skinparam frame {
+	BackgroundColor transparent
+  	BorderColor #033C73
+	FontColor #033C73
+	BorderThickness 2
+}
+
+
+skinparam state {
+		FontColor #2FA4E7
+	BorderColor #2FA4E7
+	BackgroundColor transparent
+	StartColor #033C73
+	EndColor #033C73
+	AttributeFontColor #BABDBF
+	AttributeFontSize 11
+}
+
+
+skinparam queue {
+		FontColor #2FA4E7
+	BorderColor #2FA4E7
+	BackgroundColor transparent
+}
+
+
+skinparam card {
+	BackgroundColor transparent
+	BorderColor #033C73
+	FontColor #033C73
+}
+
+
+skinparam file {
+	BackgroundColor transparent
+	BorderColor #868E96
+	FontColor #868E96
+}
+
+
+skinparam stack {
+		FontColor #2FA4E7
+	BorderColor #2FA4E7
+	BackgroundColor transparent
+}
+
+
+
+
+package "Spawn Trigger" as TrapTrigger <<Node>> {
+  class TrapTrigger {
+     - _isTriggered : bool
+     + m_trapSpawners : List<GameObject>
+     == Trigger Spawn Pool ==
+     + m_useTriggerSpawnPool: bool
+     + m_spawnPoolPrefabs : List<GameObject>
+     == Global Spawn Pool ==
+     + m_useGlobalSpawnPool: bool
+     + m_globalSpawnPoolPrefab : GameObject
+     - -
+     + AddToSpawnPool(GameObject) : void
+     + ClearSpawnPool() : void
+     + OnTriggerEnter(Collider) : void
+     + SetGlobalSpawnPool(GameObject, bool) : void
+     + SetIsTriggered(bool) : void
+     + SetUseGlobalSpawnPool(bool) : void
+     + SetUseTriggerSpawnPool(bool) : void
+     + SpawnPoolCount() : int
+  }
+}
+
+package "Global Spawn Pool" as GlobalSpawnPool <<Node>> {
+  class TrapSpawnPool {
+     + m_spawnPoolPrefabs : List<GameObject>
+     + AddToSpawnPool(GameObject) : void
+     + Clear() : void
+  }
+}
+
+package "Spawn Point" as TrapSpawner <<Node>> {
+  class TrapSpawner {
+     == Quantity ==
+     + m_quantityMin: int
+     + m_quantityMax: int
+     == Level ==
+     + m_levelMin: int
+     + m_levelMax: int
+     == Scale Size ==
+     + m_scaleSize: int
+     == Local Spawn Pool ==
+     - m_ignoreSpawnPoolOverrides: bool
+     - m_spawnPoolPrefabs : List<GameObject>
+     - -
+     + AddToSpawnPool(GameObject) : void
+     + ClearSpawnPool() : void
+     + DoSpawn(List<GameObject>, int, int, int, int)
+     + SetIgnoreSpawnPoolOverrides(bool) : void
+     + SpawnPoolCount() : int
+  }
+}
+
+abstract class AbstractProxy<TProxyType> {
+  # RealObject : TProxyType
+  == ctor ==
+  # AbstractProxy(TProxyType)
+}
+
+class TrapSpawnerProxy <TrapSpawner>{
+  - RoomSpawnPointName : string
+  == ctor ==
+  + TrapSpawnerProxy(TrapSpawner)
+  + TrapSpawnerProxy(GameObject, string, string)
+  - -
+  - {static} GetPath(string, string) : string
+  + Clear() : void
+  + AddEnemy(GameObject) : void
+  + AddEnemy(string) : void
+  + AddBoss(GameObject) : void
+  + AddBoss(string) : void
+  + AddPrefab(GameObject) : void
+  + AddPrefab(string) : void
+  + SpawnPoolCount() : int
+  + SetIgnoreSpawnPoolOverrides(bool) : void
+}
+
+class TrapTriggerProxy<TrapTrigger>{
+  - RoomTriggerName: string
+  == ctor ==
+  + TrapTriggerProxy(TrapSpawner)
+  + TrapTriggerProxy(GameObject, string, string)
+  - -
+  - {static} GetPath(string, string) : string
+  + Clear() : void
+  + AddEnemy(GameObject) : void
+  + AddEnemy(string) : void
+  + AddBoss(GameObject) : void
+  + AddBoss(string) : void
+  + AddPrefab(GameObject) : void
+  + AddPrefab(string) : void
+  + SpawnPoolCount() : int
+  + SetUseTriggerSpawnPool(bool) : void
+  + SetIsTriggered(bool) : void
+  + SetUseGlobalSpawnPool(bool) : void
+  + SetGlobalSpawnPool(GameObject, bool) : void
+  + GetSpawners() : List<TrapSpawnerProxy>
+}
+
+class TrapSpawnPoolProxy<TrapSpawnPool>{
+  - RoomSpawnPoolName: string
+  == ctor ==
+  + TrapSpawnPoolProxy(TrapSpawner)
+  + TrapSpawnPoolProxy(GameObject, string, string)
+  - -
+  - {static} GetPath(string, string) : string
+  + Clear() : void
+  + AddEnemy(GameObject) : void
+  + AddEnemy(string) : void
+  + AddBoss(GameObject) : void
+  + AddBoss(string) : void
+  + AddPrefab(GameObject) : void
+  + AddPrefab(string) : void
+  + SpawnPoolCount() : int
+}
+
+
+AbstractProxy <|-down- TrapSpawnerProxy : < is a
+AbstractProxy <|-down- TrapTriggerProxy: < is a
+AbstractProxy <|-down- TrapSpawnPoolProxy: < is a
+TrapSpawnPool .up.# TrapSpawnPoolProxy #purple : < controls
+TrapSpawner .up.# TrapSpawnerProxy #purple : < controls
+TrapTrigger .up.# TrapTriggerProxy #purple : < controls
+TrapTrigger o- - TrapSpawnPool #red : has 0..1 >
+TrapTrigger o- - TrapSpawner #red : has 0..* >
+@enduml
+
+PlantUML version 1.2021.13beta8(Unknown compile time)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

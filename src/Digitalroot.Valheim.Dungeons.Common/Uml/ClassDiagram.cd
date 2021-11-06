@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Digitalroot.Valheim.Dungeons.Common.Dungeon">
+    <Position X="3.75" Y="7.25" Width="2.75" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgABgAAAAAEAAAQAAEIAAAAABBAAAAAAAAg=</HashCode>
+      <FileName>Dungeon.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="GlobalSpawnPool" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="DungeonBossRooms" />
+      <Field Name="DungeonRooms" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Digitalroot.Valheim.Dungeons.Common.Rooms.DungeonBossRoom">
+    <Position X="4.25" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>BAIAAAAAAAAAAAIAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rooms\DungeonBossRoom.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="RoomBossTrigger" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Digitalroot.Valheim.Dungeons.Common.Rooms.DungeonRoom">
+    <Position X="4.5" Y="0.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABgAAoAAAAAAAAAQAAAAAAAAAAAAAAAAQAAg=</HashCode>
+      <FileName>Rooms\DungeonRoom.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="RoomTrigger" />
+      <Field Name="RoomSpawnPool" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="RoomSpawnPoints" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Digitalroot.Valheim.Dungeons.Common.SpawnPools.GlobalSpawnPool">
+    <Position X="8" Y="6.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SpawnPools\GlobalSpawnPool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Digitalroot.Valheim.Dungeons.Common.TrapProxies.TrapSpawnPoolProxy">
+    <Position X="7.5" Y="2.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAQAAAIAAAAAAAEAACAAAAAAAAABBAAAA=</HashCode>
+      <FileName>TrapProxies\TrapSpawnPoolProxy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Digitalroot.Valheim.Dungeons.Common.TrapProxies.AbstractProxy&lt;TProxyType&gt;">
+    <Position X="11.25" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TrapProxies\AbstractProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Digitalroot.Valheim.Dungeons.Common.TrapProxies.TrapSpawnerProxy">
+    <Position X="11" Y="2.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACEAAAAAAQAAAIAAAEAAAEAACAAAAAAAAAABAAAA=</HashCode>
+      <FileName>TrapProxies\TrapSpawnerProxy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Digitalroot.Valheim.Dungeons.Common.TrapProxies.TrapTriggerProxy">
+    <Position X="14.25" Y="2.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAQCAAIQAAEAAFEAACAAAAAAgAAABAAAA=</HashCode>
+      <FileName>TrapProxies\TrapTriggerProxy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Digitalroot.Valheim.Dungeons.Common.SpawnPools.ISpawnPool">
+    <Position X="1.25" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAQAAAIAAAAAAAEAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>SpawnPools\ISpawnPool.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

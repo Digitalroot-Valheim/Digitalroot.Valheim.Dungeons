@@ -1,0 +1,96 @@
+@startuml
+!theme cerulean-outline
+
+package "Spawn Trigger" as TrapTrigger <<Node>> {
+  class TrapTrigger {
+     - _isTriggered : bool
+     + m_trapSpawners : List<GameObject>
+     == Trigger Spawn Pool ==
+     + m_useTriggerSpawnPool: bool
+     + m_spawnPoolPrefabs : List<GameObject>
+     == Global Spawn Pool ==
+     + m_useGlobalSpawnPool: bool
+     + m_globalSpawnPoolPrefab : GameObject
+     --
+     + AddToSpawnPool(GameObject) : void
+     + ClearSpawnPool() : void
+     + OnTriggerEnter(Collider) : void
+     + SetGlobalSpawnPool(GameObject, bool) : void
+     + SetIsTriggered(bool) : void
+     + SetUseGlobalSpawnPool(bool) : void
+     + SetUseTriggerSpawnPool(bool) : void
+     + SpawnPoolCount() : int
+  }
+}
+
+package "Global Spawn Pool" as GlobalSpawnPool <<Node>> {
+  class TrapSpawnPool {
+     + m_spawnPoolPrefabs : List<GameObject>
+     + AddToSpawnPool(GameObject) : void
+     + Clear() : void
+  }
+}
+
+package "Spawn Point" as TrapSpawner <<Node>> {
+  class TrapSpawner {
+     == Quantity ==
+     + m_quantityMin: int
+     + m_quantityMax: int
+     == Level ==
+     + m_levelMin: int
+     + m_levelMax: int
+     == Scale Size ==
+     + m_scaleSize: int
+     == Local Spawn Pool ==
+     - m_ignoreSpawnPoolOverrides: bool
+     - m_spawnPoolPrefabs : List<GameObject>
+     --
+     + AddToSpawnPool(GameObject) : void
+     + ClearSpawnPool() : void
+     + DoSpawn(List<GameObject>, int, int, int, int)
+     + SetIgnoreSpawnPoolOverrides(bool) : void
+     + SpawnPoolCount() : int
+  }
+}
+
+class Dungeon {
+  + Name : string
+  + DungeonBossRooms : List<DungeonBossRoom>
+  + DungeonRooms : List<DungeonRoom>
+  + GlobalSpawnPool: GlobalSpawnPool
+  + DungeonPrefab : GameObject
+  == ctor ==
+  + Dungeon(string, GameObject)
+  --
+  + AddDungeonRoom(string) : void
+  + AddDungeonRoom(DungeonRoom) : void
+  + AddDungeonBossRoom(string) : void
+  + AddDungeonBossRoom(DungeonBossRoom) : void
+}
+
+class DungeonRoom {
+  + Name : string
+  # DungeonPrefab : GameObject
+  + RoomTrigger : TrapTriggerProxy
+  + RoomSpawnPool : ISpawnPool
+  + RoomSpawnPoints: List<TrapSpawnerProxy>
+  == ctor ==
+  + DungeonRoom(string, GameObject)
+}
+
+class DungeonBossRoom {
+  - BossTriggerName: string
+  - BossSpawnPointName : string
+  + RoomBossTrigger: TrapTriggerProxy
+  + RoomBossSpawnPoint: TrapSpawnerProxy
+  == ctor ==
+  + DungeonBossRoom(string, GameObject)
+}
+
+DungeonRoom <|-- DungeonBossRoom : < is a
+TrapTrigger o-- TrapSpawnPool #red : has 0..1 >
+TrapTrigger o-- TrapSpawner #red : has 0..* >
+Dungeon *-up- TrapSpawnPool #red : has 0..1 >
+Dungeon *-- DungeonRoom #red : has 1..* >
+Dungeon *-- DungeonBossRoom #red : has 1..* >
+@enduml

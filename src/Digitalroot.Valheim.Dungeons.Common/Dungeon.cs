@@ -35,16 +35,14 @@ namespace Digitalroot.Valheim.Dungeons.Common
     }
 
     public void AddDungeonRoom(string dungeonRoomName) => AddDungeonRoom(new DungeonRoom(dungeonRoomName, DungeonPrefab));
-    public void AddDungeonRoom(DungeonRoom dungeonRoom)
-    {
-      DungeonRooms.Add(dungeonRoom);
-    }
+    // ReSharper disable once MemberCanBePrivate.Global
+    public void AddDungeonRoom(DungeonRoom dungeonRoom) => DungeonRooms.Add(dungeonRoom);
+    
 
     public void AddDungeonBossRoom(string dungeonRoomName) => AddDungeonBossRoom(new DungeonBossRoom(dungeonRoomName, DungeonPrefab));
-    public void AddDungeonBossRoom(DungeonBossRoom dungeonRoom)
-    {
-      DungeonBossRooms.Add(dungeonRoom);
-    }
+    // ReSharper disable once MemberCanBePrivate.Global
+    public void AddDungeonBossRoom(DungeonBossRoom dungeonRoom) => DungeonBossRooms.Add(dungeonRoom);
+
 
     #region Implementation of ITraceableLogging
 

@@ -11,20 +11,20 @@ namespace Digitalroot.Valheim.Dungeons.Common.Rooms
   public class DungeonRoom : ITraceableLogging
   {
     public readonly string Name;
-    protected readonly GameObject Dungeon;
+    protected readonly GameObject DungeonPrefab;
     public readonly TrapTriggerProxy RoomTrigger;
     public readonly ISpawnPool RoomSpawnPool;
     public readonly List<TrapSpawnerProxy> RoomSpawnPoints;
 
     // ReSharper disable once MemberCanBeProtected.Global
-    public DungeonRoom([NotNull] string name, [NotNull] GameObject dungeon)
+    public DungeonRoom([NotNull] string name, [NotNull] GameObject dungeonPrefab)
     {
       try
       {
         Name = name;
-        Dungeon = dungeon;
-        RoomTrigger = new TrapTriggerProxy(dungeon, name);
-        RoomSpawnPool = new TrapSpawnPoolProxy(dungeon, name);
+        DungeonPrefab = dungeonPrefab;
+        RoomTrigger = new TrapTriggerProxy(dungeonPrefab, name);
+        RoomSpawnPool = new TrapSpawnPoolProxy(dungeonPrefab, name);
         RoomSpawnPoints = RoomTrigger.GetSpawners();
       }
       catch (Exception e)

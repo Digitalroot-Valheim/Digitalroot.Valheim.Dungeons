@@ -57,6 +57,10 @@ namespace Digitalroot.Valheim.TrapSpawners
     // ReSharper disable once MemberCanBePrivate.Global
     private List<GameObject> m_spawnPoolPrefabs = new List<GameObject>(0);
 
+    public void AddToSpawnPool(GameObject prefab) => m_spawnPoolPrefabs.Add(prefab);
+
+    public void ClearSpawnPool() => m_spawnPoolPrefabs.Clear();
+
     public void DoSpawn([CanBeNull] List<GameObject> spawnPoolPrefabs = null, int quantityMin = -1, int quantityMax = -1, int levelMin = -1, int levelMax = -1)
     {
       try
@@ -137,10 +141,6 @@ namespace Digitalroot.Valheim.TrapSpawners
     }
 
     public void SetIgnoreSpawnPoolOverrides(bool value) => m_ignoreSpawnPoolOverrides = value;
-
-    public void ClearSpawnPool() => m_spawnPoolPrefabs.Clear();
-
-    public void AddToSpawnPool(GameObject prefab) => m_spawnPoolPrefabs.Add(prefab);
 
     public int SpawnPoolCount() => m_spawnPoolPrefabs.Count;
 

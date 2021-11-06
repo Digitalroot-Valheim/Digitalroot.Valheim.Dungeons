@@ -49,6 +49,16 @@ namespace Digitalroot.Valheim.TrapSpawners
     public GameObject m_globalSpawnPoolPrefab;
 #pragma warning restore 649
 
+    public void AddToSpawnPool(GameObject prefab)
+    {
+      m_spawnPoolPrefabs.Add(prefab);
+    }
+
+    public void ClearSpawnPool()
+    {
+      m_spawnPoolPrefabs.Clear();
+    }
+
     [UsedImplicitly]
     public void OnTriggerEnter(Collider other)
     {
@@ -81,9 +91,10 @@ namespace Digitalroot.Valheim.TrapSpawners
       }
     }
 
-    public void SetUseTriggerSpawnPool(bool value)
+    public void SetGlobalSpawnPool(GameObject value, bool enable = true)
     {
-      m_useTriggerSpawnPool = value;
+      m_globalSpawnPoolPrefab = value;
+      SetUseGlobalSpawnPool(enable);
     }
 
     public void SetIsTriggered(bool value)
@@ -96,20 +107,9 @@ namespace Digitalroot.Valheim.TrapSpawners
       m_useGlobalSpawnPool = value;
     }
 
-    public void SetGlobalSpawnPool(GameObject value, bool enable = true)
+    public void SetUseTriggerSpawnPool(bool value)
     {
-      m_globalSpawnPoolPrefab = value;
-      SetUseGlobalSpawnPool(enable);
-    }
-
-    public void ClearSpawnPool()
-    {
-      m_spawnPoolPrefabs.Clear();
-    }
-
-    public void AddToSpawnPool(GameObject prefab)
-    {
-      m_spawnPoolPrefabs.Add(prefab);
+      m_useTriggerSpawnPool = value;
     }
 
     public int SpawnPoolCount() => m_spawnPoolPrefabs.Count;

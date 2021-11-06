@@ -1,0 +1,144 @@
+@startuml
+!theme cerulean-outline
+'skinparam groupInheritance 3
+
+package "Spawn Trigger" as TrapTrigger <<Node>> {
+  class TrapTrigger {
+     - _isTriggered : bool
+     + m_trapSpawners : List<GameObject>
+     == Trigger Spawn Pool ==
+     + m_useTriggerSpawnPool: bool
+     + m_spawnPoolPrefabs : List<GameObject>
+     == Global Spawn Pool ==
+     + m_useGlobalSpawnPool: bool
+     + m_globalSpawnPoolPrefab : GameObject
+     --
+     + AddToSpawnPool(GameObject) : void
+     + ClearSpawnPool() : void
+     + OnTriggerEnter(Collider) : void
+     + SetGlobalSpawnPool(GameObject, bool) : void
+     + SetIsTriggered(bool) : void
+     + SetUseGlobalSpawnPool(bool) : void
+     + SetUseTriggerSpawnPool(bool) : void
+     + SpawnPoolCount() : int
+  }
+}
+
+package "Global Spawn Pool" as GlobalSpawnPool <<Node>> {
+  class TrapSpawnPool {
+     + m_spawnPoolPrefabs : List<GameObject>
+     + AddToSpawnPool(GameObject) : void
+     + Clear() : void
+  }
+}
+
+package "Spawn Point" as TrapSpawner <<Node>> {
+  class TrapSpawner {
+     == Quantity ==
+     + m_quantityMin: int
+     + m_quantityMax: int
+     == Level ==
+     + m_levelMin: int
+     + m_levelMax: int
+     == Scale Size ==
+     + m_scaleSize: int
+     == Local Spawn Pool ==
+     - m_ignoreSpawnPoolOverrides: bool
+     - m_spawnPoolPrefabs : List<GameObject>
+     --
+     + AddToSpawnPool(GameObject) : void
+     + ClearSpawnPool() : void
+     + DoSpawn(List<GameObject>, int, int, int, int)
+     + SetIgnoreSpawnPoolOverrides(bool) : void
+     + SpawnPoolCount() : int
+  }
+}
+
+abstract class AbstractProxy<TProxyType> {
+  # RealObject : TProxyType
+  == ctor ==
+  # AbstractProxy(TProxyType)
+}
+
+class TrapSpawnerProxy <TrapSpawner>{
+  - RoomSpawnPointName : string
+  == ctor ==
+  + TrapSpawnerProxy(TrapSpawner)
+  + TrapSpawnerProxy(GameObject, string, string)
+  --
+  - {static} GetPath(string, string) : string
+  + Clear() : void
+  + AddEnemy(GameObject) : void
+  + AddEnemy(string) : void
+  + AddBoss(GameObject) : void
+  + AddBoss(string) : void
+  + AddPrefab(GameObject) : void
+  + AddPrefab(string) : void
+  + SpawnPoolCount() : int
+  + SetIgnoreSpawnPoolOverrides(bool) : void
+}
+
+class TrapTriggerProxy<TrapTrigger>{
+  - RoomTriggerName: string
+  == ctor ==
+  + TrapTriggerProxy(TrapSpawner)
+  + TrapTriggerProxy(GameObject, string, string)
+  --
+  - {static} GetPath(string, string) : string
+  + Clear() : void
+  + AddEnemy(GameObject) : void
+  + AddEnemy(string) : void
+  + AddBoss(GameObject) : void
+  + AddBoss(string) : void
+  + AddPrefab(GameObject) : void
+  + AddPrefab(string) : void
+  + SpawnPoolCount() : int
+  + SetUseTriggerSpawnPool(bool) : void
+  + SetIsTriggered(bool) : void
+  + SetUseGlobalSpawnPool(bool) : void
+  + SetGlobalSpawnPool(GameObject, bool) : void
+  + GetSpawners() : List<TrapSpawnerProxy>
+}
+
+class TrapSpawnPoolProxy<TrapSpawnPool>{
+  - RoomSpawnPoolName: string
+  == ctor ==
+  + TrapSpawnPoolProxy(TrapSpawner)
+  + TrapSpawnPoolProxy(GameObject, string, string)
+  --
+  - {static} GetPath(string, string) : string
+  + Clear() : void
+  + AddEnemy(GameObject) : void
+  + AddEnemy(string) : void
+  + AddBoss(GameObject) : void
+  + AddBoss(string) : void
+  + AddPrefab(GameObject) : void
+  + AddPrefab(string) : void
+  + SpawnPoolCount() : int
+}
+
+class Dungeon {
+  + Name : string
+  + DungeonBossRooms : List<DungeonBossRoom>
+  + DungeonRooms : List<DungeonRoom>
+  + GlobalSpawnPool: GlobalSpawnPool
+  + DungeonPrefab : GameObject
+  == ctor ==
+  + Dungeon(string, GameObject)
+  --
+  + AddDungeonRoom(string) : void
+  + AddDungeonRoom(DungeonRoom) : void
+  + AddDungeonBossRoom(string) : void
+  + AddDungeonBossRoom(DungeonBossRoom) : void
+}
+
+AbstractProxy <|-down- TrapSpawnerProxy : < is a
+AbstractProxy <|-down- TrapTriggerProxy: < is a
+AbstractProxy <|-down- TrapSpawnPoolProxy: < is a
+TrapSpawnPool .up.# TrapSpawnPoolProxy #purple : < controls
+TrapSpawner .up.# TrapSpawnerProxy #purple : < controls
+TrapTrigger .up.# TrapTriggerProxy #purple : < controls
+TrapTrigger o-- TrapSpawnPool #red : has 0..1 >
+TrapTrigger o-- TrapSpawner #red : has 0..* >
+Dungeon *-up- TrapSpawnPool #red : has 0..1 >
+@enduml

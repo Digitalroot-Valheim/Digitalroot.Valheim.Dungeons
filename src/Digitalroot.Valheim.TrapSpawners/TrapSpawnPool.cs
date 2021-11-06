@@ -13,11 +13,11 @@ namespace Digitalroot.Valheim.TrapSpawners
     // ReSharper disable once FieldCanBeMadeReadOnly.Global
     public List<GameObject> m_spawnPoolPrefabs = new List<GameObject>(0);
 
-    public void Clear() => m_spawnPoolPrefabs.Clear();
-
     public void AddToSpawnPool(GameObject prefab)
     {
       m_spawnPoolPrefabs.Add(prefab);
     }
+
+    public void Clear() => m_spawnPoolPrefabs.Clear();
   }
 }

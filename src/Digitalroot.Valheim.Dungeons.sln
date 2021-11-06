@@ -36,6 +36,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digitalroot.Valheim.Dungeon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digitalroot.Valheim.Dungeons.OdinsHollow", "Digitalroot.Valheim.Dungeons.OdinsHollow\Digitalroot.Valheim.Dungeons.OdinsHollow.csproj", "{C4041FCC-C04D-4AAA-B736-906E282BCF2E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "uml", "uml", "{F9C16686-ED0C-4EEA-A95E-D7EF2D575D24}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\uml\ClassDiagram.puml = ..\docs\uml\ClassDiagram.puml
+		..\docs\uml\ClassDiagram2.puml = ..\docs\uml\ClassDiagram2.puml
+		..\docs\uml\ComponentDiagram.puml = ..\docs\uml\ComponentDiagram.puml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "imgs", "imgs", "{03D2B486-2072-4CE4-A463-701E72A8E293}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\imgs\Type_Dependencies_Diagram_for_Dungeon.png = ..\docs\imgs\Type_Dependencies_Diagram_for_Dungeon.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +82,8 @@ Global
 		{E64D67E6-C2B6-471C-990D-2E9A91427B64} = {E5C5D2B9-639B-48CF-B5B0-E44FD7F24B1E}
 		{1960DCD1-3C51-48FF-BFF8-5FE4C3CBABB2} = {E64D67E6-C2B6-471C-990D-2E9A91427B64}
 		{ECE65B8A-4208-4EC7-AC71-D853048978AA} = {E5C5D2B9-639B-48CF-B5B0-E44FD7F24B1E}
+		{F9C16686-ED0C-4EEA-A95E-D7EF2D575D24} = {ECE65B8A-4208-4EC7-AC71-D853048978AA}
+		{03D2B486-2072-4CE4-A463-701E72A8E293} = {ECE65B8A-4208-4EC7-AC71-D853048978AA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {46DD4389-95C4-4F57-BB16-2A9A816F46B9}
