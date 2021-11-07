@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +17,7 @@ namespace Digitalroot.Valheim.TrapSpawners
     // ReSharper disable once FieldCanBeMadeReadOnly.Local
     // ReSharper disable once CollectionNeverUpdated.Local
     // ReSharper disable once FieldCanBeMadeReadOnly.Global
+    // ReSharper disable once CollectionNeverUpdated.Global
     public List<GameObject> m_trapSpawners = new List<GameObject>(0);
 
     [Header("Trigger Spawn Pool"), SerializeField]
@@ -59,10 +61,18 @@ namespace Digitalroot.Valheim.TrapSpawners
       m_spawnPoolPrefabs.Clear();
     }
 
+    [HideInInspector]
+    // public Func<Collider, bool> ShouldTrigger = (collider => false );
+
     [UsedImplicitly]
     public void OnTriggerEnter(Collider other)
     {
       if (_isTriggered) return;
+      Debug.Log($"** Trap Triggered **");
+      Debug.Log($"** Triggered By: {other.name} **");
+
+      if (!(other.name == "Player(Clone)" || other.name == "Player")) return;
+
       _isTriggered = true;
       if (m_trapSpawners.Count < 1) return;
 

@@ -94,8 +94,9 @@ namespace Digitalroot.Valheim.TrapSpawners
             rnd = 0;
           }
 
-          var go = Instantiate(spawnPoolPrefabs[rnd], transform);
-          // go.transform.position = transform.position;
+          var go = Instantiate(spawnPoolPrefabs[rnd]);
+          // var go = Instantiate(spawnPoolPrefabs[rnd], transform);
+          go.transform.position = transform.position;
 
           switch (i)
           {
@@ -116,7 +117,8 @@ namespace Digitalroot.Valheim.TrapSpawners
           if (levelMin == -1) levelMin = m_levelMin;
           if (levelMax == -1) levelMax = m_levelMax;
           var level = levelMin == levelMax ? levelMax : Random.Range(levelMin, levelMax + 1);
-          go.SendMessage("SetLevel", level, SendMessageOptions.RequireReceiver);
+          // go.SendMessage("SetLevel", level, SendMessageOptions.RequireReceiver);
+          go.SendMessage("SetLevel", 3, SendMessageOptions.RequireReceiver);
 
           // var character = go.GetComponent("Character");
           // if (character != null)
@@ -128,8 +130,9 @@ namespace Digitalroot.Valheim.TrapSpawners
 
 
           // Fix Scale
-          go.transform.localScale *= m_scaleSize;
-          go.transform.localPosition += Vector3.up * 0.25f;
+          // var localScale = go.transform.localScale;
+          // localScale.y *= 59.6338481722f;
+          go.transform.localPosition += Vector3.up * 0.025f;
 
           Debug.Log($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}] Spawning: {go.name} @ {go.transform.position}, Scale: {go.transform.localScale}, Level: {level}");
         }

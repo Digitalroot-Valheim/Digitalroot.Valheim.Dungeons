@@ -14,8 +14,8 @@ namespace Digitalroot.Valheim.Dungeons.Common.Utils
       Log.Trace(StaticLogger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] prefab?.name : {prefab?.name}");
       if (prefab == null) return null;
       // prefab.transform.localScale *= 2;
-      var character = prefab.GetComponent<Character>();
-      Log.Trace(StaticLogger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] character == null : {character == null}");
+      // var character = prefab.GetComponent<Character>();
+      // Log.Trace(StaticLogger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] character == null : {character == null}");
       // character?.SetLevel(3); // Need to do this at spawn time. 
       return prefab;
     }
@@ -25,7 +25,7 @@ namespace Digitalroot.Valheim.Dungeons.Common.Utils
       Log.Trace(StaticLogger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] prefab == null : {prefab == null}");
       Log.Trace(StaticLogger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] prefab?.name : {prefab?.name}");
       if (prefab == null) return null;
-      prefab.transform.localScale *= 2;
+      // prefab.transform.localScale *= 2;
       return prefab;
     }
   }

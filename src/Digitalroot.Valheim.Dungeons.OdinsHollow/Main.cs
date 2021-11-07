@@ -144,16 +144,16 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
       _dungeon.GlobalSpawnPool?.Clear(); // Remove anything already in the GSP.
       _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.SkeletonPoison);
       _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.Blob);
-      _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.BlobElite);
+      // _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.BlobElite);
       _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.Draugr);
-      _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.DraugrElite);
+      // _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.DraugrElite);
       _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.DraugrRanged);
       _dungeon.GlobalSpawnPool?.AddEnemy(PrefabNames.SkeletonNoArcher);
       _dungeon.GlobalSpawnPool?.AddEnemy(PrefabNames.SkeletonNoArcher);
       _dungeon.GlobalSpawnPool?.AddEnemy(PrefabNames.SkeletonNoArcher);
       _dungeon.GlobalSpawnPool?.AddEnemy(PrefabNames.SkeletonNoArcher);
-      _dungeon.GlobalSpawnPool?.AddPrefab(PrefabNames.BonePileSpawner);
-      _dungeon.GlobalSpawnPool?.AddPrefab(PrefabNames.SpawnerDraugrPile);
+      // _dungeon.GlobalSpawnPool?.AddPrefab(PrefabNames.BonePileSpawner);
+      // _dungeon.GlobalSpawnPool?.AddPrefab(PrefabNames.SpawnerDraugrPile);
     }
 
     private void SeedSpawnPoolsFor(DungeonBossRoom room)
