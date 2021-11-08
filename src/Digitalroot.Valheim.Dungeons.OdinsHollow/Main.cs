@@ -73,9 +73,9 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
         }
 #endif
         PrefabManager.Instance.AddPrefab(new CustomPrefab(_assetBundle.LoadAsset<GameObject>(OdinsHollow), true));
-        PrefabManager.OnVanillaPrefabsAvailable += OnVanillaPrefabsAvailable;
+        // PrefabManager.OnVanillaPrefabsAvailable += OnVanillaPrefabsAvailable;
 
-        _harmony = Harmony.CreateAndPatchAll(typeof(Main).Assembly, Guid);
+        // _harmony = Harmony.CreateAndPatchAll(typeof(Main).Assembly, Guid);
       }
       catch (Exception e)
       {
