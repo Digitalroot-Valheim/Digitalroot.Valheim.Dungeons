@@ -1,40 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31515.178
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E5C5D2B9-639B-48CF-B5B0-E44FD7F24B1E}"
 	ProjectSection(SolutionItems) = preProject
+		..\.gitattributes = ..\.gitattributes
 		..\.gitignore = ..\.gitignore
+		..\LICENSE = ..\LICENSE
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{E64D67E6-C2B6-471C-990D-2E9A91427B64}"
-	ProjectSection(SolutionItems) = preProject
-		..\.github\release-drafter.yml = ..\.github\release-drafter.yml
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{1960DCD1-3C51-48FF-BFF8-5FE4C3CBABB2}"
-	ProjectSection(SolutionItems) = preProject
-		..\.github\workflows\builder.yml = ..\.github\workflows\builder.yml
-		..\.github\workflows\ci.yml = ..\.github\workflows\ci.yml
-		..\.github\workflows\drafter.yml = ..\.github\workflows\drafter.yml
-		..\.github\workflows\main.yml = ..\.github\workflows\main.yml
-		..\.github\workflows\publish.yml = ..\.github\workflows\publish.yml
-		..\.github\workflows\quality-gate.yml = ..\.github\workflows\quality-gate.yml
-		..\.github\workflows\test-report.yml = ..\.github\workflows\test-report.yml
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{ECE65B8A-4208-4EC7-AC71-D853048978AA}"
 	ProjectSection(SolutionItems) = preProject
-		..\docs\LICENSE = ..\docs\LICENSE
 		..\docs\README.md = ..\docs\README.md
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digitalroot.Valheim.TrapSpawners", "Digitalroot.Valheim.TrapSpawners\Digitalroot.Valheim.TrapSpawners.csproj", "{56A31091-B241-48FE-98DB-D625C8847D16}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digitalroot.Valheim.Dungeons.Common", "Digitalroot.Valheim.Dungeons.Common\Digitalroot.Valheim.Dungeons.Common.csproj", "{A7951E8A-CEA6-409F-A491-6592442B3307}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digitalroot.Valheim.Dungeons.OdinsHollow", "Digitalroot.Valheim.Dungeons.OdinsHollow\Digitalroot.Valheim.Dungeons.OdinsHollow.csproj", "{C4041FCC-C04D-4AAA-B736-906E282BCF2E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "uml", "uml", "{F9C16686-ED0C-4EEA-A95E-D7EF2D575D24}"
 	ProjectSection(SolutionItems) = preProject
@@ -48,32 +31,42 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "imgs", "imgs", "{03D2B486-2
 		..\docs\imgs\Type_Dependencies_Diagram_for_Dungeon.png = ..\docs\imgs\Type_Dependencies_Diagram_for_Dungeon.png
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Digitalroot.Valheim.TrapSpawners", "Digitalroot.Valheim.TrapSpawners\Digitalroot.Valheim.TrapSpawners.csproj", "{4BEC8E6F-B4B1-46C8-9232-79894A22280A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digitalroot.Valheim.Dungeons.OdinsHollow", "Digitalroot.Valheim.Dungeons.OdinsHollow\Digitalroot.Valheim.Dungeons.OdinsHollow.csproj", "{F526C3C2-45DF-4483-BF6E-F30089D68E2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digitalroot.Valheim.Dungeons.Common", "Digitalroot.Valheim.Dungeons.Common\Digitalroot.Valheim.Dungeons.Common.csproj", "{B496AAD8-DC6B-492A-8939-DF978F9781A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ico", "ico", "{B9AE976F-2F94-4027-A096-E6774C0F5827}"
+	ProjectSection(SolutionItems) = preProject
+		ico\icon_greendot.gif = ico\icon_greendot.gif
+		ico\icon_reddot.gif = ico\icon_reddot.gif
+		ico\icon_yellowdot.gif = ico\icon_yellowdot.gif
+		ico\ValheimRcon.xcf = ico\ValheimRcon.xcf
+		ico\ValheimRcon_black.ico = ico\ValheimRcon_black.ico
+		ico\ValheimRcon_black.png = ico\ValheimRcon_black.png
+		ico\ValheimRcon_color.ico = ico\ValheimRcon_color.ico
+		ico\ValheimRcon_color.png = ico\ValheimRcon_color.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		OdinsHollowDebug|Any CPU = OdinsHollowDebug|Any CPU
-		OdinsHollowRelease|Any CPU = OdinsHollowRelease|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{56A31091-B241-48FE-98DB-D625C8847D16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56A31091-B241-48FE-98DB-D625C8847D16}.OdinsHollowDebug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56A31091-B241-48FE-98DB-D625C8847D16}.OdinsHollowDebug|Any CPU.Build.0 = Debug|Any CPU
-		{56A31091-B241-48FE-98DB-D625C8847D16}.OdinsHollowRelease|Any CPU.ActiveCfg = Release|Any CPU
-		{56A31091-B241-48FE-98DB-D625C8847D16}.OdinsHollowRelease|Any CPU.Build.0 = Release|Any CPU
-		{56A31091-B241-48FE-98DB-D625C8847D16}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7951E8A-CEA6-409F-A491-6592442B3307}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7951E8A-CEA6-409F-A491-6592442B3307}.OdinsHollowDebug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7951E8A-CEA6-409F-A491-6592442B3307}.OdinsHollowDebug|Any CPU.Build.0 = Debug|Any CPU
-		{A7951E8A-CEA6-409F-A491-6592442B3307}.OdinsHollowRelease|Any CPU.ActiveCfg = Release|Any CPU
-		{A7951E8A-CEA6-409F-A491-6592442B3307}.OdinsHollowRelease|Any CPU.Build.0 = Release|Any CPU
-		{A7951E8A-CEA6-409F-A491-6592442B3307}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4041FCC-C04D-4AAA-B736-906E282BCF2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4041FCC-C04D-4AAA-B736-906E282BCF2E}.OdinsHollowDebug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4041FCC-C04D-4AAA-B736-906E282BCF2E}.OdinsHollowDebug|Any CPU.Build.0 = Debug|Any CPU
-		{C4041FCC-C04D-4AAA-B736-906E282BCF2E}.OdinsHollowRelease|Any CPU.ActiveCfg = Release|Any CPU
-		{C4041FCC-C04D-4AAA-B736-906E282BCF2E}.OdinsHollowRelease|Any CPU.Build.0 = Release|Any CPU
-		{C4041FCC-C04D-4AAA-B736-906E282BCF2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BEC8E6F-B4B1-46C8-9232-79894A22280A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BEC8E6F-B4B1-46C8-9232-79894A22280A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BEC8E6F-B4B1-46C8-9232-79894A22280A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BEC8E6F-B4B1-46C8-9232-79894A22280A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F526C3C2-45DF-4483-BF6E-F30089D68E2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F526C3C2-45DF-4483-BF6E-F30089D68E2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F526C3C2-45DF-4483-BF6E-F30089D68E2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F526C3C2-45DF-4483-BF6E-F30089D68E2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B496AAD8-DC6B-492A-8939-DF978F9781A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B496AAD8-DC6B-492A-8939-DF978F9781A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B496AAD8-DC6B-492A-8939-DF978F9781A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B496AAD8-DC6B-492A-8939-DF978F9781A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +77,7 @@ Global
 		{ECE65B8A-4208-4EC7-AC71-D853048978AA} = {E5C5D2B9-639B-48CF-B5B0-E44FD7F24B1E}
 		{F9C16686-ED0C-4EEA-A95E-D7EF2D575D24} = {ECE65B8A-4208-4EC7-AC71-D853048978AA}
 		{03D2B486-2072-4CE4-A463-701E72A8E293} = {ECE65B8A-4208-4EC7-AC71-D853048978AA}
+		{B9AE976F-2F94-4027-A096-E6774C0F5827} = {E5C5D2B9-639B-48CF-B5B0-E44FD7F24B1E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {46DD4389-95C4-4F57-BB16-2A9A816F46B9}

@@ -5,7 +5,7 @@ using System;
 using System.Reflection;
 using UnityEngine;
 
-namespace Digitalroot.Valheim.GBDungeonsDemo
+namespace Digitalroot.Valheim.Dungeons.OdinsHollow
 {
   [UsedImplicitly]
   public class Patch
@@ -21,11 +21,11 @@ namespace Digitalroot.Valheim.GBDungeonsDemo
       {
         try
         {
-          Log.Trace($"{Main.Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}");
+          Log.Trace(Main.Instance, $"{Main.Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}");
 
-          if (!Common.Utils.IsObjectDBReady())
+          if (!Valheim.Common.Utils.IsObjectDBReady())
           {
-            Log.Debug($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] ObjectDB not ready - skipping");
+            Log.Debug(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] ObjectDB not ready - skipping");
             return;
           }
 
@@ -33,7 +33,7 @@ namespace Digitalroot.Valheim.GBDungeonsDemo
         }
         catch (Exception e)
         {
-          Log.Error(e);
+          Log.Error(Main.Instance, e);
         }
       }
     }
@@ -49,10 +49,10 @@ namespace Digitalroot.Valheim.GBDungeonsDemo
       {
         try
         {
-          Log.Trace($"{Main.Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}");
-          if (!Common.Utils.IsObjectDBReady())
+          Log.Trace(Main.Instance, $"{Main.Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}");
+          if (!Valheim.Common.Utils.IsObjectDBReady())
           {
-            Log.Debug($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] ObjectDB not ready - skipping");
+            Log.Debug(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] ObjectDB not ready - skipping");
             return;
           }
 
@@ -60,7 +60,7 @@ namespace Digitalroot.Valheim.GBDungeonsDemo
         }
         catch (Exception e)
         {
-          Log.Error(e);
+          Log.Error(Main.Instance, e);
         }
       }
     }
@@ -76,10 +76,10 @@ namespace Digitalroot.Valheim.GBDungeonsDemo
       {
         try
         {
-          Log.Trace($"{Main.Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}");
-          if (!Common.Utils.IsZNetSceneReady())
+          Log.Trace(Main.Instance, $"{Main.Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}");
+          if (!Valheim.Common.Utils.IsZNetSceneReady())
           {
-            Log.Debug($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] ZNetScene not ready - skipping");
+            Log.Debug(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] ZNetScene not ready - skipping");
             return;
           }
 
@@ -87,7 +87,7 @@ namespace Digitalroot.Valheim.GBDungeonsDemo
         }
         catch (Exception e)
         {
-          Log.Error(e);
+          Log.Error(Main.Instance, e);
         }
       }
     }
@@ -103,10 +103,10 @@ namespace Digitalroot.Valheim.GBDungeonsDemo
       {
         try
         {
-          Log.Trace($"{Main.Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}");
-          if (!Common.Utils.IsZNetReady())
+          Log.Trace(Main.Instance, $"{Main.Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}");
+          if (!Valheim.Common.Utils.IsZNetReady())
           {
-            Log.Debug($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] ZNet not ready - skipping");
+            Log.Debug(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] ZNet not ready - skipping");
             return;
           }
 
@@ -114,7 +114,7 @@ namespace Digitalroot.Valheim.GBDungeonsDemo
         }
         catch (Exception e)
         {
-          Log.Error(e);
+          Log.Error(Main.Instance, e);
         }
       }
     }
@@ -130,11 +130,11 @@ namespace Digitalroot.Valheim.GBDungeonsDemo
       {
         try
         {
-          Log.Trace($"{Main.Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}({spawnPoint})");
+          Log.Trace(Main.Instance, $"{Main.Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}({spawnPoint})");
 
-          if (!Common.Utils.IsPlayerReady())
+          if (!Valheim.Common.Utils.IsPlayerReady())
           {
-            Log.Debug($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Player not ready - skipping");
+            Log.Debug(Main.Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Player not ready - skipping");
             return;
           }
 
@@ -142,7 +142,7 @@ namespace Digitalroot.Valheim.GBDungeonsDemo
         }
         catch (Exception e)
         {
-          Log.Error(e);
+          Log.Error(Main.Instance, e);
         }
       }
     }

@@ -1,7 +1,0 @@
-ManifestFileVersion: 0
-CRC: 3341577809
-AssetBundleManifest:
-  AssetBundleInfos:
-    Info_0:
-      Name: op_dungeons
-      Dependencies: {}
