@@ -47,6 +47,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Digitalroot.CustomMonoBehaviours" Version="1.0.1" />
+    <PackageReference Include="Digitalroot.Valheim.Build.Targets" Version="1.0.6" />
     <PackageReference Include="Digitalroot.Valheim.Common.AssemblyInfo" Version="1.0.7">
       <PrivateAssets>all</PrivateAssets>
       <ExcludeAssets>runtime</ExcludeAssets>
@@ -56,7 +57,7 @@
     <PackageReference Include="Digitalroot.Valheim.Common.References" Version="0.205.6">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Digitalroot.Valheim.Common.Utils" Version="1.0.16" />
+    <PackageReference Include="Digitalroot.Valheim.Common.Utils" Version="1.0.17" />
     <PackageReference Include="ErrorProne.NET.CoreAnalyzers" Version="0.1.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -69,7 +70,9 @@
     <PackageReference Include="HarmonyX" Version="2.6.1">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="ILMerge.Fody" Version="1.22.0" />
+    <PackageReference Include="ILMerge.Fody" Version="1.22.0">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="JotunnLib" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>
       <ExcludeAssets>runtime</ExcludeAssets>

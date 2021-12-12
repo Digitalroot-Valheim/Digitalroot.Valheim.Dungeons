@@ -1,8 +1,8 @@
-# Digitalroot.Valheim.DungeonsDemo
+# Digitalroot.Valheim.Dungeon.OdinsHollow
 [![Build](https://github.com/Digitalroot-Valheim/Digitalroot.Valheim.DungeonsDemo/actions/workflows/builder.yml/badge.svg)](https://github.com/Digitalroot-Valheim/Digitalroot.Valheim.DungeonsDemo/actions/workflows/builder.yml)  
 
 
-## Dungeons Demo
+## Dungeons Odin's Hollow
 <!--
 //www.plantuml.com/plantuml/png/XP31IiGm48RlUOfuSbVOI_7afOjLH13n81usv11tHpUGp2pJgRPlRrias4gpn_p_bs7cszRYM9eOrEM57262hazk3y6zA_D4UoUUy8MfxLPL88IrrLURZLvLt9taUgrlT7NquQ1ICBQFAC2U-1w_F1D6GDaHmZbygOTsrkTMCw_iiFuWZZQBxPv1tZnyPwbfPTNoPIFTfyFBJlTFGwnIflmL-71xr-0d4FuvEcLvZSNmfLp6Yyn8QFynffoBAsmAawQKpQNqnHRmqCJm0m00
 -->

@@ -1,5 +1,4 @@
 using Digitalroot.Valheim.Common;
-using Digitalroot.Valheim.Dungeons.Common;
 using Digitalroot.Valheim.Dungeons.OdinsHollow;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -17,7 +16,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright(AssemblyInfo.Copyright)]
 [assembly: AssemblyTrademark(AssemblyInfo.Trademark)]
 [assembly: AssemblyCulture(AssemblyInfo.Culture)]
-//[assembly: ILMerge.ExcludeAssemblies("Digitalroot.Valheim.TrapSpawners")]
+[assembly: ILMerge.ExcludeAssemblies("Digitalroot.Valheim.TrapSpawners")]
 
 // Setting ComVisible to false makes the types in this assembly not visible to COM
 // components.  If you need to access a type in this assembly from COM, set the ComVisible

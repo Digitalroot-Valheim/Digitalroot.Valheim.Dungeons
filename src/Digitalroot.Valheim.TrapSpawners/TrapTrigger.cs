@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 // ReSharper disable once IdentifierTypo
@@ -70,7 +71,7 @@ namespace Digitalroot.Valheim.TrapSpawners
       Debug.Log($"** Trap Triggered **");
       Debug.Log($"** Triggered By: {other.name} **");
 
-      if (!(other.name == "Player(Clone)" || other.name == "Player")) return;
+      if (other.name is not ("Player(Clone)" or "Player")) return;
 
       _isTriggered = true;
       if (m_trapSpawners.Count < 1) return;
@@ -91,10 +92,8 @@ namespace Digitalroot.Valheim.TrapSpawners
       }
 
       // ReSharper disable once IdentifierTypo
-      foreach (var spawner in m_trapSpawners)
+      foreach (var trapSpawner in m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>()))
       {
-        // ReSharper disable once IdentifierTypo
-        var trapSpawner = spawner.GetComponent<TrapSpawner>();
         // ReSharper disable once CommentTypo
         trapSpawner?.DoSpawn(spawnPool); // null = use Spawners Pool
       }

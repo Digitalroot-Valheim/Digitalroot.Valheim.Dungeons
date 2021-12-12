@@ -44,6 +44,7 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
       #if DEBUG
       EnableTrace = true;
       Log.RegisterSource(Instance);
+      Log.SetEnableTraceForAllLoggers(true);
       #else
       EnableTrace = false;
       #endif
@@ -74,7 +75,7 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
         }
         #endif
         PrefabManager.Instance.AddPrefab(new CustomPrefab(_assetBundle.LoadAsset<GameObject>(OdinsHollow), true));
-        // PrefabManager.OnVanillaPrefabsAvailable += OnVanillaPrefabsAvailable;
+        PrefabManager.OnVanillaPrefabsAvailable += OnVanillaPrefabsAvailable;
 
         // _harmony = Harmony.CreateAndPatchAll(typeof(Main).Assembly, Guid);
       }
@@ -104,8 +105,7 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
       _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.Draugr);
       // _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.DraugrElite);
       _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.DraugrRanged);
-      // _dungeon.GlobalSpawnPool?.AddEnemy(PrefabNames.SkeletonNoArcher);
-      // _dungeon.GlobalSpawnPool?.AddEnemy(PrefabNames.SkeletonNoArcher);
+      _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.SkeletonNoArcher);
       // _dungeon.GlobalSpawnPool?.AddEnemy(PrefabNames.SkeletonNoArcher);
       // _dungeon.GlobalSpawnPool?.AddEnemy(PrefabNames.SkeletonNoArcher);
       // _dungeon.GlobalSpawnPool?.AddPrefab(PrefabNames.BonePileSpawner);
@@ -155,7 +155,7 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
     #region Events
 
     [UsedImplicitly]
-    private void OnDestroy()
+    public void OnDestroy()
     {
       try
       {
@@ -192,7 +192,7 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
         // Configure
         _dungeon = new Dungeon(OdinsHollow, dungeonPrefab);
         _dungeon.SetEnableTrace(EnableTrace);
-        _dungeon.AddDungeonBossRoom(DungeonsRoomNames.BlueRoom);
+        // _dungeon.AddDungeonBossRoom(DungeonsRoomNames.BlueRoom);
 
         // Seed
         SeedGlobalSpawnPoolIfNecessary();

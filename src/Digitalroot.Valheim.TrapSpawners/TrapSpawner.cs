@@ -94,6 +94,9 @@ namespace Digitalroot.Valheim.TrapSpawners
             rnd = 0;
           }
 
+          
+
+          // var go = Common.Utils.Spawn(spawnPoolPrefabs[rnd], transform.position);;
           var go = Instantiate(spawnPoolPrefabs[rnd]);
           // var go = Instantiate(spawnPoolPrefabs[rnd], transform);
           go.transform.position = transform.position;
