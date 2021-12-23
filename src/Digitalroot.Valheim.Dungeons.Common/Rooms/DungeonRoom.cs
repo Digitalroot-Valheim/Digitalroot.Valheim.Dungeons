@@ -1,53 +1,44 @@
 ﻿using Digitalroot.Valheim.Common;
 using Digitalroot.Valheim.Dungeons.Common.TrapProxies;
-using Digitalroot.Valheim.TrapSpawners;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
+
+// ReSharper disable PrivateFieldCanBeConvertedToLocalVariable
 
 namespace Digitalroot.Valheim.Dungeons.Common.Rooms
 {
-  public class DungeonRoom : ITraceableLogging
+  public class DungeonRoom
   {
     public readonly string Name;
-    private readonly GameObject DungeonPrefab;
+    private readonly GameObject _dungeonPrefab;
     public readonly TrapTriggerProxy RoomTrigger;
-    // public readonly ISpawnPool RoomSpawnPool;
-    public readonly List<TrapSpawnerProxy> RoomSpawnPoints;
+    public readonly IEnumerable<TrapSpawnerProxy> RoomSpawnPoints;
+    private protected readonly ITraceableLogging Logger;
 
     // ReSharper disable once MemberCanBeProtected.Global
-    public DungeonRoom([NotNull] string name, [NotNull] GameObject dungeonPrefab)
+    private protected DungeonRoom([NotNull] string name, [NotNull] GameObject dungeonPrefab, [NotNull] ITraceableLogging logger)
     {
       try
       {
-        Name            = name;
-        DungeonPrefab   = dungeonPrefab;
-        RoomTrigger     = new TrapTriggerProxy(DungeonPrefab, Name);
-        // RoomSpawnPool   = RoomTrigger.SpawnPool;
-        RoomSpawnPoints = RoomTrigger.Spawners;
+        Logger = logger;
+        Log.Trace(logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Creating Dungeon Room ({name}) from {dungeonPrefab.name}");
+        Name = name;
+        _dungeonPrefab = dungeonPrefab;
+        RoomTrigger = TrapTriggerProxy.CreateInstance(_dungeonPrefab, Name, Logger);
+        RoomSpawnPoints = RoomTrigger?.Spawners;
       }
       catch (Exception e)
       {
-        Log.Error(this, e);
+        Log.Error(Logger, e);
       }
     }
 
-    #region Implementation of ITraceableLogging
-
-    /// <inheritdoc />
-    public string Source => $"Digitalroot.Valheim.Dungeons.Common.{ nameof(DungeonRoom) } ({Name})";
-
-    /// <inheritdoc />
-    [UsedImplicitly]
-    public bool EnableTrace { get; private set; }
-
-    public void SetEnableTrace(bool value)
+    public static DungeonRoom CreateInstance([NotNull] string name, [NotNull] GameObject dungeonPrefab, [NotNull] ITraceableLogging logger)
     {
-      EnableTrace = value;
+      return new DungeonRoom(name, dungeonPrefab, logger);
     }
-
-    #endregion
   }
-
 }

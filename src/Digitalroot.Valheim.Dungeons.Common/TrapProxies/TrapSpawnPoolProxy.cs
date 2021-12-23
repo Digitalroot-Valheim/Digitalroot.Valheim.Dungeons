@@ -1,9 +1,13 @@
-﻿using Digitalroot.Valheim.Dungeons.Common.Utils;
+﻿using Digitalroot.Valheim.Common;
+using Digitalroot.Valheim.Dungeons.Common.Utils;
 using Digitalroot.Valheim.TrapSpawners;
 using JetBrains.Annotations;
 using Jotunn.Managers;
 using System;
+using System.Reflection;
 using UnityEngine;
+
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
 {
@@ -14,13 +18,27 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
     private static string GetPath(string roomName, string roomSpawnPoolName) => $"Interior/Dungeon/Rooms/{roomName}/Spawners/{roomSpawnPoolName}";
 
     // ReSharper disable once MemberCanBeProtected.Global
-    public TrapSpawnPoolProxy([NotNull] TrapSpawnPool trapSpawnPool)
-      : base(trapSpawnPool) { }
+    private protected TrapSpawnPoolProxy([NotNull] TrapSpawnPool realObject, [NotNull] ITraceableLogging logger)
+      : base(realObject, logger)
+    {
+      Log.Trace(_logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Creating Spawn Pool ({realObject.name})");
+      realObject.LogEvent += HandleLogEvent;
+    }
 
-    public TrapSpawnPoolProxy([NotNull] GameObject dungeon, [NotNull] string roomName, [NotNull] string roomSpawnPoolName = RoomSpawnPoolName)
-      : base(dungeon.transform.Find(GetPath(roomName, roomSpawnPoolName))
+    private protected TrapSpawnPoolProxy([NotNull] GameObject dungeon, [NotNull] string roomName, [NotNull] ITraceableLogging logger, [NotNull] string roomSpawnPoolName = RoomSpawnPoolName)
+      : this(dungeon.transform.Find(GetPath(roomName, roomSpawnPoolName))
                     ?.gameObject?.GetComponent<TrapSpawnPool>()
-             ?? throw new NullReferenceException($"{nameof(TrapSpawnPoolProxy)} '{GetPath(roomName, roomSpawnPoolName)}' not found.")) { }
+             ?? throw new NullReferenceException($"{nameof(TrapSpawnPoolProxy)} '{GetPath(roomName, roomSpawnPoolName)}' not found."), logger) { }
+
+    public static TrapSpawnPoolProxy CreateInstance([NotNull] TrapSpawnPool realObject, [NotNull] ITraceableLogging logger)
+    {
+      return new TrapSpawnPoolProxy(realObject, logger);
+    }
+
+    public static TrapSpawnPoolProxy CreateInstance([NotNull] GameObject dungeon, [NotNull] string roomName, [NotNull] ITraceableLogging logger, [NotNull] string roomSpawnPoolName = RoomSpawnPoolName)
+    {
+      return new TrapSpawnPoolProxy(dungeon, roomName, logger, roomSpawnPoolName);
+    }
 
     #region Implementation of ISpawnPool
 

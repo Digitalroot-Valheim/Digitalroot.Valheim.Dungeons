@@ -11,6 +11,7 @@ using Jotunn.Entities;
 using Jotunn.Managers;
 using Jotunn.Utils;
 using System;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -63,6 +64,7 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
         _assetBundle = AssetUtils.LoadAssetBundleFromResources("op_dungeons", typeof(Main).Assembly);
 
         #if DEBUG
+
         foreach (var scene in _assetBundle.GetAllScenePaths())
         {
           Log.Trace(Instance, scene);
@@ -74,6 +76,7 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
           Log.Trace(Instance, assetName);
         }
         #endif
+
         PrefabManager.Instance.AddPrefab(new CustomPrefab(_assetBundle.LoadAsset<GameObject>(OdinsHollow), true));
         PrefabManager.OnVanillaPrefabsAvailable += OnVanillaPrefabsAvailable;
 
@@ -101,12 +104,16 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
       _dungeon.GlobalSpawnPool?.Clear(); // Remove anything already in the GSP.
       _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.SkeletonPoison);
       _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.Blob);
-      // _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.BlobElite);
+      _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.BlobElite);
       _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.Draugr);
-      // _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.DraugrElite);
+      _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.DraugrElite);
       _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.DraugrRanged);
       _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.SkeletonNoArcher);
-      // _dungeon.GlobalSpawnPool?.AddEnemy(PrefabNames.SkeletonNoArcher);
+      _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.Ghost);
+      _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.Wraith);
+      _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.Abomination);
+      _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.Surtling);
+      
       // _dungeon.GlobalSpawnPool?.AddEnemy(PrefabNames.SkeletonNoArcher);
       // _dungeon.GlobalSpawnPool?.AddPrefab(PrefabNames.BonePileSpawner);
       // _dungeon.GlobalSpawnPool?.AddPrefab(PrefabNames.SpawnerDraugrPile);
@@ -117,9 +124,10 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
       Log.Trace(Instance, $"Seeding bosses for {room.Name}");
       Log.Trace(Instance, $"Room Health Check [{room.Name}]");
       Log.Trace(Instance, $"room.RoomBossSpawnPoints == null [{room.RoomBossSpawnPoint == null}]");
-      Log.Trace(Instance, $"room.RoomBossTrigger == null [{room.RoomBossTrigger == null}]");
+      Log.Trace(Instance, $"room.RoomBossSpawnPoints.Count() [{room.RoomBossSpawnPoint?.Count()}]");
+      // Log.Trace(Instance, $"room.RoomBossTrigger == null [{room.RoomBossTrigger == null}]");
 
-      room.RoomBossSpawnPoint?.SpawnPool.AddBoss(EnemyNames.DraugrElite);
+      // room.RoomBossSpawnPoint?.SpawnPool.AddBoss(EnemyNames.DraugrElite);
 
       SeedSpawnPoolsFor(room as DungeonRoom);
     }
@@ -132,10 +140,9 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
       // Log.Trace(Instance, $"room.RoomSpawnPool?.Count() == null : {room.RoomSpawnPool?.Count}");
       Log.Trace(Instance, $"room.RoomTrigger == null : {room.RoomTrigger == null}");
       Log.Trace(Instance, $"room.RoomSpawnPoints == null : {room.RoomSpawnPoints == null}");
-      Log.Trace(Instance, $"room.RoomSpawnPoints?.Count : {room.RoomSpawnPoints?.Count}");
+      Log.Trace(Instance, $"room.RoomSpawnPoints?.Count : {room.RoomSpawnPoints?.Count()}");
 
       // if (room.RoomSpawnPool == null) return;
-
       // room.RoomSpawnPool?.AddEnemy(EnemyNames.Draugr);
       // room.RoomSpawnPool?.AddEnemy(EnemyNames.DraugrRanged);
     }
@@ -168,18 +175,6 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
       }
     }
 
-    internal void OnObjectDBAwake(ref ObjectDB instance)
-    {
-    }
-
-    internal void OnObjectDBCopyOtherDB(ref ObjectDB instance)
-    {
-    }
-
-    internal void OnSpawnedPlayer(ref Game instance, Vector3 spawnPoint)
-    {
-    }
-
     private void OnVanillaPrefabsAvailable()
     {
       try
@@ -190,17 +185,29 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
         Debug.Assert(dungeonPrefab != null, nameof(dungeonPrefab) + " != null");
 
         // Configure
-        _dungeon = new Dungeon(OdinsHollow, dungeonPrefab);
-        _dungeon.SetEnableTrace(EnableTrace);
-        // _dungeon.AddDungeonBossRoom(DungeonsRoomNames.BlueRoom);
+        _dungeon = new Dungeon(OdinsHollow, dungeonPrefab, Instance);
+        _dungeon.AddDungeonRoom(DungeonsRoomNames.CaveEntrance);
+        _dungeon.AddDungeonRoom(DungeonsRoomNames.CaveHall1);
+        _dungeon.AddDungeonRoom(DungeonsRoomNames.CaveHall2);
         _dungeon.AddDungeonRoom(DungeonsRoomNames.CaveBridge);
+        _dungeon.AddDungeonRoom(DungeonsRoomNames.CaveHall3);
+        _dungeon.AddDungeonRoom(DungeonsRoomNames.CaveRoom1);
+        _dungeon.AddDungeonRoom(DungeonsRoomNames.CaveHall4);
+        _dungeon.AddDungeonRoom(DungeonsRoomNames.CaveHall5);
+        _dungeon.AddDungeonBossRoom(DungeonsRoomNames.RedRoom);
+        _dungeon.AddDungeonRoom(DungeonsRoomNames.CaveHall6);
+        _dungeon.AddDungeonRoom(DungeonsRoomNames.CaveRoom2);
+        _dungeon.AddDungeonBossRoom(DungeonsRoomNames.GreenRoom);
+        _dungeon.AddDungeonRoom(DungeonsRoomNames.CaveRoom3);
+        _dungeon.AddDungeonRoom(DungeonsRoomNames.CaveRoom4);
+        _dungeon.AddDungeonBossRoom(DungeonsRoomNames.BlueRoom);
 
         // Seed
         SeedGlobalSpawnPoolIfNecessary();
-        foreach (var dungeonDungeonBossRoom in _dungeon.DungeonBossRooms)
-        {
-          SeedSpawnPoolsFor(dungeonDungeonBossRoom);
-        }
+        // foreach (var dungeonDungeonBossRoom in _dungeon.DungeonBossRooms)
+        // {
+        //   SeedSpawnPoolsFor(dungeonDungeonBossRoom);
+        // }
       }
       catch (Exception e)
       {
@@ -210,14 +217,6 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
       {
         PrefabManager.OnVanillaPrefabsAvailable -= OnVanillaPrefabsAvailable;
       }
-    }
-
-    internal void OnZNetAwake(ref ZNet instance)
-    {
-    }
-
-    internal void OnZNetSceneAwake(ref ZNetScene instance)
-    {
     }
 
     #endregion

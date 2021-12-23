@@ -31,6 +31,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Patch.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Assets\Assets" />
     <None Remove="Assets\Assets.manifest" />
     <None Remove="Assets\op_dungeons" />
@@ -43,7 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BepInEx.Core" Version="5.4.16">
+    <PackageReference Include="BepInEx.Core" Version="5.4.17">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Digitalroot.CustomMonoBehaviours" Version="1.0.1" />
@@ -52,7 +56,7 @@
       <PrivateAssets>all</PrivateAssets>
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
-    <PackageReference Include="Digitalroot.Valheim.Common.Log" Version="1.1.14" />
+    <PackageReference Include="Digitalroot.Valheim.Common.Log" Version="1.1.15" />
     <PackageReference Include="Digitalroot.Valheim.Common.Names" Version="1.4.7" />
     <PackageReference Include="Digitalroot.Valheim.Common.References" Version="0.205.6">
       <PrivateAssets>all</PrivateAssets>
@@ -67,15 +71,16 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="FSMSharp.Valheim" Version="1.0.2" />
-    <PackageReference Include="HarmonyX" Version="2.6.1">
+    <PackageReference Include="HarmonyX" Version="2.7.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="ILMerge.Fody" Version="1.22.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="JotunnLib" Version="2.4.3">
+    <PackageReference Include="JotunnLib" Version="2.4.5">
       <PrivateAssets>all</PrivateAssets>
       <ExcludeAssets>runtime</ExcludeAssets>
+      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="UnityEngine.Modules" Version="[2019.4.32]">
       <PrivateAssets>all</PrivateAssets>

@@ -11,23 +11,33 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
 {
   public class TrapTriggerProxy : AbstractProxy<TrapTrigger>
   {
-    private readonly StaticSourceLogger _logger = new(true);
     private const string RoomTriggerName = "SpawnTrigger";
-
-    public TrapTriggerProxy(TrapTrigger realObject)
-      : base(realObject) { }
-
-    public TrapTriggerProxy([NotNull] GameObject dungeon, [NotNull] string roomName, [NotNull] string roomTriggerName = RoomTriggerName)
-      : base(dungeon.transform.Find(GetPath(roomName, roomTriggerName))
-                    ?.gameObject?.GetComponent<TrapTrigger>()
-             ?? throw new NullReferenceException($"{nameof(TrapTriggerProxy)} '{GetPath(roomName, roomTriggerName)}' not found.")
-            )
-    {
-    }
-
     private static string GetPath(string roomName, string roomTriggerName) => $"Interior/Dungeon/Rooms/{roomName}/Spawners/{roomTriggerName}";
 
-    public List<TrapSpawnerProxy> Spawners => RealObject.TrapSpawners.Select(trapSpawner => new TrapSpawnerProxy(trapSpawner.GetComponent<TrapSpawner>())).ToList();
+    private TrapTriggerProxy([NotNull] TrapTrigger realObject, [NotNull] ITraceableLogging logger)
+      : base(realObject, logger)
+    {
+      Log.Trace(_logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Creating Trigger ({realObject.name})");
+      realObject.LogEvent += HandleLogEvent;
+    }
+
+    private TrapTriggerProxy([NotNull] GameObject dungeon, [NotNull] string roomName, [NotNull] ITraceableLogging logger, [NotNull] string roomTriggerName = RoomTriggerName)
+      : this(dungeon.transform.Find(GetPath(roomName, roomTriggerName))
+                    ?.gameObject?.GetComponent<TrapTrigger>()
+             ?? throw new NullReferenceException($"{nameof(TrapTriggerProxy)} '{GetPath(roomName, roomTriggerName)}' not found.")
+             , logger) { }
+
+    public static TrapTriggerProxy CreateInstance([NotNull] TrapTrigger realObject, [NotNull] ITraceableLogging logger)
+    {
+      return new TrapTriggerProxy(realObject, logger);
+    }
+
+    public static TrapTriggerProxy CreateInstance([NotNull] GameObject dungeon, [NotNull] string roomName, [NotNull] ITraceableLogging logger, [NotNull] string roomTriggerName = RoomTriggerName)
+    {
+      return dungeon.transform.Find(roomName) != null ? new TrapTriggerProxy(dungeon, roomName, logger, roomTriggerName) : null;
+    }
+
+    public IEnumerable<TrapSpawnerProxy> Spawners => RealObject.TrapSpawners.Select(trapSpawner => TrapSpawnerProxy.CreateInstance(trapSpawner.GetComponent<TrapSpawner>(), _logger));
 
     [UsedImplicitly]
     private bool ShouldTrigger(Collider other)
@@ -39,6 +49,5 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
     }
 
     public void SetIsTriggered(bool value) => RealObject.SetIsTriggered(value);
-
   }
 }

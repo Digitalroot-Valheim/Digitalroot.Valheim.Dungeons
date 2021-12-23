@@ -1,6 +1,6 @@
 ﻿using Digitalroot.Valheim.Common;
-using Digitalroot.Valheim.Dungeons.Common.Utils;
 using Digitalroot.Valheim.TrapSpawners.Logging;
+using JetBrains.Annotations;
 using System;
 // ReSharper disable MemberCanBePrivate.Global
 
@@ -10,9 +10,11 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
   {
     // ReSharper disable once MemberCanBePrivate.Global
     protected readonly TProxyType RealObject;
+    protected readonly ITraceableLogging _logger;
 
-    protected AbstractProxy(TProxyType realObject)
+    protected AbstractProxy([NotNull] TProxyType realObject, [NotNull] ITraceableLogging logger)
     {
+      _logger = logger;
       RealObject = realObject;
       RealObject.LogEvent += HandleLogEvent;
     }
@@ -30,31 +32,31 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
       switch (e.LogLevel)
       {
         case LogLevel.Info:
-          Log.Info(DungeonsUtils.StaticLogger, e);
+          Log.Info(_logger, e);
           break;
 
         case LogLevel.Debug:
-          Log.Debug(DungeonsUtils.StaticLogger, e);
+          Log.Debug(_logger, e);
           break;
 
         case LogLevel.Warning:
-          Log.Warning(DungeonsUtils.StaticLogger, e);
+          Log.Warning(_logger, e);
           break;
 
         case LogLevel.Error:
-          Log.Error(DungeonsUtils.StaticLogger, e);
+          Log.Error(_logger, e);
           break;
 
         case LogLevel.Fatal:
-          Log.Fatal(DungeonsUtils.StaticLogger, e);
+          Log.Fatal(_logger, e);
           break;
 
         case LogLevel.Trace:
-          Log.Trace(DungeonsUtils.StaticLogger, e);
+          Log.Trace(_logger, e);
           break;
 
         case LogLevel.Message:
-          Log.Message(DungeonsUtils.StaticLogger, e);
+          Log.Message(_logger, e);
           break;
 
         default:

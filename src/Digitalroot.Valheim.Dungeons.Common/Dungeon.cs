@@ -7,61 +7,50 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable CollectionNeverQueried.Global
+
 namespace Digitalroot.Valheim.Dungeons.Common
 {
-  public class Dungeon : ITraceableLogging
+  public class Dungeon
   {
-    // ReSharper disable once NotAccessedField.Global
-    // ReSharper disable once MemberCanBePrivate.Global
     public readonly string Name;
     public readonly List<DungeonBossRoom> DungeonBossRooms = new();
     public readonly List<DungeonRoom> DungeonRooms = new();
     public readonly GlobalSpawnPool GlobalSpawnPool;
     public readonly GameObject DungeonPrefab;
+    private readonly ITraceableLogging _logger;
 
-    public Dungeon([NotNull] string name, [NotNull] GameObject dungeonPrefab)
+    public Dungeon([NotNull] string name, [NotNull] GameObject dungeonPrefab, ITraceableLogging logger)
     {
       try
       {
-        Log.Trace(this, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Creating Dungeon ({name}) from {dungeonPrefab.name}");
+        _logger = logger;
+        Log.Trace(logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Creating Dungeon ({name}) from {dungeonPrefab.name}");
         Name = name;
         DungeonPrefab = dungeonPrefab;
-        GlobalSpawnPool = new GlobalSpawnPool(DungeonPrefab);
+        GlobalSpawnPool = GlobalSpawnPool.CreateInstance(DungeonPrefab, _logger);
       }
       catch (Exception e)
       {
-        Log.Error(this, e);
+        Log.Error(_logger, e);
       }
     }
 
-    public void AddDungeonRoom(string dungeonRoomName) => AddDungeonRoom(new DungeonRoom(dungeonRoomName, DungeonPrefab));
-    // ReSharper disable once MemberCanBePrivate.Global
-    public void AddDungeonRoom(DungeonRoom dungeonRoom) => DungeonRooms.Add(dungeonRoom);
-    
+    public void AddDungeonRoom(string dungeonRoomName) => AddDungeonRoom(DungeonRoom.CreateInstance(dungeonRoomName, DungeonPrefab, _logger));
 
-    public void AddDungeonBossRoom(string dungeonRoomName) => AddDungeonBossRoom(new DungeonBossRoom(dungeonRoomName, DungeonPrefab));
-    // ReSharper disable once MemberCanBePrivate.Global
-    public void AddDungeonBossRoom(DungeonBossRoom dungeonRoom) => DungeonBossRooms.Add(dungeonRoom);
-
-
-    #region Implementation of ITraceableLogging
-
-    /// <inheritdoc />
-    public string Source => $"Digitalroot.Valheim.Dungeons.Common.{nameof(Dungeon)}";
-
-    /// <inheritdoc />
-    [UsedImplicitly]
-    public bool EnableTrace { get; private set; }
-
-    public void SetEnableTrace(bool value)
+    public void AddDungeonRoom(DungeonRoom dungeonRoom)
     {
-      EnableTrace = value;
-      foreach (var dungeonBossRoom in DungeonBossRooms)
-      {
-        dungeonBossRoom.SetEnableTrace(value);
-      }
+      Log.Trace(_logger, $"Adding {dungeonRoom}");
+      DungeonRooms.Add(dungeonRoom);
     }
 
-    #endregion
+    public void AddDungeonBossRoom(string dungeonRoomName) => AddDungeonBossRoom(DungeonBossRoom.CreateInstance(dungeonRoomName, DungeonPrefab, _logger));
+
+    public void AddDungeonBossRoom(DungeonBossRoom dungeonRoom)
+    {
+      Log.Trace(_logger, $"Adding {dungeonRoom}");
+      DungeonBossRooms.Add(dungeonRoom);
+    }
   }
 }

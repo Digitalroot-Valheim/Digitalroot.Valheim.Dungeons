@@ -1,6 +1,8 @@
-﻿using Digitalroot.Valheim.TrapSpawners;
+﻿using Digitalroot.Valheim.Common;
+using Digitalroot.Valheim.TrapSpawners;
 using JetBrains.Annotations;
 using System;
+using System.Reflection;
 using UnityEngine;
 
 namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
@@ -9,17 +11,32 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
   public class TrapSpawnerProxy : AbstractProxy<TrapSpawner>
   {
     private const string RoomSpawnPointName = "SpawnPoint";
+    public ISpawnPool SpawnPool => RealObject.SpawnPool;
+    public string Name => RealObject.name;
+    public bool IsBoss => RealObject.m_isBoss;
+
     private static string GetPath(string roomName, string roomSpawnPointName) => $"Interior/Dungeon/Rooms/{roomName}/Spawners/{roomSpawnPointName}";
 
-    public TrapSpawnerProxy([NotNull] TrapSpawner trapSpawner)
-      : base(trapSpawner) { }
+    private TrapSpawnerProxy([NotNull] TrapSpawner realObject, [NotNull] ITraceableLogging logger)
+      : base(realObject, logger)
+    {
+      Log.Trace(_logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Creating Spawner ({realObject.name})");
+      realObject.LogEvent += HandleLogEvent;
+    }
 
-    public TrapSpawnerProxy([NotNull] GameObject dungeon, [NotNull] string roomName, [NotNull] string roomSpawnPointName = RoomSpawnPointName)
-      : base(dungeon.transform.Find(GetPath(roomName, roomSpawnPointName))
+    private TrapSpawnerProxy([NotNull] GameObject dungeon, [NotNull] string roomName, [NotNull] ITraceableLogging logger, [NotNull] string roomSpawnPointName = RoomSpawnPointName)
+      : this(dungeon.transform.Find(GetPath(roomName, roomSpawnPointName))
                     ?.gameObject?.GetComponent<TrapSpawner>()
-             ?? throw new NullReferenceException($"{nameof(TrapSpawnerProxy)} '{GetPath(roomName, roomSpawnPointName)}' not found.")) { }
+             ?? throw new NullReferenceException($"{nameof(TrapSpawnerProxy)} '{GetPath(roomName, roomSpawnPointName)}' not found."), logger) { }
 
-    public ISpawnPool SpawnPool => RealObject.SpawnPool;
+    public static TrapSpawnerProxy CreateInstance([NotNull] TrapSpawner realObject, [NotNull] ITraceableLogging logger)
+    {
+      return new TrapSpawnerProxy(realObject, logger);
+    }
 
+    public static TrapSpawnerProxy CreateInstance([NotNull] GameObject dungeon, [NotNull] string roomName, [NotNull] ITraceableLogging logger, [NotNull] string roomSpawnPointName = RoomSpawnPointName)
+    {
+      return new TrapSpawnerProxy(dungeon, roomName, logger, roomSpawnPointName);
+    }
   }
 }
