@@ -6,7 +6,7 @@ namespace Digitalroot.Valheim.Dungeons.Common.Utils
 {
   public static class DungeonsUtils
   {
-    private static readonly StaticSourceLogger StaticLogger = new StaticSourceLogger($"Digitalroot.Valheim.Dungeons.Common.{nameof(DungeonsUtils)}");
+    internal static readonly StaticSourceLogger StaticLogger = new StaticSourceLogger($"Digitalroot.Valheim.Dungeons.Common.{nameof(DungeonsUtils)}");
 
     public static GameObject ConfigureAsTrash(GameObject prefab)
     {

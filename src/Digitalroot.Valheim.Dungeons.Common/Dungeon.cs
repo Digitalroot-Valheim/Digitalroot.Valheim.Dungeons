@@ -14,8 +14,8 @@ namespace Digitalroot.Valheim.Dungeons.Common
     // ReSharper disable once NotAccessedField.Global
     // ReSharper disable once MemberCanBePrivate.Global
     public readonly string Name;
-    public readonly List<DungeonBossRoom> DungeonBossRooms = new List<DungeonBossRoom>();
-    public readonly List<DungeonRoom> DungeonRooms = new List<DungeonRoom>();
+    public readonly List<DungeonBossRoom> DungeonBossRooms = new();
+    public readonly List<DungeonRoom> DungeonRooms = new();
     public readonly GlobalSpawnPool GlobalSpawnPool;
     public readonly GameObject DungeonPrefab;
 

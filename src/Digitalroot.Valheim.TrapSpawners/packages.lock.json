@@ -2,6 +2,12 @@
   "version": 1,
   "dependencies": {
     ".NETFramework,Version=v4.6.2": {
+      "Digitalroot.Valheim.Common.References": {
+        "type": "Direct",
+        "requested": "[0.205.6, )",
+        "resolved": "0.205.6",
+        "contentHash": "zXSnFD/lHssUcRpM/gciECcTNW5CXa/GyWXaqHM5labGjLW4ALui5cxuZuoD5N2pjt98bHLKdGFIm1xGIfO+IA=="
+      },
       "ErrorProne.NET.CoreAnalyzers": {
         "type": "Direct",
         "requested": "[0.1.2, )",

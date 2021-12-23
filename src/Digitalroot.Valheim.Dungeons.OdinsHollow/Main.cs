@@ -119,7 +119,7 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
       Log.Trace(Instance, $"room.RoomBossSpawnPoints == null [{room.RoomBossSpawnPoint == null}]");
       Log.Trace(Instance, $"room.RoomBossTrigger == null [{room.RoomBossTrigger == null}]");
 
-      room.RoomBossSpawnPoint?.AddBoss(EnemyNames.DraugrElite);
+      room.RoomBossSpawnPoint?.SpawnPool.AddBoss(EnemyNames.DraugrElite);
 
       SeedSpawnPoolsFor(room as DungeonRoom);
     }
@@ -128,16 +128,16 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
     {
       Log.Trace(Instance, $"Seeding trash for {room.Name}");
       Log.Trace(Instance, $"Room Health Check [{room.Name}]");
-      Log.Trace(Instance, $"room.RoomSpawnPool == null : {room.RoomSpawnPool == null}");
-      Log.Trace(Instance, $"room.RoomSpawnPool?.SpawnPoolCount() == null : {room.RoomSpawnPool?.SpawnPoolCount()}");
+      // Log.Trace(Instance, $"room.RoomSpawnPool == null : {room.RoomSpawnPool == null}");
+      // Log.Trace(Instance, $"room.RoomSpawnPool?.Count() == null : {room.RoomSpawnPool?.Count}");
       Log.Trace(Instance, $"room.RoomTrigger == null : {room.RoomTrigger == null}");
       Log.Trace(Instance, $"room.RoomSpawnPoints == null : {room.RoomSpawnPoints == null}");
       Log.Trace(Instance, $"room.RoomSpawnPoints?.Count : {room.RoomSpawnPoints?.Count}");
 
-      if (room.RoomSpawnPool == null) return;
+      // if (room.RoomSpawnPool == null) return;
 
-      room.RoomSpawnPool?.AddEnemy(EnemyNames.Draugr);
-      room.RoomSpawnPool?.AddEnemy(EnemyNames.DraugrRanged);
+      // room.RoomSpawnPool?.AddEnemy(EnemyNames.Draugr);
+      // room.RoomSpawnPool?.AddEnemy(EnemyNames.DraugrRanged);
     }
 
     #endregion
@@ -193,6 +193,7 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
         _dungeon = new Dungeon(OdinsHollow, dungeonPrefab);
         _dungeon.SetEnableTrace(EnableTrace);
         // _dungeon.AddDungeonBossRoom(DungeonsRoomNames.BlueRoom);
+        _dungeon.AddDungeonRoom(DungeonsRoomNames.CaveBridge);
 
         // Seed
         SeedGlobalSpawnPoolIfNecessary();

@@ -1,108 +1,72 @@
-﻿using JetBrains.Annotations;
+﻿using Digitalroot.Valheim.TrapSpawners.Logging;
+using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable InconsistentNaming
+// ReSharper disable ClassWithVirtualMembersNeverInherited.Global
 // ReSharper disable once IdentifierTypo
 namespace Digitalroot.Valheim.TrapSpawners
 {
   [AddComponentMenu("Traps/Trigger", 30)]
-  public class TrapTrigger : MonoBehaviour
+  public class TrapTrigger : MonoBehaviour, IEventLogger
   {
-    [SerializeField] [HideInInspector] private bool _isTriggered;
-    
     [SerializeField]
-    // ReSharper disable once InconsistentNaming
-    // ReSharper disable once IdentifierTypo
-    // ReSharper disable once FieldCanBeMadeReadOnly.Local
-    // ReSharper disable once CollectionNeverUpdated.Local
-    // ReSharper disable once FieldCanBeMadeReadOnly.Global
-    // ReSharper disable once CollectionNeverUpdated.Global
-    public List<GameObject> m_trapSpawners = new List<GameObject>(0);
-
-    [Header("Trigger Spawn Pool"), SerializeField]
-    // ReSharper disable once InconsistentNaming
-#pragma warning disable 649
-    // ReSharper disable once MemberCanBePrivate.Global
-    // ReSharper disable once UnassignedField.Global
-    public bool m_useTriggerSpawnPool;
-#pragma warning restore 649
-
-    [SerializeField]
-    // ReSharper disable once InconsistentNaming
-    // ReSharper disable once FieldCanBeMadeReadOnly.Local
-    // ReSharper disable once MemberCanBePrivate.Global
-    // ReSharper disable once FieldCanBeMadeReadOnly.Global
-    public List<GameObject> m_spawnPoolPrefabs = new List<GameObject>(0);
-
-    [Header("Global Spawn Pool"), SerializeField]
-    // ReSharper disable once InconsistentNaming
-#pragma warning disable 649
-    // ReSharper disable once UnassignedField.Global
-    // ReSharper disable once MemberCanBePrivate.Global
-    public bool m_useGlobalSpawnPool; // ToDo: Wrap this in a public toggle method. 
-#pragma warning restore 649
-
-    [SerializeField] 
-    // ReSharper disable once InconsistentNaming
-#pragma warning disable 649
-    // ReSharper disable once MemberCanBePrivate.Global
-    // ReSharper disable once UnassignedField.Global
-    public GameObject m_globalSpawnPoolPrefab;
-#pragma warning restore 649
-
-    public void AddToSpawnPool(GameObject prefab)
-    {
-      m_spawnPoolPrefabs.Add(prefab);
-    }
-
-    public void ClearSpawnPool()
-    {
-      m_spawnPoolPrefabs.Clear();
-    }
-
     [HideInInspector]
-    // public Func<Collider, bool> ShouldTrigger = (collider => false );
+    public bool _isTriggered;
+
+    [Header("Spawners"), SerializeField]
+    public List<GameObject> m_trapSpawners = new(0);
+
+    public List<GameObject> TrapSpawners
+    {
+      get => m_trapSpawners;
+      set => m_trapSpawners = value;
+    }
+
+    private void DisableMarkerMesh()
+    {
+      var mesh = GetComponentInChildren<MeshRenderer>();
+      if (mesh == null) return;
+      mesh.enabled = false;
+    }
 
     [UsedImplicitly]
-    public void OnTriggerEnter(Collider other)
+    public void OnDestroy()
+    {
+      if (m_trapSpawners.Count == 0) return;
+
+      foreach (var trapSpawner in m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>()))
+      {
+        trapSpawner.LogEvent -= OnLogEvent;
+      }
+    }
+
+    [UsedImplicitly]
+    public void OnTriggered(Collider other)
     {
       if (_isTriggered) return;
-      Debug.Log($"** Trap Triggered **");
-      Debug.Log($"** Triggered By: {other.name} **");
 
-      if (other.name is not ("Player(Clone)" or "Player")) return;
+      OnLogEvent(new LogEventArgs { Message = $"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} ** Trap Triggered **", LogLevel = LogLevel.Trace });
+      OnLogEvent(new LogEventArgs { Message = $"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} ** Triggered By: {other.name} **", LogLevel = LogLevel.Trace });
 
       _isTriggered = true;
       if (m_trapSpawners.Count < 1) return;
 
-      List<GameObject> spawnPool = null;
-      switch (m_useGlobalSpawnPool)
-      {
-        // Global Pool
-        case true:
-          var globalSpawnPool = m_globalSpawnPoolPrefab.GetComponent<TrapSpawnPool>();
-          spawnPool = globalSpawnPool.m_spawnPoolPrefabs;
-          break;
-        
-        // Trigger Pool
-        case false when m_useTriggerSpawnPool:
-          spawnPool = m_spawnPoolPrefabs;
-          break;
-      }
-
-      // ReSharper disable once IdentifierTypo
       foreach (var trapSpawner in m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>()))
       {
-        // ReSharper disable once CommentTypo
-        trapSpawner?.DoSpawn(spawnPool); // null = use Spawners Pool
-      }
-    }
+        if (!trapSpawner.enabled)
+        {
+          OnLogEvent(new LogEventArgs { Message = $"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} Skipping: {trapSpawner.name}", LogLevel = LogLevel.Trace });
+          continue;
+        }
 
-    public void SetGlobalSpawnPool(GameObject value, bool enable = true)
-    {
-      m_globalSpawnPoolPrefab = value;
-      SetUseGlobalSpawnPool(enable);
+        trapSpawner.DoSpawn();
+      }
     }
 
     public void SetIsTriggered(bool value)
@@ -110,17 +74,62 @@ namespace Digitalroot.Valheim.TrapSpawners
       _isTriggered = value;
     }
 
-    public void SetUseGlobalSpawnPool(bool value)
+    [UsedImplicitly]
+    public void Start()
     {
-      m_useGlobalSpawnPool = value;
+      Debug.LogWarning($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} m_trapSpawners.Count : {m_trapSpawners.Count}");
+
+      DisableMarkerMesh();
+
+      OnLogEvent(new LogEventArgs { LogLevel = LogLevel.Trace, Message = $"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} m_trapSpawners.Count : {m_trapSpawners.Count}" });
+      if (m_trapSpawners.Count == 0) return;
+
+      var spawners = m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>()).ToList();
+
+      Debug.LogWarning($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>().Count : {spawners.Count}");
+      OnLogEvent(new LogEventArgs { LogLevel = LogLevel.Trace, Message = $"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>().Count : {spawners.Count}" });
+
+      foreach (var trapSpawner in m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>()))
+      {
+        OnLogEvent(new LogEventArgs { LogLevel = LogLevel.Trace, Message = $"Logger Wire up" });
+        trapSpawner.LogEvent += OnLogEvent;
+      }
     }
 
-    public void SetUseTriggerSpawnPool(bool value)
+    #region Logging
+
+    [HideInInspector]
+    public event EventHandler<LogEventArgs> LogEvent;
+
+    /// <inheritdoc />
+    public void OnLogEvent(object sender, LogEventArgs logEventArgs)
     {
-      m_useTriggerSpawnPool = value;
+      try
+      {
+        Debug.Log(logEventArgs.Message);
+        Debug.Log($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} LogEvent == null : {LogEvent == null}");
+
+        if (LogEvent != null)
+        {
+          foreach (var d in LogEvent.GetInvocationList())
+          {
+            d.DynamicInvoke(sender, logEventArgs);
+          }
+        }
+
+        // LogEvent?.Invoke(sender, logEventArgs);
+      }
+      catch (Exception e)
+      {
+        LoggingUtils.HandleDelegateError(LogEvent?.Method, e);
+      }
     }
 
-    public int SpawnPoolCount() => m_spawnPoolPrefabs.Count;
+    private void OnLogEvent(LogEventArgs logEventArgs)
+    {
+      OnLogEvent(this, logEventArgs);
+    }
 
+    #endregion
   }
 }

@@ -109,7 +109,10 @@
         }
       },
       "digitalroot.valheim.trapspawners": {
-        "type": "Project"
+        "type": "Project",
+        "dependencies": {
+          "Digitalroot.Valheim.Common.References": "0.205.6"
+        }
       }
     }
   }
