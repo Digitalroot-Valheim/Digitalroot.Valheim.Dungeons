@@ -13,6 +13,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{E64D67E6-C2B6-471C-990D-2E9A91427B64}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{1960DCD1-3C51-48FF-BFF8-5FE4C3CBABB2}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\builder.yml = ..\.github\workflows\builder.yml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{ECE65B8A-4208-4EC7-AC71-D853048978AA}"
 	ProjectSection(SolutionItems) = preProject
@@ -33,9 +36,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "imgs", "imgs", "{03D2B486-2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Digitalroot.Valheim.TrapSpawners", "Digitalroot.Valheim.TrapSpawners\Digitalroot.Valheim.TrapSpawners.csproj", "{4BEC8E6F-B4B1-46C8-9232-79894A22280A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digitalroot.Valheim.Dungeons.OdinsHollow", "Digitalroot.Valheim.Dungeons.OdinsHollow\Digitalroot.Valheim.Dungeons.OdinsHollow.csproj", "{F526C3C2-45DF-4483-BF6E-F30089D68E2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Digitalroot.Valheim.Dungeons.OdinsHollow", "Digitalroot.Valheim.Dungeons.OdinsHollow\Digitalroot.Valheim.Dungeons.OdinsHollow.csproj", "{F526C3C2-45DF-4483-BF6E-F30089D68E2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digitalroot.Valheim.Dungeons.Common", "Digitalroot.Valheim.Dungeons.Common\Digitalroot.Valheim.Dungeons.Common.csproj", "{B496AAD8-DC6B-492A-8939-DF978F9781A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Digitalroot.Valheim.Dungeons.Common", "Digitalroot.Valheim.Dungeons.Common\Digitalroot.Valheim.Dungeons.Common.csproj", "{B496AAD8-DC6B-492A-8939-DF978F9781A8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ico", "ico", "{B9AE976F-2F94-4027-A096-E6774C0F5827}"
 	ProjectSection(SolutionItems) = preProject
