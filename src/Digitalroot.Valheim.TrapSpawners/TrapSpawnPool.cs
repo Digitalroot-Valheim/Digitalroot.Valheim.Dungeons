@@ -3,16 +3,15 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ReSharper disable once IdentifierTypo
+// ReSharper disable InconsistentNaming
+// ReSharper disable FieldCanBeMadeReadOnly.Global
+
 namespace Digitalroot.Valheim.TrapSpawners
 {
   [AddComponentMenu("Traps/Spawn Pool", 32)]
-  // ReSharper disable once ClassNeverInstantiated.Global
   public class TrapSpawnPool : MonoBehaviour, IEventLogger, ISpawnPool
   {
     [SerializeField, Tooltip("Collection of all the prefabs that can spawn")]
-    // ReSharper disable once InconsistentNaming
-    // ReSharper disable once FieldCanBeMadeReadOnly.Global
     public List<GameObject> m_spawnPoolPrefabs = new(0);
 
     #region Implementation of IEventLogger
@@ -25,8 +24,8 @@ namespace Digitalroot.Valheim.TrapSpawners
     {
       try
       {
-        Debug.Log(logEventArgs.Message);
-        LogEvent?.Invoke(this, logEventArgs);
+        Debug.Log($"[REMOVE] {logEventArgs.Message}"); // Todo: Remove
+        LogEvent?.Invoke(sender, logEventArgs);
       }
       catch (Exception e)
       {

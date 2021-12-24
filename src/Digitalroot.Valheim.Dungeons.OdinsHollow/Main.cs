@@ -3,8 +3,10 @@ using Digitalroot.CustomMonoBehaviours;
 using Digitalroot.Valheim.Common;
 using Digitalroot.Valheim.Common.Names.Vanilla;
 using Digitalroot.Valheim.Dungeons.Common;
+using Digitalroot.Valheim.Dungeons.Common.Logging;
 using Digitalroot.Valheim.Dungeons.Common.Rooms;
 using Digitalroot.Valheim.Dungeons.OdinsHollow.Enums;
+using Digitalroot.Valheim.TrapSpawners.Logging;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Jotunn.Entities;
@@ -38,6 +40,7 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
     // ReSharper disable once IdentifierTypo
     private const string OdinsHollow = nameof(OdinsHollow);
     private Dungeon _dungeon;
+    private EventLogHandler _eventLogHandler;
 
     public Main()
     {
@@ -49,6 +52,7 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
       #else
       EnableTrace = false;
       #endif
+      _eventLogHandler = new EventLogHandler(Instance);
       Log.Trace(Instance, $"{Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}");
     }
 
@@ -77,7 +81,10 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
         }
         #endif
 
-        PrefabManager.Instance.AddPrefab(new CustomPrefab(_assetBundle.LoadAsset<GameObject>(OdinsHollow), true));
+        var oh = _assetBundle.LoadAsset<GameObject>(OdinsHollow);
+        var eventLogCollector = oh.GetComponent<EventLogCollector>();
+        eventLogCollector.LogEvent += _eventLogHandler.HandleLogEvent;
+        PrefabManager.Instance.AddPrefab(new CustomPrefab(oh, true));
         PrefabManager.OnVanillaPrefabsAvailable += OnVanillaPrefabsAvailable;
 
         // _harmony = Harmony.CreateAndPatchAll(typeof(Main).Assembly, Guid);
@@ -111,12 +118,28 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
       _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.SkeletonNoArcher);
       _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.Ghost);
       _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.Wraith);
-      _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.Abomination);
+      // _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.Abomination);
       _dungeon.GlobalSpawnPool?.AddEnemy(EnemyNames.Surtling);
       
       // _dungeon.GlobalSpawnPool?.AddEnemy(PrefabNames.SkeletonNoArcher);
       // _dungeon.GlobalSpawnPool?.AddPrefab(PrefabNames.BonePileSpawner);
       // _dungeon.GlobalSpawnPool?.AddPrefab(PrefabNames.SpawnerDraugrPile);
+    }
+
+    private void SeedGlobalDecoSpawnPoolIfNecessary()
+    {
+      Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Seeding Global Deco Spawn Pool");
+      Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] _dungeon.GlobalDecoSpawnPool == null : {_dungeon.GlobalDecoSpawnPool == null}");
+
+      if (_dungeon.GlobalDecoSpawnPool == null)
+      {
+        Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Skipping Seeding of Global Deco Spawn Pool");
+        return;
+      }
+
+      _dungeon.GlobalDecoSpawnPool?.Clear(); // Remove anything already in the GSP.
+      // _dungeon.GlobalDecoSpawnPool?.AddPrefab(PrefabNames.Mudpile);
+      _dungeon.GlobalDecoSpawnPool?.AddPrefab(PrefabNames.Mudpile2); // MP2 just looks so much better
     }
 
     private void SeedSpawnPoolsFor(DungeonBossRoom room)
@@ -129,7 +152,7 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
 
       // room.RoomBossSpawnPoint?.SpawnPool.AddBoss(EnemyNames.DraugrElite);
 
-      SeedSpawnPoolsFor(room as DungeonRoom);
+      // SeedSpawnPoolsFor(room as DungeonRoom);
     }
 
     private void SeedSpawnPoolsFor(DungeonRoom room)
@@ -167,6 +190,11 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
       try
       {
         Log.Trace(Instance, $"{Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}");
+
+        var oh = PrefabManager.Cache.GetPrefab<GameObject>(OdinsHollow);
+        var eventLogCollector = oh.GetComponent<EventLogCollector>();
+        eventLogCollector.LogEvent -= _eventLogHandler.HandleLogEvent;
+
         _harmony?.UnpatchSelf();
       }
       catch (Exception e)
@@ -204,10 +232,7 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
 
         // Seed
         SeedGlobalSpawnPoolIfNecessary();
-        // foreach (var dungeonDungeonBossRoom in _dungeon.DungeonBossRooms)
-        // {
-        //   SeedSpawnPoolsFor(dungeonDungeonBossRoom);
-        // }
+        SeedGlobalDecoSpawnPoolIfNecessary();
       }
       catch (Exception e)
       {

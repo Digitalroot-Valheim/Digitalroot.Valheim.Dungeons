@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Digitalroot.Valheim.TrapSpawners
 {
+  [AddComponentMenu("Traps/Tripline", 33), DisallowMultipleComponent]
   public class PlayerTripline : MonoBehaviour
   {
     [UsedImplicitly]

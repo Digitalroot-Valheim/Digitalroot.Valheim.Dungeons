@@ -21,7 +21,7 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
     private protected TrapSpawnPoolProxy([NotNull] TrapSpawnPool realObject, [NotNull] ITraceableLogging logger)
       : base(realObject, logger)
     {
-      Log.Trace(_logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Creating Spawn Pool ({realObject.name})");
+      Log.Trace(Logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Creating Spawn Pool ({realObject.name})");
       realObject.LogEvent += HandleLogEvent;
     }
 
@@ -46,13 +46,13 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
     public void Clear() => RealObject.Clear();
 
     /// <inheritdoc />
-    public void AddEnemy(GameObject prefab) => RealObject.AddEnemy(DungeonsUtils.ConfigureAsTrash(prefab));
+    public void AddEnemy(GameObject prefab) => RealObject.AddEnemy(DungeonsUtils.ConfigureAsTrash(prefab, Logger));
 
     /// <inheritdoc />
     public void AddEnemy(string prefabName) => AddEnemy(PrefabManager.Cache.GetPrefab<GameObject>(prefabName));
 
     /// <inheritdoc />
-    public void AddBoss(GameObject prefab) => RealObject.AddBoss(DungeonsUtils.ConfigureAsBoss(prefab));
+    public void AddBoss(GameObject prefab) => RealObject.AddBoss(DungeonsUtils.ConfigureAsBoss(prefab, Logger));
 
     /// <inheritdoc />
     public void AddBoss(string prefabName) => AddBoss(PrefabManager.Cache.GetPrefab<GameObject>(prefabName));

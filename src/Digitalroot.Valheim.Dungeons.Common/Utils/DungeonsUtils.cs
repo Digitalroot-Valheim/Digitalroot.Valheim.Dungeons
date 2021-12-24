@@ -6,12 +6,10 @@ namespace Digitalroot.Valheim.Dungeons.Common.Utils
 {
   public static class DungeonsUtils
   {
-    internal static readonly StaticSourceLogger StaticLogger = new StaticSourceLogger($"Digitalroot.Valheim.Dungeons.Common.{nameof(DungeonsUtils)}");
-
-    public static GameObject ConfigureAsTrash(GameObject prefab)
+    public static GameObject ConfigureAsTrash(GameObject prefab, ITraceableLogging logger)
     {
-      Log.Trace(StaticLogger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] prefab == null : {prefab == null}");
-      Log.Trace(StaticLogger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] prefab?.name : {prefab?.name}");
+      Log.Trace(logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] prefab == null : {prefab == null}");
+      Log.Trace(logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] prefab?.name : {prefab?.name}");
       if (prefab == null) return null;
       // prefab.transform.localScale *= 2;
       // var character = prefab.GetComponent<Character>();
@@ -20,13 +18,12 @@ namespace Digitalroot.Valheim.Dungeons.Common.Utils
       return prefab;
     }
 
-    public static GameObject ConfigureAsBoss(GameObject prefab)
+    public static GameObject ConfigureAsBoss(GameObject prefab, ITraceableLogging logger)
     {
-      Log.Trace(StaticLogger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] prefab == null : {prefab == null}");
-      Log.Trace(StaticLogger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] prefab?.name : {prefab?.name}");
-      if (prefab == null) return null;
+      Log.Trace(logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] prefab == null : {prefab == null}");
+      Log.Trace(logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] prefab?.name : {prefab?.name}");
+      return prefab == null ? null : prefab;
       // prefab.transform.localScale *= 2;
-      return prefab;
     }
   }
 }

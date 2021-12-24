@@ -18,6 +18,7 @@ namespace Digitalroot.Valheim.Dungeons.Common
     public readonly List<DungeonBossRoom> DungeonBossRooms = new();
     public readonly List<DungeonRoom> DungeonRooms = new();
     public readonly GlobalSpawnPool GlobalSpawnPool;
+    public readonly GlobalDecoSpawnPool GlobalDecoSpawnPool;
     public readonly GameObject DungeonPrefab;
     private readonly ITraceableLogging _logger;
 
@@ -30,6 +31,7 @@ namespace Digitalroot.Valheim.Dungeons.Common
         Name = name;
         DungeonPrefab = dungeonPrefab;
         GlobalSpawnPool = GlobalSpawnPool.CreateInstance(DungeonPrefab, _logger);
+        GlobalDecoSpawnPool = GlobalDecoSpawnPool.CreateInstance(DungeonPrefab, _logger);
       }
       catch (Exception e)
       {

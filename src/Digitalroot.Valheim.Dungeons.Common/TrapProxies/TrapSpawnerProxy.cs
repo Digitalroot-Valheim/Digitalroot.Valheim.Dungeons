@@ -2,6 +2,7 @@
 using Digitalroot.Valheim.TrapSpawners;
 using JetBrains.Annotations;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
@@ -14,13 +15,20 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
     public ISpawnPool SpawnPool => RealObject.SpawnPool;
     public string Name => RealObject.name;
     public bool IsBoss => RealObject.m_isBoss;
+    public bool IsDeco => RealObject.m_isDeco;
+    public float ScaleSize => RealObject.m_scaleSize;
+    public int LevelMin => RealObject.m_levelMin;
+    public int LevelMax => RealObject.m_levelMax;
+    public int QuantityMin => RealObject.m_quantityMin;
+    public int QuantityMax => RealObject.m_quantityMax;
+    public void DoSpawn([CanBeNull] List<GameObject> spawnPoolPrefabs = null, int quantityMin = -1, int quantityMax = -1, int levelMin = -1, int levelMax = -1) => RealObject.DoSpawn(spawnPoolPrefabs, quantityMin, quantityMax, levelMin, levelMax);
 
     private static string GetPath(string roomName, string roomSpawnPointName) => $"Interior/Dungeon/Rooms/{roomName}/Spawners/{roomSpawnPointName}";
 
     private TrapSpawnerProxy([NotNull] TrapSpawner realObject, [NotNull] ITraceableLogging logger)
       : base(realObject, logger)
     {
-      Log.Trace(_logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Creating Spawner ({realObject.name})");
+      Log.Trace(Logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Creating Spawner ({realObject.name})");
       realObject.LogEvent += HandleLogEvent;
     }
 

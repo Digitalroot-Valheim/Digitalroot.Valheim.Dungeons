@@ -10,11 +10,11 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
   {
     // ReSharper disable once MemberCanBePrivate.Global
     protected readonly TProxyType RealObject;
-    protected readonly ITraceableLogging _logger;
+    protected readonly ITraceableLogging Logger;
 
     protected AbstractProxy([NotNull] TProxyType realObject, [NotNull] ITraceableLogging logger)
     {
-      _logger = logger;
+      Logger = logger;
       RealObject = realObject;
       RealObject.LogEvent += HandleLogEvent;
     }
@@ -32,31 +32,31 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
       switch (e.LogLevel)
       {
         case LogLevel.Info:
-          Log.Info(_logger, e);
+          Log.Info(Logger, e);
           break;
 
         case LogLevel.Debug:
-          Log.Debug(_logger, e);
+          Log.Debug(Logger, e);
           break;
 
         case LogLevel.Warning:
-          Log.Warning(_logger, e);
+          Log.Warning(Logger, e);
           break;
 
         case LogLevel.Error:
-          Log.Error(_logger, e);
+          Log.Error(Logger, e);
           break;
 
         case LogLevel.Fatal:
-          Log.Fatal(_logger, e);
+          Log.Fatal(Logger, e);
           break;
 
         case LogLevel.Trace:
-          Log.Trace(_logger, e);
+          Log.Trace(Logger, e);
           break;
 
         case LogLevel.Message:
-          Log.Message(_logger, e);
+          Log.Message(Logger, e);
           break;
 
         default:
