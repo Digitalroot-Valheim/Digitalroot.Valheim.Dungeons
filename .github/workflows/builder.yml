@@ -38,10 +38,10 @@ jobs:
         uses: Amadevus/pwsh-script@v2.0.1
         id: rename-zip
         with:
-          script: Get-ChildItem ${{ github.workspace }}/src/Digitalroot.Valheim.Dungeons.OdinsHollow/bin/*.zip | Rename-Item -NewName { $_.Name -replace '.zip','.${{ github.run_id }}.zip' }
+          script: Get-ChildItem ${{ github.workspace }}/src/Digitalroot.Valheim.Dungeons.OdinsHollow/bin/Release/*.zip | Rename-Item -NewName { $_.Name -replace '.zip','.${{ github.run_id }}.zip' }
       - name: Publish
         uses: actions/upload-artifact@v2
         with:
-          path: ${{ github.workspace }}/src/Digitalroot.Valheim.Dungeons.OdinsHollow/bin/*.zip
+          path: ${{ github.workspace }}/src/Digitalroot.Valheim.Dungeons.OdinsHollow/bin/Release/*.zip
           name: Build-Artifacts
           retention-days: 1
