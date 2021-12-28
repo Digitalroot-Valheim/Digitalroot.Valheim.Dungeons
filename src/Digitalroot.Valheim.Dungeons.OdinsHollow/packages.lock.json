@@ -41,11 +41,11 @@
       },
       "Digitalroot.Valheim.Common.Names": {
         "type": "Direct",
-        "requested": "[1.4.7, )",
-        "resolved": "1.4.7",
-        "contentHash": "z0qU/2vhbq1oSd0CLHm1khgRelalZ7imD/1dtF2N/E4ppQDzTm231T1E7tdOwZbKrngqH/eU9ylwYYIkVbOI5Q==",
+        "requested": "[1.4.8, )",
+        "resolved": "1.4.8",
+        "contentHash": "/og5338cqZ3iwK4tw5jdIr6HSD8fT0jMdhnka1C82cVUrx3faxAuaoH7Lc6wt+qgE/NRjZYjqOkS3zc87K/FNQ==",
         "dependencies": {
-          "Digitalroot.Valheim.Common.Utils": "1.0.16"
+          "Digitalroot.Valheim.Common.Utils": "1.0.18"
         }
       },
       "Digitalroot.Valheim.Common.References": {
@@ -110,11 +110,11 @@
           "MonoMod": "21.9.19.1"
         }
       },
-      "Unity3D": {
+      "UnityEngine.Modules": {
         "type": "Direct",
-        "requested": "[1.7.0, )",
-        "resolved": "1.7.0",
-        "contentHash": "60s9alC4gA19hsmPw6oUQOTEJWwIVG92cgut4JU/AUcC0J2I2f/7D47EC0Yu94N5xC901GQIWOruwllOtD9qWQ=="
+        "requested": "[2019.4.31, 2019.4.31]",
+        "resolved": "2019.4.31",
+        "contentHash": "xZjdfGGzZw6nnrn4auRNis6WnAlsvqY1XXioEGJnSku+CylESgEt/sTLYlrbrQ0srnLfSCfx80vR8z4SsI1EuQ=="
       },
       "BepInEx.BaseLib": {
         "type": "Transitive",
@@ -166,24 +166,17 @@
           "Mono.Cecil": "0.11.4"
         }
       },
-      "UnityEngine.Modules": {
-        "type": "Transitive",
-        "resolved": "2019.4.31",
-        "contentHash": "xZjdfGGzZw6nnrn4auRNis6WnAlsvqY1XXioEGJnSku+CylESgEt/sTLYlrbrQ0srnLfSCfx80vR8z4SsI1EuQ=="
-      },
       "digitalroot.valheim.dungeons.common": {
         "type": "Project",
         "dependencies": {
           "Digitalroot.Valheim.Common.Log": "1.1.16",
-          "Digitalroot.Valheim.TrapSpawners": "1.0.0",
-          "Unity3D": "1.7.0"
+          "Digitalroot.Valheim.TrapSpawners": "1.0.0"
         }
       },
       "digitalroot.valheim.trapspawners": {
         "type": "Project",
         "dependencies": {
-          "Digitalroot.Valheim.Common.References": "0.205.7",
-          "Unity3D": "1.7.0"
+          "Digitalroot.Valheim.Common.References": "0.205.7"
         }
       }
     }

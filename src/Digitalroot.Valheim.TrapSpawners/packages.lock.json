@@ -14,11 +14,11 @@
         "resolved": "0.1.2",
         "contentHash": "RQdzUtFVhwLwisP2Du7Ugm7ldwAzc+QJrlZWNIwHXcgq4b5fLwZgdN1203RdYiHS8OOALophC6yWekxu3UgN2g=="
       },
-      "Unity3D": {
+      "UnityEngine.Modules": {
         "type": "Direct",
-        "requested": "[1.7.0, )",
-        "resolved": "1.7.0",
-        "contentHash": "60s9alC4gA19hsmPw6oUQOTEJWwIVG92cgut4JU/AUcC0J2I2f/7D47EC0Yu94N5xC901GQIWOruwllOtD9qWQ=="
+        "requested": "[2019.4.31, 2019.4.31]",
+        "resolved": "2019.4.31",
+        "contentHash": "xZjdfGGzZw6nnrn4auRNis6WnAlsvqY1XXioEGJnSku+CylESgEt/sTLYlrbrQ0srnLfSCfx80vR8z4SsI1EuQ=="
       }
     }
   }
