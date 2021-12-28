@@ -1,5 +1,6 @@
 ﻿using Digitalroot.Valheim.Common;
 using Digitalroot.Valheim.TrapSpawners;
+using Digitalroot.Valheim.TrapSpawners.Enums;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,7 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
     private const string RoomSpawnPointName = "SpawnPoint";
     public ISpawnPool SpawnPool => RealObject.SpawnPool;
     public string Name => RealObject.name;
-    public bool IsBoss => RealObject.m_isBoss;
-    public bool IsDeco => RealObject.m_isDeco;
+    public SpawnerType SpawnerType => RealObject.spawnerType;
     public float ScaleSize => RealObject.m_scaleSize;
     public int LevelMin => RealObject.m_levelMin;
     public int LevelMax => RealObject.m_levelMax;

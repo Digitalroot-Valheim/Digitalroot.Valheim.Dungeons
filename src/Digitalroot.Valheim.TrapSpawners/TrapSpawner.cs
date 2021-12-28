@@ -1,4 +1,5 @@
-﻿using Digitalroot.Valheim.TrapSpawners.Logging;
+﻿using Digitalroot.Valheim.TrapSpawners.Enums;
+using Digitalroot.Valheim.TrapSpawners.Logging;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
@@ -17,14 +18,11 @@ namespace Digitalroot.Valheim.TrapSpawners
   [UsedImplicitly]
   public class TrapSpawner : MonoBehaviour, IEventLogger
   {
-    #region Unity
+    #region Unity Props
 
-    [Header("Details")]
-    [SerializeField, Tooltip("Is the spawn deco?")]
-    public bool m_isDeco = false;
-
-    [SerializeField, Tooltip("Spawn as a boss")]
-    public bool m_isBoss = false;
+    [Header("Presets")]
+    [SerializeField, Tooltip("Type of spawner.")]
+    public SpawnerType spawnerType = SpawnerType.Enemy;
 
     [Header("Quantity")]
     [SerializeField, Tooltip("Min number of prefabs to spawn"), Range(1, 5), Delayed]
@@ -59,9 +57,30 @@ namespace Digitalroot.Valheim.TrapSpawners
       mesh.enabled = false;
     }
 
+    public void OnDestroy()
+    {
+      for (int i = 0; i < transform.childCount; i++)
+      {
+        var child = transform.GetChild(i);
+        if (child == null) continue;
+        var zNetView = child.GetComponent<ZNetView>();
+        zNetView.Destroy();
+      }
+
+      if (LogEvent != null)
+      {
+        var eventLogCollector = transform.root.GetComponent<EventLogCollector>();
+        if (eventLogCollector != null) eventLogCollector.UnRegisterLogEventSource(this);
+      }
+    }
+
     public void Start()
     {
       DisableMarkerMesh();
+      if (LogEvent != null) return;
+      var eventLogCollector = transform.root.GetComponent<EventLogCollector>();
+      if (eventLogCollector != null) eventLogCollector.RegisterLogEventSource(this);
+      // SendMessageUpwards();  
     }
 
     #region Spawn
@@ -70,8 +89,8 @@ namespace Digitalroot.Valheim.TrapSpawners
     {
       try
       {
-        LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] spawnPoolPrefabs == null : {spawnPoolPrefabs == null}");
-        LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] spawnPoolPrefabs.Count : {spawnPoolPrefabs?.Count}");
+        //LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] spawnPoolPrefabs == null : {spawnPoolPrefabs == null}");
+        //LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] spawnPoolPrefabs.Count : {spawnPoolPrefabs?.Count}");
         if (spawnPoolPrefabs == null || spawnPoolPrefabs.Count < 1)
         {
           LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Using {m_spawnPool.name} Spawn Pool.");
@@ -106,19 +125,25 @@ namespace Digitalroot.Valheim.TrapSpawners
           }
 
           LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Parent Transform : {transform.position}");
-          LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] m_spawnPool.m_spawnPoolPrefabs.Count : {m_spawnPool.m_spawnPoolPrefabs?.Count}");
+          // LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] m_spawnPool.m_spawnPoolPrefabs.Count : {m_spawnPool.m_spawnPoolPrefabs?.Count}");
 
-          if (m_isBoss)
+          switch (spawnerType)
           {
-            SpawnBoss(spawnPoolPrefabs, rnd, levelMin, levelMax, i);
-          }
-          else if (m_isDeco)
-          {
-            SpawnDeco(spawnPoolPrefabs, rnd, i);
-          }
-          else
-          {
-            SpawnEnemy(spawnPoolPrefabs, rnd, levelMin, levelMax, i);
+            case SpawnerType.Boss:
+              SpawnBoss(spawnPoolPrefabs, rnd, levelMin, levelMax, i);
+              break;
+
+            case SpawnerType.Enemy:
+              SpawnEnemy(spawnPoolPrefabs, rnd, levelMin, levelMax, i);
+              break;
+
+            case SpawnerType.Lootable:
+              SpawnLootable(spawnPoolPrefabs, rnd, i);
+              break;
+
+            case SpawnerType.Chest:
+            default:
+              throw new ArgumentOutOfRangeException();
           }
         }
       }
@@ -156,11 +181,21 @@ namespace Digitalroot.Valheim.TrapSpawners
       return Name;
     }
 
-    private void SetAI(GameObject go)
+    private MonsterAI SetAI(GameObject prefab)
     {
-      var monsterAI = go.GetComponent<MonsterAI>();
-      monsterAI?.SetDespawnInDay(false);
-      monsterAI?.SetPatrolPoint(transform.position);
+      var monsterAI = prefab.GetComponent<MonsterAI>();
+      if (monsterAI != null)
+      {
+        monsterAI.SetDespawnInDay(false);
+        monsterAI.SetPatrolPoint(transform.position);
+        if (!monsterAI.m_randomFly)
+        {
+          monsterAI.m_jumpInterval = 10f;
+        }
+        monsterAI.m_fleeIfLowHealth = 0f;
+      }
+
+      return monsterAI;
     }
 
     private int SetLevel(int levelMin, int levelMax, GameObject go)
@@ -194,50 +229,80 @@ namespace Digitalroot.Valheim.TrapSpawners
       }
     }
 
-    private GameObject SpawnPrefab(GameObject prefab, int i)
+    private GameObject SpawnPrefab(GameObject spawnablePrefab, int i)
     {
-      var go = Instantiate(prefab, transform.position, Quaternion.identity, transform);
-      go.transform.localScale = new Vector3(m_scaleSize, m_scaleSize, m_scaleSize);
-      SetLocalPosition(i, go);
-      return go;
+      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}]");
+      var prefab = Instantiate(spawnablePrefab, transform.position, Quaternion.identity, transform);
+      prefab.transform.localScale = new Vector3(m_scaleSize, m_scaleSize, m_scaleSize);
+      SetLocalPosition(i, prefab);
+      return prefab;
     }
 
     private void SpawnBoss(IReadOnlyList<GameObject> spawnPoolPrefabs, int rnd, int levelMin, int levelMax, int i)
     {
-      var go = SpawnPrefab(spawnPoolPrefabs[rnd], i);
-      var humanoid = go.GetComponent<Humanoid>();
+      var prefab = SpawnPrefab(spawnPoolPrefabs[rnd], i);
+      var humanoid = prefab.GetComponent<Humanoid>();
       if (humanoid != null)
       {
-        humanoid.m_boss = m_isBoss;
+        humanoid.m_boss = true;
         humanoid.m_health *= Convert.ToSingle(Math.Pow(m_scaleSize, 2));
         humanoid.m_name = $"{GenerateName(Random.Range(4, 9))} the {humanoid.m_name}";
+        humanoid.m_faction = Character.Faction.Boss;
+        humanoid.m_jumpForce = 10;
+        humanoid.m_jumpForceForward = 10;
       }
 
-      var level = SetLevel(levelMin, levelMax, go);
-      SetAI(go);
-      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Spawning: {go.name} @ {go.transform.position}, Scale: {go.transform.localScale}, Level: {level}, isBoss : {humanoid?.m_boss}, Health {humanoid?.m_health}");
+      var visEquipment = prefab.GetComponent<VisEquipment>();
+
+      if (visEquipment != null)
+      {
+        if (visEquipment.m_leftItemInstance != null)
+        {
+          var item = visEquipment.m_leftItemInstance;
+          var localScale = item.transform.localScale;
+          localScale.x *= m_scaleSize;
+          localScale.y *= m_scaleSize;
+          localScale.z *= m_scaleSize;
+        }
+
+        if (visEquipment.m_rightBackItemInstance != null)
+        {
+          var item = visEquipment.m_rightBackItemInstance;
+          var localScale = item.transform.localScale;
+          localScale.x *= m_scaleSize;
+          localScale.y *= m_scaleSize;
+          localScale.z *= m_scaleSize;
+        }
+      }
+
+      var level = SetLevel(levelMin, levelMax, prefab);
+      var monsterAI = SetAI(prefab);
+
+      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Spawning: {prefab.name} @ {prefab.transform.position}, Scale: {prefab.transform.localScale}, Level: {level}, isBoss : {humanoid?.m_boss}, Health {humanoid?.m_health}");
     }
 
-    private void SpawnDeco(IReadOnlyList<GameObject> spawnPoolPrefabs, int rnd, int i)
+    private void SpawnLootable(IReadOnlyList<GameObject> spawnPoolPrefabs, int rnd, int i)
     {
-      var go = SpawnPrefab(spawnPoolPrefabs[rnd], i);
-      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Spawning: {go.name} @ {go.transform.position}, Scale: {go.transform.localScale}");
+      var prefab = SpawnPrefab(spawnPoolPrefabs[rnd], i);
+      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Spawning: {prefab.name} @ {prefab.transform.position}, Scale: {prefab.transform.localScale}");
     }
 
     private void SpawnEnemy(IReadOnlyList<GameObject> spawnPoolPrefabs, int rnd, int levelMin, int levelMax, int i)
     {
-      var go = SpawnPrefab(spawnPoolPrefabs[rnd], i);
+      var prefab = SpawnPrefab(spawnPoolPrefabs[rnd], i);
 
-      var humanoid = go.GetComponent<Humanoid>();
+      var humanoid = prefab.GetComponent<Humanoid>();
       if (humanoid != null)
       {
         humanoid.m_health *= 2;
         humanoid.m_name = $"Dark {humanoid.m_name}";
+        humanoid.m_faction = Character.Faction.Undead;
       }
 
-      var level = SetLevel(levelMin, levelMax, go);
-      SetAI(go);
-      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Spawning: {go.name} @ {go.transform.position}, Scale: {go.transform.localScale}, Level: {level}, isBoss : {humanoid?.m_boss}, Health {humanoid?.m_health}");
+      var level = SetLevel(levelMin, levelMax, prefab);
+      var monsterAI = SetAI(prefab);
+      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Spawning: {prefab.name} [{humanoid?.m_name}] @ {prefab.transform.position}, Scale: {prefab.transform.localScale}, Level: {level}, isBoss : {humanoid?.m_boss}, Health {humanoid?.m_health}");
+      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Spawning: {prefab.name} [{humanoid?.m_name}] parent == null : {prefab.transform.parent == null}, parent?.name: {prefab.transform.parent?.name}");
     }
 
     #endregion
@@ -252,7 +317,7 @@ namespace Digitalroot.Valheim.TrapSpawners
       try
       {
         Debug.Log(logEventArgs.Message);
-        Debug.Log($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} LogEvent == null : {LogEvent == null}");
+        // Debug.Log($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} LogEvent == null : {LogEvent == null}");
         LogEvent?.Invoke(sender, logEventArgs);
       }
       catch (Exception e)
@@ -288,5 +353,11 @@ namespace Digitalroot.Valheim.TrapSpawners
     //     }
     //   }
     // }
+
+    #region Editor
+
+    // public class ShopItemEditor : UnityEditor. .Experimental. Editor
+
+    #endregion
   }
 }

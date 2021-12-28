@@ -15,6 +15,8 @@ namespace Digitalroot.Valheim.TrapSpawners
   [AddComponentMenu("Traps/Trigger", 30)]
   public class TrapTrigger : MonoBehaviour, IEventLogger
   {
+    private const string Namespace = "Digitalroot.Valheim.TrapSpawners";
+
     [SerializeField]
     [HideInInspector]
     public bool _isTriggered;
@@ -35,7 +37,9 @@ namespace Digitalroot.Valheim.TrapSpawners
 
     private void DisableMarkerMesh()
     {
+      // LogTrace($"{Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}()");
       var mesh = GetComponentInChildren<MeshRenderer>();
+      // LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] mesh == null : {mesh == null}");
       if (mesh == null) return;
       mesh.enabled = false;
     }
@@ -43,6 +47,12 @@ namespace Digitalroot.Valheim.TrapSpawners
     [UsedImplicitly]
     public void OnDestroy()
     {
+      if (LogEvent != null)
+      {
+        var eventLogCollector = transform.root.GetComponent<EventLogCollector>();
+        if (eventLogCollector != null) eventLogCollector.UnRegisterLogEventSource(this);
+      }
+
       if (m_trapSpawners.Count == 0) return;
 
       foreach (var trapSpawner in m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>()))
@@ -87,6 +97,14 @@ namespace Digitalroot.Valheim.TrapSpawners
     public void Start()
     {
       LogTrace(($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} m_trapSpawners.Count : {m_trapSpawners.Count}"));
+      LogTrace(($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} LogEvent == null : {LogEvent == null}"));
+
+      if (LogEvent == null)
+      {
+        var eventLogCollector = transform.root.GetComponent<EventLogCollector>();
+        if (eventLogCollector != null) eventLogCollector.RegisterLogEventSource(this);
+      }
+
       DisableMarkerMesh();
       if (m_trapSpawners.Count == 0) return;
 
@@ -95,7 +113,7 @@ namespace Digitalroot.Valheim.TrapSpawners
       LogTrace($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>().Count : {spawners.Count}");
       foreach (var trapSpawner in m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>()))
       {
-        LogTrace("Logger Wire up");
+        LogTrace($"Logger Wire up for {trapSpawner.name}");
         trapSpawner.LogEvent += OnLogEvent;
       }
 
@@ -112,7 +130,7 @@ namespace Digitalroot.Valheim.TrapSpawners
     {
       try
       {
-        Debug.Log($"[REMOVE] {logEventArgs.Message}"); // Todo: Remove
+        // Debug.Log($"[REMOVE] {logEventArgs.Message}"); // Todo: Remove
         LogEvent?.Invoke(sender, logEventArgs);
       }
       catch (Exception e)

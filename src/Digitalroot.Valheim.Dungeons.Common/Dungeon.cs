@@ -17,12 +17,12 @@ namespace Digitalroot.Valheim.Dungeons.Common
     public readonly string Name;
     public readonly List<DungeonBossRoom> DungeonBossRooms = new();
     public readonly List<DungeonRoom> DungeonRooms = new();
-    public readonly GlobalSpawnPool GlobalSpawnPool;
-    public readonly GlobalDecoSpawnPool GlobalDecoSpawnPool;
+    public readonly GlobalEnemySpawnPoolProxy GlobalEnemySpawnPoolProxy;
+    public readonly GlobalLootableSpawnPoolProxy GlobalLootableSpawnPoolProxy;
     public readonly GameObject DungeonPrefab;
     private readonly ITraceableLogging _logger;
 
-    public Dungeon([NotNull] string name, [NotNull] GameObject dungeonPrefab, ITraceableLogging logger)
+    public Dungeon([NotNull] string name, [NotNull] GameObject dungeonPrefab, [NotNull] ITraceableLogging logger)
     {
       try
       {
@@ -30,8 +30,8 @@ namespace Digitalroot.Valheim.Dungeons.Common
         Log.Trace(logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Creating Dungeon ({name}) from {dungeonPrefab.name}");
         Name = name;
         DungeonPrefab = dungeonPrefab;
-        GlobalSpawnPool = GlobalSpawnPool.CreateInstance(DungeonPrefab, _logger);
-        GlobalDecoSpawnPool = GlobalDecoSpawnPool.CreateInstance(DungeonPrefab, _logger);
+        GlobalEnemySpawnPoolProxy = GlobalEnemySpawnPoolProxy.CreateInstance(DungeonPrefab, _logger);
+        GlobalLootableSpawnPoolProxy = GlobalLootableSpawnPoolProxy.CreateInstance(DungeonPrefab, _logger);
       }
       catch (Exception e)
       {
@@ -39,19 +39,19 @@ namespace Digitalroot.Valheim.Dungeons.Common
       }
     }
 
-    public void AddDungeonRoom(string dungeonRoomName) => AddDungeonRoom(DungeonRoom.CreateInstance(dungeonRoomName, DungeonPrefab, _logger));
+    public void AddDungeonRoom([NotNull] string dungeonRoomName) => AddDungeonRoom(DungeonRoom.CreateInstance(dungeonRoomName, DungeonPrefab, _logger));
 
-    public void AddDungeonRoom(DungeonRoom dungeonRoom)
+    public void AddDungeonRoom([NotNull] DungeonRoom dungeonRoom)
     {
-      Log.Trace(_logger, $"Adding {dungeonRoom}");
+      // Log.Trace(_logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Adding {dungeonRoom}");
       DungeonRooms.Add(dungeonRoom);
     }
 
-    public void AddDungeonBossRoom(string dungeonRoomName) => AddDungeonBossRoom(DungeonBossRoom.CreateInstance(dungeonRoomName, DungeonPrefab, _logger));
+    public void AddDungeonBossRoom([NotNull] string dungeonRoomName) => AddDungeonBossRoom(DungeonBossRoom.CreateInstance(dungeonRoomName, DungeonPrefab, _logger));
 
-    public void AddDungeonBossRoom(DungeonBossRoom dungeonRoom)
+    public void AddDungeonBossRoom([NotNull] DungeonBossRoom dungeonRoom)
     {
-      Log.Trace(_logger, $"Adding {dungeonRoom}");
+      // Log.Trace(_logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Adding {dungeonRoom}");
       DungeonBossRooms.Add(dungeonRoom);
     }
   }

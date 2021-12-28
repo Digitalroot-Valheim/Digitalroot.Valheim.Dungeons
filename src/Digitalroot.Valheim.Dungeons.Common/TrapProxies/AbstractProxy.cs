@@ -25,10 +25,8 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
     }
 
     // ReSharper disable once MemberCanBeProtected.Global
-    public void HandleLogEvent(object sender, LogEventArgs e)
+    public void HandleLogEvent([NotNull]object sender, [NotNull] LogEventArgs e)
     {
-      if (sender == null) return;
-
       switch (e.LogLevel)
       {
         case LogLevel.Info:

@@ -29,6 +29,7 @@
     <VersionPrefix>1.0.0</VersionPrefix>
     <AutoGenerateBindingRedirects>False</AutoGenerateBindingRedirects>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <UnityVersion>2019.4.31f1</UnityVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -45,10 +46,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="UnityEngine.Modules" Version="[2019.4.32]">
-      <PrivateAssets>all</PrivateAssets>
-      <ExcludeAssets>runtime</ExcludeAssets>
-    </PackageReference>
+    <PackageReference Include="Unity3D" Version="1.7.0" />
+    <Reference Include="$(UnityInstallRoot)\$(UnityVersion)\$(UnityEditorPath)" Private="false" />
+    <Reference Remove="$(UnityInstallRoot)\$(UnityVersion)\$(UnityEnginePath)" />
+    <Reference Include="$(UnityInstallRoot)\$(UnityVersion)\$(UnityModulesPath)\UnityEngine.dll" Private="false" />
+    <Reference Include="$(UnityInstallRoot)\$(UnityVersion)\$(UnityModulesPath)\UnityEngine.PhysicsModule.dll" Private="false" />
+    <Reference Include="$(UnityInstallRoot)\$(UnityVersion)\$(UnityModulesPath)\UnityEngine.CoreModule.dll" Private="false" />
   </ItemGroup>
 
   <Target Name="RefreshVars" AfterTargets="PostBuildEvent" Label="MyRefreshVars">

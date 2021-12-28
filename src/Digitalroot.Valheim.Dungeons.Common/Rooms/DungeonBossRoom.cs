@@ -1,5 +1,6 @@
 ﻿using Digitalroot.Valheim.Common;
 using Digitalroot.Valheim.Dungeons.Common.TrapProxies;
+using Digitalroot.Valheim.TrapSpawners.Enums;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace Digitalroot.Valheim.Dungeons.Common.Rooms
       try
       {
         // RoomBossTrigger = TrapTriggerProxy.CreateInstance(dungeonPrefab, name, _logger, BossTriggerName);
-        RoomBossSpawnPoint = RoomTrigger?.Spawners?.Where(s => s.IsBoss);
+        RoomBossSpawnPoint = RoomTrigger?.Spawners?.Where(s => s.SpawnerType == SpawnerType.Boss);
       }
       catch (Exception e)
       {

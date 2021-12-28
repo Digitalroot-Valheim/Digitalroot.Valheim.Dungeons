@@ -28,6 +28,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <VersionPrefix>1.0.0</VersionPrefix>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <UnityVersion>2019.4.31f1</UnityVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -52,16 +53,17 @@
     </PackageReference>
     <PackageReference Include="Digitalroot.CustomMonoBehaviours" Version="1.0.1" />
     <PackageReference Include="Digitalroot.Valheim.Build.Targets" Version="1.0.6" />
-    <PackageReference Include="Digitalroot.Valheim.Common.AssemblyInfo" Version="1.0.7">
+    <PackageReference Include="Digitalroot.Valheim.Common.AssemblyInfo" Version="1.0.8">
       <PrivateAssets>all</PrivateAssets>
       <ExcludeAssets>runtime</ExcludeAssets>
+      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Digitalroot.Valheim.Common.Log" Version="1.1.15" />
+    <PackageReference Include="Digitalroot.Valheim.Common.Log" Version="1.1.16" />
     <PackageReference Include="Digitalroot.Valheim.Common.Names" Version="1.4.7" />
     <PackageReference Include="Digitalroot.Valheim.Common.References" Version="0.205.7">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Digitalroot.Valheim.Common.Utils" Version="1.0.17" />
+    <PackageReference Include="Digitalroot.Valheim.Common.Utils" Version="1.0.18" />
     <PackageReference Include="ErrorProne.NET.CoreAnalyzers" Version="0.1.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -82,10 +84,7 @@
       <ExcludeAssets>runtime</ExcludeAssets>
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="UnityEngine.Modules" Version="[2019.4.32]">
-      <PrivateAssets>all</PrivateAssets>
-      <ExcludeAssets>runtime</ExcludeAssets>
-    </PackageReference>
+    <PackageReference Include="Unity3D" Version="1.7.0" />
   </ItemGroup>
 
   <ItemGroup>

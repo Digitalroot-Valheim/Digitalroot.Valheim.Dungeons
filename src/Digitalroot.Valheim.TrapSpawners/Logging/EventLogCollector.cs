@@ -1,9 +1,12 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
+using System.Reflection;
 using UnityEngine;
 
 namespace Digitalroot.Valheim.TrapSpawners.Logging
 {
   [AddComponentMenu("Traps/Event Log Collector", 34), DisallowMultipleComponent]
+  [UsedImplicitly]
   public class EventLogCollector : MonoBehaviour, IEventLogger
   {
     public void Start()
@@ -30,6 +33,18 @@ namespace Digitalroot.Valheim.TrapSpawners.Logging
       {
         trapTrigger.LogEvent -= OnLogEvent;
       }
+    }
+
+    public void RegisterLogEventSource(IEventLogger eventLogger)
+    {
+      ZLog.Log($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}].{MethodBase.GetCurrentMethod().Name}()");
+      eventLogger.LogEvent += OnLogEvent;
+    }
+
+    public void UnRegisterLogEventSource(IEventLogger eventLogger)
+    {
+      ZLog.Log($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}].{MethodBase.GetCurrentMethod().Name}()");
+      eventLogger.LogEvent -= OnLogEvent;
     }
 
     #region Implementation of IEventLogger
