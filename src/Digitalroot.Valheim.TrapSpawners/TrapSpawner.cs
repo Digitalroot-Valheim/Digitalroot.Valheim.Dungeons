@@ -24,27 +24,26 @@ namespace Digitalroot.Valheim.TrapSpawners
     [SerializeField, Tooltip("Type of spawner.")]
     public SpawnerType spawnerType = SpawnerType.Enemy;
 
-    [Header("Quantity")]
-    [SerializeField, Tooltip("Min number of prefabs to spawn"), Range(1, 5), Delayed]
+    [SerializeField, Tooltip("Local Spawn Pool")]
+    public TrapSpawnPool m_spawnPool = new();
+
+    // [Header("Quantity")]
+    [SerializeField, Tooltip("Min number of prefabs to spawn"), HideInInspector]
     public int m_quantityMin = 1;
 
-    [SerializeField, Tooltip("Max number of prefabs to spawn"), Range(1, 5), Delayed]
+    [SerializeField, Tooltip("Max number of prefabs to spawn"), HideInInspector]
     public int m_quantityMax = 1;
 
     [Header("Level")]
-    [SerializeField, Tooltip("Min level to spawn prefabs at."), Range(1, 9), Delayed]
+    [SerializeField, Tooltip("Min level to spawn prefabs at."), HideInInspector]
     public int m_levelMin = 1;
 
-    [SerializeField, Tooltip("Max level to spawn prefabs at."), Range(1, 9), Delayed]
+    [SerializeField, Tooltip("Max level to spawn prefabs at."), HideInInspector]
     public int m_levelMax = 1;
 
     [Header("Size")]
-    [UsedImplicitly, SerializeField, Tooltip("Scale/Size to spawn prefabs at."), Range(0.01f, 5f), Delayed]
+    [UsedImplicitly, SerializeField, Tooltip("Scale/Size to spawn prefabs at."), HideInInspector]
     public float m_scaleSize = 1;
-
-    [Header("Local Spawn Pool")]
-    [SerializeField, Tooltip("Local Spawn Pool")]
-    public TrapSpawnPool m_spawnPool = new();
 
     public ISpawnPool SpawnPool => m_spawnPool;
 
