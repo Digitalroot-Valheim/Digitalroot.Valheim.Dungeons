@@ -1,32 +1,24 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Digitalroot.Valheim.TrapSpawners.CMB
 {
   internal class BossAura : MonoBehaviour
   {
-    private float update;
+    private float _update;
 
     void Awake()
     {
       Debug.Log("Awake");
-      update = 0.0f;
-    }
-
-    IEnumerator Start()
-    {
-      Debug.Log("Start1");
-      yield return new WaitForSeconds(2.5f);
-      Debug.Log("Start2");
+      _update = 0.0f;
     }
 
     void Update()
     {
-      update += Time.deltaTime;
-      if (update > 1.0f)
+      _update += Time.deltaTime;
+      if (_update > 3.0f)
       {
-        update = 0.0f;
-        Debug.Log("Update");
+        _update = 0.0f;
+        Instantiate(ZNetScene.instance.GetPrefab("shaman_heal_aoe".GetStableHashCode()), gameObject.transform.localPosition, Quaternion.identity, gameObject.transform);
       }
     }
   }

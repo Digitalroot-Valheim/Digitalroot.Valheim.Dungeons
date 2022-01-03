@@ -1,0 +1,3 @@
+﻿[*.cs]
+command = xcopy
+arguments = {file} "C:\Users\nkd\Source\Repos\ValheimModsAll\_UnityProjects\WorkingRip\Assets\_OdinPlusTeam\SharedAssets\Scripts\TrapSpawners\{filename}" /V /Y

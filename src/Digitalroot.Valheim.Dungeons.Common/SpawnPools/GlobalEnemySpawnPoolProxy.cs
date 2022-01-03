@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Digitalroot.Valheim.Dungeons.Common.SpawnPools
 {
+  [Obsolete]
   public class GlobalEnemySpawnPoolProxy : TrapSpawnPoolProxy
   {
     private const string GlobalEnemySpawnPoolName = "GlobalEnemySpawnPool";
@@ -17,7 +18,7 @@ namespace Digitalroot.Valheim.Dungeons.Common.SpawnPools
     {
     }
 
-    public static GlobalEnemySpawnPoolProxy CreateInstance([NotNull] GameObject dungeon, [NotNull] ITraceableLogging logger)
+    public static TrapSpawnPoolProxy CreateInstance([NotNull] GameObject dungeon, [NotNull] ITraceableLogging logger)
     {
       return new GlobalEnemySpawnPoolProxy(dungeon, logger);
     }

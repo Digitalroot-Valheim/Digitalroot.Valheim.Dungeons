@@ -46,6 +46,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Fody" Version="6.6.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="ILMerge.Fody" Version="1.22.0">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="UnityEngine.Modules" Version="[2019.4.31]">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>compile</IncludeAssets>
@@ -56,14 +63,14 @@
     <Message Text="RefreshVars Called" Importance="high" />
     <ItemGroup>
       <DigitalrootSourceFiles Include="$(TargetDir)**\*.*" />
-      <DigitalrootBuildFiles Include="$(TargetDir)..\$(ProjectName)\$(ProjectName)\$(ProjectName).dll" />
+      <DigitalrootBuildFiles Include="$(TargetDir)$(ProjectName).dll" />
     </ItemGroup>
   </Target>
   <Target Name="DebugPostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Debug'" DependsOnTargets="RefreshVars">
     <Message Text="DebugPostBuild Called" Importance="high" />
     <Message Text="Copying assemblies to C:\Users\nkd\Source\Repos\ValheimModsAll\_UnityProjects\WorkingRip\Assets\_OdinPlusTeam\SharedAssets\Scripts\TrapSpawners" Importance="high" />
     <CallTarget Targets="RefreshVars" />
-    <Copy SourceFiles="@(DigitalrootSourceFiles)" DestinationFiles="@(DigitalrootSourceFiles->'C:\Users\nkd\Source\Repos\ValheimModsAll\_UnityProjects\WorkingRip\Assets\_OdinPlusTeam\SharedAssets\Scripts\TrapSpawners\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" OverwriteReadOnlyFiles="true" />
+    <Copy SourceFiles="@(DigitalrootBuildFiles)" DestinationFiles="@(DigitalrootBuildFiles->'C:\Users\nkd\Source\Repos\ValheimModsAll\_UnityProjects\WorkingRip\Assets\_OdinPlusTeam\SharedAssets\Scripts\TrapSpawners\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" OverwriteReadOnlyFiles="true" />
   </Target>
 
 </Project>

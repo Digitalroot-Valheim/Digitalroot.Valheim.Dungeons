@@ -1,6 +1,8 @@
 ﻿using Digitalroot.Valheim.Common;
+using Digitalroot.Valheim.Dungeons.Common.Enums;
 using Digitalroot.Valheim.Dungeons.Common.Rooms;
 using Digitalroot.Valheim.Dungeons.Common.SpawnPools;
+using Digitalroot.Valheim.TrapSpawners;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
@@ -17,8 +19,11 @@ namespace Digitalroot.Valheim.Dungeons.Common
     public readonly string Name;
     public readonly List<DungeonBossRoom> DungeonBossRooms = new();
     public readonly List<DungeonRoom> DungeonRooms = new();
-    public readonly GlobalEnemySpawnPoolProxy GlobalEnemySpawnPoolProxy;
-    public readonly GlobalLootableSpawnPoolProxy GlobalLootableSpawnPoolProxy;
+    public readonly ISpawnPool GlobalDestructibleSpawnPool;
+    public readonly ISpawnPool GlobalEnemySpawnPool;
+    public readonly ISpawnPool GlobalMiniBossSpawnPool;
+    public readonly ISpawnPool GlobalTreasureSpawnPool;
+    
     public readonly GameObject DungeonPrefab;
     private readonly ITraceableLogging _logger;
 
@@ -30,8 +35,10 @@ namespace Digitalroot.Valheim.Dungeons.Common
         Log.Trace(logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Creating Dungeon ({name}) from {dungeonPrefab.name}");
         Name = name;
         DungeonPrefab = dungeonPrefab;
-        GlobalEnemySpawnPoolProxy = GlobalEnemySpawnPoolProxy.CreateInstance(DungeonPrefab, _logger);
-        GlobalLootableSpawnPoolProxy = GlobalLootableSpawnPoolProxy.CreateInstance(DungeonPrefab, _logger);
+        GlobalDestructibleSpawnPool = GlobalSpawnPoolFactory.CreateInstance(GlobalSpawnPoolNames.Destructible, DungeonPrefab, _logger);
+        GlobalEnemySpawnPool = GlobalSpawnPoolFactory.CreateInstance(GlobalSpawnPoolNames.Enemy, DungeonPrefab, _logger);
+        GlobalMiniBossSpawnPool = GlobalSpawnPoolFactory.CreateInstance(GlobalSpawnPoolNames.MiniBoss, DungeonPrefab, _logger);
+        GlobalTreasureSpawnPool = GlobalSpawnPoolFactory.CreateInstance(GlobalSpawnPoolNames.Treasure, DungeonPrefab, _logger);
       }
       catch (Exception e)
       {

@@ -11,7 +11,7 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
 {
   public class TrapTriggerProxy : AbstractProxy<TrapTrigger>
   {
-    public bool IsTriggered => RealObject._isTriggered;
+    public bool IsTriggered => RealObject.IsTriggered;
     public bool TriggerOnStart => RealObject.m_triggerOnStart;
     private const string RoomTriggerName = "SpawnTrigger";
     public IEnumerable<TrapSpawnerProxy> Spawners => RealObject.TrapSpawners.Select(trapSpawner => TrapSpawnerProxy.CreateInstance(trapSpawner.GetComponent<TrapSpawner>(), Logger));
@@ -41,7 +41,7 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
 
     private static string GetPath(string roomName, string roomTriggerName) => $"Interior/Dungeon/Rooms/{roomName}/Spawners/{roomTriggerName}";
 
-    public void SetIsTriggered(bool value) => RealObject.SetIsTriggered(value);
+    public void SetIsTriggered(bool value) => RealObject.IsTriggered = value;
 
     [UsedImplicitly]
     private bool ShouldTrigger(Collider other)

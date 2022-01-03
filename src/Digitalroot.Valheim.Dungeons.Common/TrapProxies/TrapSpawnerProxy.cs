@@ -15,7 +15,7 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
     private const string RoomSpawnPointName = "SpawnPoint";
     public ISpawnPool SpawnPool => RealObject.SpawnPool;
     public string Name => RealObject.name;
-    public SpawnerType SpawnerType => RealObject.spawnerType;
+    public SpawnerType SpawnerType => RealObject.m_spawnerType;
     public float ScaleSize => RealObject.m_scaleSize;
     public int LevelMin => RealObject.m_levelMin;
     public int LevelMax => RealObject.m_levelMax;

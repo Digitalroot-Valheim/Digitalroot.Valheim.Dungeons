@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1413453353
+CRC: 2980551469
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3e1bded7596b8e71376d9e2bed41de50
+    Hash: f7dd4abf1bca205c2cb7a714014e2161
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 6a809cec9d56869407970f54330efc43
+    Hash: 985825953c27e2fe46291ab9422fca7b
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -32,7 +32,11 @@ ClassTypes:
 - Class: 108
   Script: {instanceID: 0}
 - Class: 114
+  Script: {fileID: 1708701530, guid: 9477bca0cb1adbf42a2c33c4457f4b96, type: 3}
+- Class: 114
   Script: {fileID: -28551244, guid: 9477bca0cb1adbf42a2c33c4457f4b96, type: 3}
+- Class: 114
+  Script: {fileID: -1495905056, guid: 9477bca0cb1adbf42a2c33c4457f4b96, type: 3}
 - Class: 114
   Script: {fileID: 199696882, guid: 9477bca0cb1adbf42a2c33c4457f4b96, type: 3}
 - Class: 114
@@ -42,6 +46,8 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: b342d0f18ea3ecd48ad438e438acbf4f, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: e42e5506c5d43954db7f135ab74fc286, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 1115f586e702802499f1bfc1daf691a2, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 5344b9cae38968b4e954b7dd6898bf58, type: 3}
@@ -49,8 +55,6 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 4f91382ba6ee3fe419d2399c1c0e99c8, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 4ae645cf7e4d3654ba91cbc4d11149bb, type: 3}
-- Class: 114
-  Script: {fileID: -1495905056, guid: 9477bca0cb1adbf42a2c33c4457f4b96, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 135
@@ -70,4 +74,5 @@ ClassTypes:
 SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/_OdinPlusTeam/Projects/OdinPlus.EmptyDungeons/OdinsHollow/PrefabInstance/OdinsHollow.prefab
+- Assets/_OdinPlusTeam/Projects/OdinPlus.EmptyDungeons/OdinsHollow/PrefabInstance/TriggerTest.prefab
 Dependencies: []

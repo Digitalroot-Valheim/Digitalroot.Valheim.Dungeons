@@ -1,5 +1,5 @@
 ﻿using Digitalroot.Valheim.TrapSpawners.Logging;
-using System;
+using JetBrains.Annotations;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,32 +8,15 @@ using UnityEngine;
 
 namespace Digitalroot.Valheim.TrapSpawners
 {
+  /// <summary>
+  /// Does not need to be saved to a ZDO
+  /// </summary>
   [AddComponentMenu("Traps/Spawn Pool", 32)]
-  public class TrapSpawnPool : MonoBehaviour, IEventLogger, ISpawnPool
+  [UsedImplicitly, DisallowMultipleComponent]
+  public class TrapSpawnPool : EventLoggingMonoBehaviour, ISpawnPool
   {
     [SerializeField, Tooltip("Collection of all the prefabs that can spawn")]
     public List<GameObject> m_spawnPoolPrefabs = new(0);
-
-    #region Implementation of IEventLogger
-
-    /// <inheritdoc />
-    public event EventHandler<LogEventArgs> LogEvent;
-
-    /// <inheritdoc />
-    public void OnLogEvent(object sender, LogEventArgs logEventArgs)
-    {
-      try
-      {
-        Debug.Log($"[REMOVE] {logEventArgs.Message}"); // Todo: Remove
-        LogEvent?.Invoke(sender, logEventArgs);
-      }
-      catch (Exception e)
-      {
-        LoggingUtils.HandleDelegateError(LogEvent?.Method, e);
-      }
-    }
-
-    #endregion
 
     #region Implementation of ISpawnPool
 

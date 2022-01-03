@@ -1,18 +1,17 @@
-﻿using JetBrains.Annotations;
+﻿using Digitalroot.Valheim.TrapSpawners.Logging;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Digitalroot.Valheim.TrapSpawners
 {
   [AddComponentMenu("Traps/Trip Wire", 33), DisallowMultipleComponent]
-  public class PlayerTripWire : MonoBehaviour
+  public class PlayerTripWire : EventLoggingMonoBehaviour
   {
     [UsedImplicitly]
     public void OnTriggerEnter(Collider other)
     {
-      if (other.name is not ("Player(Clone)" or "Player")) return;
-      var trigger = GetComponentInParent<TrapTrigger>();
-      if (trigger._isTriggered) return;
-      trigger.OnTriggered(other);
+      if (Utils.GetPrefabName(other.gameObject) is not nameof(Player)) return;
+      GetComponentInParent<TrapTrigger>()?.OnTriggered(other);
     }
   }
 }

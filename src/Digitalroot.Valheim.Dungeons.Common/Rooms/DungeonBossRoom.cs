@@ -21,7 +21,7 @@ namespace Digitalroot.Valheim.Dungeons.Common.Rooms
       try
       {
         // RoomBossTrigger = TrapTriggerProxy.CreateInstance(dungeonPrefab, name, _logger, BossTriggerName);
-        RoomBossSpawnPoint = RoomTrigger?.Spawners?.Where(s => s.SpawnerType == SpawnerType.Boss);
+        RoomBossSpawnPoint = RoomTrigger?.Spawners?.Where(s => s.SpawnerType == SpawnerType.MiniBoss);
       }
       catch (Exception e)
       {

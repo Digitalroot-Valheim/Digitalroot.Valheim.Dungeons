@@ -3,8 +3,9 @@
   public enum SpawnerType
   {
     Enemy,
-    Boss,
-    Lootable,
-    Chest
+    MiniBoss,
+    Destructible,
+    Treasure,
+    Boss
   }
 }

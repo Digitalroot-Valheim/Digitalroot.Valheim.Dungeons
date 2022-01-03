@@ -1,4 +1,5 @@
-﻿using Digitalroot.Valheim.TrapSpawners.Logging;
+﻿using Digitalroot.Valheim.TrapSpawners.Extensions;
+using Digitalroot.Valheim.TrapSpawners.Logging;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
@@ -12,22 +13,44 @@ using UnityEngine;
 // ReSharper disable once IdentifierTypo
 namespace Digitalroot.Valheim.TrapSpawners
 {
+  /// <summary>
+  /// Needs the following saved to ZDOs
+  /// - _isTriggered
+  /// </summary>
   [AddComponentMenu("Traps/Trigger", 30)]
-  public class TrapTrigger : MonoBehaviour, IEventLogger
+  [UsedImplicitly, Serializable, DisallowMultipleComponent]
+  public class TrapTrigger : EventLoggingMonoBehaviour
   {
     private const string Namespace = "Digitalroot.Valheim.TrapSpawners";
 
-    [SerializeField]
-    [HideInInspector]
-    public bool _isTriggered;
+    private ZNetView m_nview;
+    private string m_uniqueName;
+
+    private bool _isTriggered;
 
     [Header("Config")]
+    [SerializeField, Tooltip("Hide the marker on spawn.")]
+    private bool m_hideMarker = true;
+
     [Tooltip("Trigger fires right away."), SerializeField]
     [UsedImplicitly]
     public bool m_triggerOnStart;
 
     [Header("Spawners"), SerializeField]
-    public List<GameObject> m_trapSpawners = new(0);
+    private List<GameObject> m_trapSpawners = new(0);
+
+    public bool IsTriggered
+    {
+      get => _isTriggered;
+      set
+      {
+        _isTriggered = value;
+        if (m_nview.IsOwner())
+        {
+          m_nview.GetZDO().Set(nameof(_isTriggered), value);
+        }
+      }
+    }
 
     public List<GameObject> TrapSpawners
     {
@@ -35,45 +58,84 @@ namespace Digitalroot.Valheim.TrapSpawners
       set => m_trapSpawners = value;
     }
 
-    private void DisableMarkerMesh()
+    #region MonoBehaviour Overrides
+
+    public void Awake()
     {
-      // LogTrace($"{Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}()");
-      var mesh = GetComponentInChildren<MeshRenderer>();
-      // LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] mesh == null : {mesh == null}");
-      if (mesh == null) return;
-      mesh.enabled = false;
+      m_nview = gameObject.GetComponent<ZNetView>() ?? transform.root?.GetComponent<ZNetView>();
+      m_uniqueName = gameObject.GetUniqueName();
+      if (m_nview == null)
+      {
+        LogError(new Exception($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} m_nview is null"));
+        return;
+      }
+
+      if (m_nview.GetZDO() == null)
+      {
+        return;
+      }
+      m_nview.Register<bool>(FormatNameOfRPC(nameof(RPC_SetIsTriggered)), RPC_SetIsTriggered);
+      m_nview.Register(FormatNameOfRPC(nameof(RPC_RequestOwn)), RPC_RequestOwn);
+      IsTriggered = (m_nview.GetZDO().GetBool(nameof(_isTriggered)));
+    }
+
+    [UsedImplicitly]
+    public void Start()
+    {
+      LogTrace($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} m_trapSpawners.Count : {m_trapSpawners.Count}");
+
+      DisableMarkerMesh();
+      if (m_trapSpawners.Count == 0) return;
+
+      var spawners = m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>()).ToList();
+
+      //LogTrace($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>().Count : {spawners.Count}");
+      //foreach (var trapSpawner in m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>()))
+      //{
+      //  LogTrace($"Logger Wire up for {trapSpawner.name}");
+      //  trapSpawner.LogEvent += OnLogEvent;
+      //}
+
+      if (m_triggerOnStart) DoSpawn();
     }
 
     [UsedImplicitly]
     public void OnDestroy()
     {
-      if (LogEvent != null)
-      {
-        var eventLogCollector = transform.root.GetComponent<EventLogCollector>();
-        if (eventLogCollector != null) eventLogCollector.UnRegisterLogEventSource(this);
-      }
-
       if (m_trapSpawners.Count == 0) return;
 
-      foreach (var trapSpawner in m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>()))
+      foreach (var trapSpawner in m_trapSpawners.Select(spawner => spawner?.GetComponent<TrapSpawner>()))
       {
-        trapSpawner.LogEvent -= OnLogEvent;
+        if (trapSpawner != null)
+        {
+          trapSpawner.LogEvent -= OnLogEvent;
+        }
       }
     }
 
     [UsedImplicitly]
     public void OnTriggered(Collider other)
     {
-      if (_isTriggered) return;
+      if (IsTriggered) return;
       LogTrace($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} ** Trap Triggered **");
       LogTrace($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} ** Triggered By: {other.name} **");
       DoSpawn();
     }
 
+    #endregion
+
+    private void DisableMarkerMesh()
+    {
+      if (!m_hideMarker) return;
+      var mesh = GetComponentInChildren<MeshRenderer>();
+      if (mesh == null) return;
+      mesh.enabled = false;
+    }
+
     private void DoSpawn()
     {
-      if (_isTriggered) return;
-      _isTriggered = true;
+      if (IsTriggered) return;
+      m_nview.InvokeRPC(FormatNameOfRPC(nameof(RPC_SetIsTriggered)), true);
       if (m_trapSpawners.Count < 1) return;
 
       foreach (var trapSpawner in m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>()))
@@ -88,62 +150,30 @@ namespace Digitalroot.Valheim.TrapSpawners
       }
     }
 
-    public void SetIsTriggered(bool value)
+    #region RPC
+
+    private string FormatNameOfRPC(string rpcName)
     {
-      _isTriggered = value;
+      return $"{rpcName}.{m_uniqueName}";
     }
 
-    [UsedImplicitly]
-    public void Start()
+    private void RPC_SetIsTriggered(long sender, bool value)
     {
-      LogTrace(($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} m_trapSpawners.Count : {m_trapSpawners.Count}"));
-      LogTrace(($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} LogEvent == null : {LogEvent == null}"));
-
-      if (LogEvent == null)
+      if (m_nview.IsOwner())
       {
-        var eventLogCollector = transform.root.GetComponent<EventLogCollector>();
-        if (eventLogCollector != null) eventLogCollector.RegisterLogEventSource(this);
-      }
-
-      DisableMarkerMesh();
-      if (m_trapSpawners.Count == 0) return;
-
-      var spawners = m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>()).ToList();
-
-      LogTrace($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>().Count : {spawners.Count}");
-      foreach (var trapSpawner in m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>()))
-      {
-        LogTrace($"Logger Wire up for {trapSpawner.name}");
-        trapSpawner.LogEvent += OnLogEvent;
-      }
-
-      if (m_triggerOnStart) DoSpawn();
-    }
-
-    #region Logging
-
-    [HideInInspector]
-    public event EventHandler<LogEventArgs> LogEvent;
-
-    /// <inheritdoc />
-    public void OnLogEvent(object sender, LogEventArgs logEventArgs)
-    {
-      try
-      {
-        // Debug.Log($"[REMOVE] {logEventArgs.Message}"); // Todo: Remove
-        LogEvent?.Invoke(sender, logEventArgs);
-      }
-      catch (Exception e)
-      {
-        LoggingUtils.HandleDelegateError(LogEvent?.Method, e);
+        IsTriggered = value;
       }
     }
 
-    private void OnLogEvent(LogEventArgs logEventArgs) => OnLogEvent(this, logEventArgs);
-    private void LogError(Exception e) => OnLogEvent(new LogEventArgs { Message = e.Message, Exception = e, LogLevel = LogLevel.Error });
-    private void LogTrace(string msg) => Log(msg, LogLevel.Trace);
-    private void Log(string msg, LogLevel logLevel) => OnLogEvent(new LogEventArgs { Message = msg, LogLevel = logLevel });
+    private void RPC_RequestOwn(long sender)
+    {
+      if (m_nview.IsOwner())
+      {
+        m_nview.GetZDO().SetOwner(sender);
+      }
+    }
 
     #endregion
+
   }
 }

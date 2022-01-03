@@ -1,6 +1,4 @@
 ﻿using Digitalroot.Valheim.Common;
-using Digitalroot.Valheim.Dungeons.Common.Extensions;
-using Digitalroot.Valheim.Dungeons.Common.Utils;
 using Digitalroot.Valheim.TrapSpawners;
 using JetBrains.Annotations;
 using Jotunn.Managers;
@@ -47,16 +45,16 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
     public void Clear() => RealObject.Clear();
 
     /// <inheritdoc />
-    public void AddEnemy(GameObject prefab) => RealObject.AddEnemy(prefab.EnemyDecorator());
+    public void AddEnemy(GameObject prefab) => AddPrefab(prefab);
 
     /// <inheritdoc />
-    public void AddEnemy(string prefabName) => AddEnemy(PrefabManager.Cache.GetPrefab<GameObject>(prefabName));
+    public void AddEnemy(string prefabName) => AddPrefab(prefabName);
 
     /// <inheritdoc />
-    public void AddBoss(GameObject prefab) => RealObject.AddBoss(prefab.BossDecorator());
+    public void AddBoss(GameObject prefab) => AddPrefab(prefab);
 
     /// <inheritdoc />
-    public void AddBoss(string prefabName) => AddBoss(PrefabManager.Cache.GetPrefab<GameObject>(prefabName));
+    public void AddBoss(string prefabName) => AddPrefab(prefabName);
 
     /// <inheritdoc />
     public void AddPrefab(GameObject prefab) => RealObject.AddPrefab(prefab);

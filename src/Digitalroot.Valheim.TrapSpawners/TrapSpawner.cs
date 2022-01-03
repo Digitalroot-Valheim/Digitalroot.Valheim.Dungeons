@@ -1,85 +1,122 @@
-﻿using Digitalroot.Valheim.TrapSpawners.Enums;
+﻿using Digitalroot.Valheim.TrapSpawners.Decorators;
+using Digitalroot.Valheim.TrapSpawners.Enums;
+using Digitalroot.Valheim.TrapSpawners.Extensions;
 using Digitalroot.Valheim.TrapSpawners.Logging;
 using JetBrains.Annotations;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-// ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ConvertToConstant.Global
 // ReSharper disable FieldCanBeMadeReadOnly.Global
 // ReSharper disable InconsistentNaming
 // ReSharper disable once IdentifierTypo
 namespace Digitalroot.Valheim.TrapSpawners
 {
-  [AddComponentMenu("Traps/Spawner", 31), DisallowMultipleComponent]
-  [UsedImplicitly]
-  public class TrapSpawner : MonoBehaviour, IEventLogger
+  /// <summary>
+  /// Needs the following saved to ZDOs
+  /// - humanoid.m_health
+  /// - humanoid.m_name
+  /// - humanoid.m_faction
+  /// - humanoid.m_boss
+  /// - humanoid.m_jumpForce
+  /// - humanoid.m_jumpForceForward
+  /// - monsterAI.SetDespawnInDay(false);
+  /// - monsterAI.SetPatrolPoint(prefab.transform.parent.transform.position);
+  /// - monsterAI.m_jumpInterval
+  /// - monsterAI.m_fleeIfLowHealth
+  /// - monsterAI.m_pathAgentType
+  /// - drop.m_levelMultiplier
+  /// - drop.m_amountMax
+  /// - AddComponent<AutoJumpLedge>()
+  /// - level
+  /// - m_scaleSize
+  /// - Boss Auras
+  /// </summary>
+  [AddComponentMenu("Traps/Spawner", 31)]
+  [UsedImplicitly, Serializable, DisallowMultipleComponent]
+  public class TrapSpawner : EventLoggingMonoBehaviour
   {
     #region Unity Props
 
-    [Header("Presets")]
-    [SerializeField, Tooltip("Type of spawner.")]
-    public SpawnerType spawnerType = SpawnerType.Enemy;
+    /// <summary>
+    /// Type of spawner.
+    /// </summary>
+    [Header("Configure")]
+    [SerializeField, Tooltip("Hide the marker on spawn.")]
+    private bool m_hideMarker = true;
 
-    [SerializeField, Tooltip("Local Spawn Pool")]
-    public TrapSpawnPool m_spawnPool = new();
+    public SpawnerType m_spawnerType = SpawnerType.Enemy;
 
-    // [Header("Quantity")]
-    [SerializeField, Tooltip("Min number of prefabs to spawn"), HideInInspector]
+    /// <summary>
+    /// Local Spawn Pool
+    /// </summary>
+    [SerializeField]
+    private TrapSpawnPool m_spawnPool;
+
+    /// <summary>
+    /// Min number of prefabs to spawn
+    /// </summary>
+    [HideInInspector]
     public int m_quantityMin = 1;
 
-    [SerializeField, Tooltip("Max number of prefabs to spawn"), HideInInspector]
+    /// <summary>
+    /// Max number of prefabs to spawn
+    /// </summary>
+    [HideInInspector]
     public int m_quantityMax = 1;
 
-    [Header("Level")]
-    [SerializeField, Tooltip("Min level to spawn prefabs at."), HideInInspector]
+    /// <summary>
+    /// Min level to spawn prefabs at.
+    /// </summary>
+    [HideInInspector]
     public int m_levelMin = 1;
 
-    [SerializeField, Tooltip("Max level to spawn prefabs at."), HideInInspector]
+    /// <summary>
+    /// Max level to spawn prefabs at.
+    /// </summary>
+    [HideInInspector]
     public int m_levelMax = 1;
 
-    [Header("Size")]
-    [UsedImplicitly, SerializeField, Tooltip("Scale/Size to spawn prefabs at."), HideInInspector]
+    /// <summary>
+    /// Scale/Size to spawn prefabs at.
+    /// </summary>
+    [HideInInspector]
     public float m_scaleSize = 1;
 
     public ISpawnPool SpawnPool => m_spawnPool;
 
+    private ZNetView m_nview;
+
+    private IEnumerator _coroutine;
+
     #endregion
 
-    private void DisableMarkerMesh()
-    {
-      var mesh = GetComponentInChildren<MeshRenderer>();
-      if (mesh == null) return;
-      mesh.enabled = false;
-    }
+    #region MonoBehaviour Overrides
 
-    public void OnDestroy()
+    [UsedImplicitly]
+    private void Awake()
     {
-      for (int i = 0; i < transform.childCount; i++)
-      {
-        var child = transform.GetChild(i);
-        if (child == null) continue;
-        var zNetView = child.GetComponent<ZNetView>();
-        zNetView.Destroy();
-      }
-
-      if (LogEvent != null)
-      {
-        var eventLogCollector = transform.root.GetComponent<EventLogCollector>();
-        if (eventLogCollector != null) eventLogCollector.UnRegisterLogEventSource(this);
-      }
+      m_nview = GetComponent<ZNetView>();
     }
 
     public void Start()
     {
       DisableMarkerMesh();
-      if (LogEvent != null) return;
-      var eventLogCollector = transform.root.GetComponent<EventLogCollector>();
-      if (eventLogCollector != null) eventLogCollector.RegisterLogEventSource(this);
       // SendMessageUpwards();  
+    }
+
+    #endregion
+
+    private void DisableMarkerMesh()
+    {
+      if (!m_hideMarker) return;
+      var mesh = GetComponentInChildren<MeshRenderer>();
+      if (mesh == null) return;
+      mesh.enabled = false;
     }
 
     #region Spawn
@@ -93,14 +130,14 @@ namespace Digitalroot.Valheim.TrapSpawners
         if (spawnPoolPrefabs == null || spawnPoolPrefabs.Count < 1)
         {
           LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Using {m_spawnPool.name} Spawn Pool.");
-          LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] m_spawnPool.m_spawnPoolPrefabs == null : {m_spawnPool.m_spawnPoolPrefabs == null}");
-          LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] m_spawnPool.m_spawnPoolPrefabs.Count : {m_spawnPool.m_spawnPoolPrefabs?.Count}");
+          // LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] m_spawnPool.m_spawnPoolPrefabs == null : {m_spawnPool.m_spawnPoolPrefabs == null}");
+          // LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] m_spawnPool.m_spawnPoolPrefabs.Count : {m_spawnPool.m_spawnPoolPrefabs?.Count}");
           spawnPoolPrefabs = m_spawnPool.m_spawnPoolPrefabs;
         }
 
         if (spawnPoolPrefabs == null || spawnPoolPrefabs.Count < 1)
         {
-          LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] spawnPoolPrefabs is null or empty");
+          LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] {m_spawnPool.name} is null or empty");
           return;
         }
 
@@ -109,26 +146,23 @@ namespace Digitalroot.Valheim.TrapSpawners
         for (var i = 0; i < quantity; i++)
         {
           var rnd = Random.Range(0, spawnPoolPrefabs.Count);
-          LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] ({i + 1} of {quantity}), Using {rnd} from range 0 - {spawnPoolPrefabs.Count}, Spawn Pool size: {spawnPoolPrefabs.Count}");
+          LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] ({i + 1} of {quantity}), Using {rnd} from range 0 - {spawnPoolPrefabs.Count}, {m_spawnPool.name} size: {spawnPoolPrefabs.Count}");
 
           if (spawnPoolPrefabs.Count == 0)
           {
-            LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] spawnPoolPrefabs is empty - Skipping Spawn");
+            LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] {m_spawnPool.name} is empty - Skipping Spawn");
             continue;
           }
 
           if (rnd >= spawnPoolPrefabs.Count)
           {
-            LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] spawnPoolPrefabs[{rnd}] index is out of range. Using spawnPoolPrefabs[0].");
+            LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] {m_spawnPool.name}[{rnd}] index is out of range. Using {m_spawnPool.name}[0].");
             rnd = 0;
           }
 
-          LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Parent Transform : {transform.position}");
-          // LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] m_spawnPool.m_spawnPoolPrefabs.Count : {m_spawnPool.m_spawnPoolPrefabs?.Count}");
-
-          switch (spawnerType)
+          switch (m_spawnerType)
           {
-            case SpawnerType.Boss:
+            case SpawnerType.MiniBoss:
               SpawnBoss(spawnPoolPrefabs, rnd, levelMin, levelMax, i);
               break;
 
@@ -136,11 +170,14 @@ namespace Digitalroot.Valheim.TrapSpawners
               SpawnEnemy(spawnPoolPrefabs, rnd, levelMin, levelMax, i);
               break;
 
-            case SpawnerType.Lootable:
-              SpawnLootable(spawnPoolPrefabs, rnd, i);
+            case SpawnerType.Destructible:
+              SpawnDestructible(spawnPoolPrefabs, rnd, i);
               break;
 
-            case SpawnerType.Chest:
+            case SpawnerType.Treasure:
+              SpawnTreasure(spawnPoolPrefabs, rnd, i);
+              break;
+
             default:
               throw new ArgumentOutOfRangeException();
           }
@@ -160,175 +197,67 @@ namespace Digitalroot.Valheim.TrapSpawners
       return quantity;
     }
 
-    public static string GenerateName(int len)
+    public static IEnumerator ScaleEquipmentCoroutine(GameObject prefab)
     {
-      System.Random r = new();
-      string[] consonants = { "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "l", "n", "p", "q", "r", "s", "sh", "zh", "t", "v", "w", "x" };
-      string[] vowels = { "a", "e", "i", "o", "u", "ae", "y" };
-      var Name = "";
-      Name += consonants[r.Next(consonants.Length)].ToUpper();
-      Name += vowels[r.Next(vowels.Length)];
-      var b = 2; //b tells how many times a new letter has been added. It's 2 right now because the first two letters are already in the name.
-      while (b < len)
-      {
-        Name += consonants[r.Next(consonants.Length)];
-        b++;
-        Name += vowels[r.Next(vowels.Length)];
-        b++;
-      }
-
-      return Name;
+      yield return new WaitForSeconds(5);
+      prefab.ScaleEquipment();
     }
 
-    private MonsterAI SetAI(GameObject prefab)
+    private void SpawnBoss(IReadOnlyList<GameObject> spawnPoolPrefabs, int rnd, int levelMin, int levelMax, int i)
     {
-      var monsterAI = prefab.GetComponent<MonsterAI>();
-      if (monsterAI != null)
+      var prefab = SpawnPrefab(spawnPoolPrefabs[rnd], i).AsBoss(m_scaleSize, levelMin, levelMax);
+
+      _coroutine = ScaleEquipmentCoroutine(prefab);
+      StartCoroutine(_coroutine);
+
+      var humanoid = prefab.GetComponent<Humanoid>();
+      var zNetView = prefab.GetComponent<ZNetView>();
+      if (zNetView != null)
       {
-        monsterAI.SetDespawnInDay(false);
-        monsterAI.SetPatrolPoint(transform.position);
-        if (!monsterAI.m_randomFly)
-        {
-          monsterAI.m_jumpInterval = 10f;
-        }
-        monsterAI.m_fleeIfLowHealth = 0f;
+        // zNetView.m_zdo.Save();
       }
 
-      return monsterAI;
+      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] ***************************************************************");
+      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Spawning: {prefab.name} [{humanoid?.m_name}] @ {prefab.transform.position}, Scale: {prefab.transform.localScale}, Level: {humanoid?.GetLevel()}, isBoss : {humanoid?.m_boss}, Health {humanoid?.m_health}");
+      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Spawning: {prefab.name} [{humanoid?.m_name}] parent == null : {prefab.transform.parent == null}, parent?.name: {prefab.transform.parent?.name}");
+      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] ***************************************************************");
     }
 
-    private int SetLevel(int levelMin, int levelMax, GameObject go)
+    private void SpawnDestructible(IReadOnlyList<GameObject> spawnPoolPrefabs, int rnd, int i)
     {
-      if (levelMin == -1) levelMin = m_levelMin;
-      if (levelMax == -1) levelMax = m_levelMax;
-      var level = levelMin == levelMax ? levelMax : Random.Range(levelMin, levelMax + 1);
-      go.SendMessage("SetLevel", level, SendMessageOptions.RequireReceiver);
-      return level;
+      var prefab = SpawnPrefab(spawnPoolPrefabs[rnd], i);
+      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] ---------------------------------------------------------------");
+      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Spawning: {prefab.name} @ {prefab.transform.position}, Scale: {prefab.transform.localScale}");
+      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] ---------------------------------------------------------------");
     }
 
-    private static void SetLocalPosition(int i, GameObject go)
+    private void SpawnEnemy(IReadOnlyList<GameObject> spawnPoolPrefabs, int rnd, int levelMin, int levelMax, int i)
     {
-      switch (i)
-      {
-        case 1:
-          go.transform.localPosition += Vector3.left * 2.5f;
-          break;
+      var prefab = SpawnPrefab(spawnPoolPrefabs[rnd], i).AsEnemy(m_scaleSize, levelMin, levelMax);
 
-        case 2:
-          go.transform.localPosition += Vector3.right * 2.5f;
-          break;
-
-        case 3:
-          go.transform.localPosition += Vector3.forward * 2.5f;
-          break;
-
-        case 4:
-          go.transform.localPosition += Vector3.back * 2.5f;
-          break;
-      }
+      var humanoid = prefab.GetComponent<Humanoid>();
+      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Spawning: {prefab.name} [{humanoid?.m_name}] @ {prefab.transform.position}, Scale: {prefab.transform.localScale}, Level: {humanoid?.GetLevel()}, isBoss : {humanoid?.m_boss}, Health {humanoid?.m_health}");
+      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Spawning: {prefab.name} [{humanoid?.m_name}] parent == null : {prefab.transform.parent == null}, parent?.name: {prefab.transform.parent?.name}");
+      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
     private GameObject SpawnPrefab(GameObject spawnablePrefab, int i)
     {
       LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}]");
-      var prefab = Instantiate(spawnablePrefab, transform.position, Quaternion.identity, transform);
-      prefab.transform.localScale = new Vector3(m_scaleSize, m_scaleSize, m_scaleSize);
-      SetLocalPosition(i, prefab);
+      var prefab = Instantiate(spawnablePrefab, transform.position, Quaternion.identity, transform)
+                   .SetLocalPosition(i)
+                   .SetLocalRotation(Quaternion.identity);
       return prefab;
     }
 
-    private void SpawnBoss(IReadOnlyList<GameObject> spawnPoolPrefabs, int rnd, int levelMin, int levelMax, int i)
+    private void SpawnTreasure(IReadOnlyList<GameObject> spawnPoolPrefabs, int rnd, int i)
     {
       var prefab = SpawnPrefab(spawnPoolPrefabs[rnd], i);
-      var humanoid = prefab.GetComponent<Humanoid>();
-      if (humanoid != null)
-      {
-        humanoid.m_boss = true;
-        humanoid.m_health *= Convert.ToSingle(Math.Pow(m_scaleSize, 2));
-        humanoid.m_name = $"{GenerateName(Random.Range(4, 9))} the {humanoid.m_name}";
-        humanoid.m_faction = Character.Faction.Boss;
-        humanoid.m_jumpForce = 10;
-        humanoid.m_jumpForceForward = 10;
-      }
-
-      var visEquipment = prefab.GetComponent<VisEquipment>();
-
-      if (visEquipment != null)
-      {
-        if (visEquipment.m_leftItemInstance != null)
-        {
-          var item = visEquipment.m_leftItemInstance;
-          var localScale = item.transform.localScale;
-          localScale.x *= m_scaleSize;
-          localScale.y *= m_scaleSize;
-          localScale.z *= m_scaleSize;
-        }
-
-        if (visEquipment.m_rightBackItemInstance != null)
-        {
-          var item = visEquipment.m_rightBackItemInstance;
-          var localScale = item.transform.localScale;
-          localScale.x *= m_scaleSize;
-          localScale.y *= m_scaleSize;
-          localScale.z *= m_scaleSize;
-        }
-      }
-
-      var level = SetLevel(levelMin, levelMax, prefab);
-      var monsterAI = SetAI(prefab);
-
-      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Spawning: {prefab.name} @ {prefab.transform.position}, Scale: {prefab.transform.localScale}, Level: {level}, isBoss : {humanoid?.m_boss}, Health {humanoid?.m_health}");
-    }
-
-    private void SpawnLootable(IReadOnlyList<GameObject> spawnPoolPrefabs, int rnd, int i)
-    {
-      var prefab = SpawnPrefab(spawnPoolPrefabs[rnd], i);
+      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] ===============================================================");
       LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Spawning: {prefab.name} @ {prefab.transform.position}, Scale: {prefab.transform.localScale}");
+      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] ===============================================================");
     }
-
-    private void SpawnEnemy(IReadOnlyList<GameObject> spawnPoolPrefabs, int rnd, int levelMin, int levelMax, int i)
-    {
-      var prefab = SpawnPrefab(spawnPoolPrefabs[rnd], i);
-
-      var humanoid = prefab.GetComponent<Humanoid>();
-      if (humanoid != null)
-      {
-        humanoid.m_health *= 2;
-        humanoid.m_name = $"Dark {humanoid.m_name}";
-        humanoid.m_faction = Character.Faction.Undead;
-      }
-
-      var level = SetLevel(levelMin, levelMax, prefab);
-      var monsterAI = SetAI(prefab);
-      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Spawning: {prefab.name} [{humanoid?.m_name}] @ {prefab.transform.position}, Scale: {prefab.transform.localScale}, Level: {level}, isBoss : {humanoid?.m_boss}, Health {humanoid?.m_health}");
-      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] Spawning: {prefab.name} [{humanoid?.m_name}] parent == null : {prefab.transform.parent == null}, parent?.name: {prefab.transform.parent?.name}");
-    }
-
-    #endregion
-
-    #region Logging
-
-    public event EventHandler<LogEventArgs> LogEvent;
-
-    /// <inheritdoc />
-    public void OnLogEvent(object sender, LogEventArgs logEventArgs)
-    {
-      try
-      {
-        Debug.Log(logEventArgs.Message);
-        // Debug.Log($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} LogEvent == null : {LogEvent == null}");
-        LogEvent?.Invoke(sender, logEventArgs);
-      }
-      catch (Exception e)
-      {
-        LoggingUtils.HandleDelegateError(LogEvent?.Method, e);
-      }
-    }
-
-    private void OnLogEvent(LogEventArgs logEventArgs) => OnLogEvent(this, logEventArgs);
-    private void LogError(Exception e) => OnLogEvent(new LogEventArgs { Message = e.Message, Exception = e, LogLevel = LogLevel.Error });
-    private void LogTrace(string msg) => Log(msg, LogLevel.Trace);
-    private void Log(string msg, LogLevel logLevel) => OnLogEvent(new LogEventArgs { Message = msg, LogLevel = logLevel });
 
     #endregion
 
@@ -352,11 +281,5 @@ namespace Digitalroot.Valheim.TrapSpawners
     //     }
     //   }
     // }
-
-    #region Editor
-
-    // public class ShopItemEditor : UnityEditor. .Experimental. Editor
-
-    #endregion
   }
 }
