@@ -21,7 +21,7 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
       : base(realObject, logger)
     {
       Log.Trace(Logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Creating Spawn Pool ({realObject.name})");
-      realObject.LogEvent += HandleLogEvent;
+      // realObject.LogEvent += HandleLogEvent;
     }
 
     private protected TrapSpawnPoolProxy([NotNull] GameObject dungeon, [NotNull] string roomName, [NotNull] ITraceableLogging logger, [NotNull] string roomSpawnPoolName = RoomSpawnPoolName)

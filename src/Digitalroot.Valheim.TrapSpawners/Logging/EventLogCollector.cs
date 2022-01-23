@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Digitalroot.Valheim.TrapSpawners.Logging
 {
   [AddComponentMenu("Traps/Event Log Collector", 34), DisallowMultipleComponent]
-  [UsedImplicitly, Obsolete]
+  [UsedImplicitly, Obsolete("DO NOT USE", true)]
   public class EventLogCollector : MonoBehaviour, IEventLogger
   {
     [UsedImplicitly]
@@ -13,12 +13,12 @@ namespace Digitalroot.Valheim.TrapSpawners.Logging
     {
       foreach (var trapSpawnPool in GetComponentsInChildren<TrapSpawnPool>())
       {
-        trapSpawnPool.LogEvent += OnLogEvent;
+        // trapSpawnPool.LogEvent += OnLogEvent;
       }
 
       foreach (var trapTrigger in GetComponentsInChildren<TrapTrigger>())
       {
-        trapTrigger.LogEvent += OnLogEvent;
+        // trapTrigger.LogEvent += OnLogEvent;
       }
     }
 
@@ -27,12 +27,12 @@ namespace Digitalroot.Valheim.TrapSpawners.Logging
     {
       foreach (var trapSpawnPool in GetComponentsInChildren<TrapSpawnPool>())
       {
-        trapSpawnPool.LogEvent -= OnLogEvent;
+        // trapSpawnPool.LogEvent -= OnLogEvent;
       }
 
       foreach (var trapTrigger in GetComponentsInChildren<TrapTrigger>())
       {
-        trapTrigger.LogEvent -= OnLogEvent;
+        // trapTrigger.LogEvent -= OnLogEvent;
       }
     }
 
@@ -58,8 +58,8 @@ namespace Digitalroot.Valheim.TrapSpawners.Logging
     {
       try
       {
-        Debug.Log(logEventArgs.Message);
-        LogEvent?.Invoke(sender, logEventArgs);
+        // Debug.Log(logEventArgs.Message);
+        // LogEvent?.Invoke(sender, logEventArgs);
       }
       catch (Exception e)
       {

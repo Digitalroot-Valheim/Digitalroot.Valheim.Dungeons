@@ -1,5 +1,5 @@
-﻿using Digitalroot.Valheim.TrapSpawners.Extensions;
-using Digitalroot.Valheim.TrapSpawners.Logging;
+﻿using Digitalroot.Valheim.TrapSpawners.CMB;
+using Digitalroot.Valheim.TrapSpawners.Extensions;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
@@ -21,8 +21,6 @@ namespace Digitalroot.Valheim.TrapSpawners
   [UsedImplicitly, Serializable, DisallowMultipleComponent]
   public class TrapTrigger : EventLoggingMonoBehaviour
   {
-    private const string Namespace = "Digitalroot.Valheim.TrapSpawners";
-
     private ZNetView m_nview;
     private string m_uniqueName;
 
@@ -47,7 +45,7 @@ namespace Digitalroot.Valheim.TrapSpawners
         _isTriggered = value;
         if (m_nview.IsOwner())
         {
-          m_nview.GetZDO().Set(nameof(_isTriggered), value);
+          m_nview.GetZDO().Set($"{m_uniqueName}.{nameof(_isTriggered)}", value);
         }
       }
     }
@@ -66,59 +64,38 @@ namespace Digitalroot.Valheim.TrapSpawners
       m_uniqueName = gameObject.GetUniqueName();
       if (m_nview == null)
       {
-        LogError(new Exception($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} m_nview is null"));
+        LogError(new Exception($"{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name} m_nview is null"));
         return;
       }
 
-      if (m_nview.GetZDO() == null)
-      {
-        return;
-      }
+      if (m_nview.GetZDO() == null) return;
+
       m_nview.Register<bool>(FormatNameOfRPC(nameof(RPC_SetIsTriggered)), RPC_SetIsTriggered);
       m_nview.Register(FormatNameOfRPC(nameof(RPC_RequestOwn)), RPC_RequestOwn);
-      IsTriggered = (m_nview.GetZDO().GetBool(nameof(_isTriggered)));
+      IsTriggered = (m_nview.GetZDO().GetBool($"{m_uniqueName}.{nameof(_isTriggered)}"));
     }
 
     [UsedImplicitly]
     public void Start()
     {
-      LogTrace($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} m_trapSpawners.Count : {m_trapSpawners.Count}");
+      LogTrace($"{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name} m_trapSpawners.Count : {m_trapSpawners.Count}");
 
       DisableMarkerMesh();
+
       if (m_trapSpawners.Count == 0) return;
 
       var spawners = m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>()).ToList();
 
-      //LogTrace($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>().Count : {spawners.Count}");
-      //foreach (var trapSpawner in m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>()))
-      //{
-      //  LogTrace($"Logger Wire up for {trapSpawner.name}");
-      //  trapSpawner.LogEvent += OnLogEvent;
-      //}
-
       if (m_triggerOnStart) DoSpawn();
     }
 
-    [UsedImplicitly]
-    public void OnDestroy()
-    {
-      if (m_trapSpawners.Count == 0) return;
-
-      foreach (var trapSpawner in m_trapSpawners.Select(spawner => spawner?.GetComponent<TrapSpawner>()))
-      {
-        if (trapSpawner != null)
-        {
-          trapSpawner.LogEvent -= OnLogEvent;
-        }
-      }
-    }
 
     [UsedImplicitly]
     public void OnTriggered(Collider other)
     {
       if (IsTriggered) return;
-      LogTrace($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} ** Trap Triggered **");
-      LogTrace($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} ** Triggered By: {other.name} **");
+      LogTrace($"{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name} ** Trap Triggered **");
+      LogTrace($"{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name} ** Triggered By: {other.name} **");
       DoSpawn();
     }
 
@@ -142,7 +119,7 @@ namespace Digitalroot.Valheim.TrapSpawners
       {
         if (!trapSpawner.enabled)
         {
-          LogTrace($"{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name} Skipping: {trapSpawner.name}");
+          LogTrace($"{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name} Skipping: {trapSpawner.name}");
           continue;
         }
 
@@ -174,6 +151,5 @@ namespace Digitalroot.Valheim.TrapSpawners
     }
 
     #endregion
-
   }
 }

@@ -2,7 +2,7 @@
 {
   public static class DecoratorUtils
   {
-    internal static string GenerateName(int len)
+    public static string GenerateName(int len)
     {
       System.Random r = new();
       string[] consonants = { "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "l", "n", "p", "q", "r", "s", "sh", "zh", "t", "v", "w", "x" };

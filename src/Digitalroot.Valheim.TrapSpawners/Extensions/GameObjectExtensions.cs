@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Digitalroot.Valheim.Common.Json;
+using Digitalroot.Valheim.TrapSpawners.Models;
+using JetBrains.Annotations;
+using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
@@ -8,18 +11,112 @@ namespace Digitalroot.Valheim.TrapSpawners.Extensions
 {
   public static class GameObjectExtensions
   {
-    /// <summary>
-    /// Set the level of the prefab.
-    /// </summary>
-    /// <param name="prefab"></param>
-    /// <param name="levelMin"></param>
-    /// <param name="levelMax"></param>
-    /// <returns></returns>
-    internal static GameObject SetLevel(this GameObject prefab, int levelMin, int levelMax)
+    public static GameObject AddLedgeJumping(this GameObject prefab)
     {
-      var level = levelMin == levelMax ? levelMax : Random.Range(levelMin, levelMax + 1);
-      prefab.SendMessage("SetLevel", level, SendMessageOptions.RequireReceiver);
+      prefab.GetOrAddMonoBehaviour<AutoJumpLedge>();
       return prefab;
+    }
+
+    public static bool HasParent(this GameObject prefab) => prefab.transform.GetParent() != null;
+
+    public static GameObject GetParent(this GameObject prefab) => prefab.HasParent() ? prefab.transform.GetParent().gameObject : null;
+
+    public static GameObject AddToSpawnedGameObjectDataCollection(this GameObject prefab, List<DungeonCreatureData> spawnedGameObjectList)
+    {
+      if (spawnedGameObjectList == null) return prefab;
+
+      var spawnedGameObjectData = new DungeonCreatureData();
+
+      var zNetView = prefab.GetComponent<ZNetView>();
+      if (zNetView != null)
+      {
+        spawnedGameObjectData.m_zdo_uid = zNetView.GetZDO().m_uid.ToString();
+      }
+
+      spawnedGameObjectData.m_prefab_hash = prefab.name.GetStableHashCode();
+
+      var humanoid = prefab.GetComponent<Humanoid>();
+      if (humanoid != null)
+      {
+        spawnedGameObjectData.m_humanoid_name = humanoid.m_name;
+        spawnedGameObjectData.m_humanoid_boss = humanoid.m_boss;
+        spawnedGameObjectData.m_humanoid_faction = humanoid.m_faction;
+        spawnedGameObjectData.m_humanoid_health = humanoid.GetHealth();
+        spawnedGameObjectData.m_humanoid_max_health = humanoid.GetMaxHealth();
+        spawnedGameObjectData.m_humanoid_jumpForce = humanoid.m_jumpForce;
+        spawnedGameObjectData.m_humanoid_jumpForceForward = humanoid.m_jumpForceForward;
+        spawnedGameObjectData.m_humanoid_level = humanoid.m_level;
+      }
+
+      var characterDrop = prefab.GetComponent<CharacterDrop>();
+      if (characterDrop != null)
+      {
+        spawnedGameObjectData.m_characterDrop_dropList.Clear();
+        foreach (var drop in characterDrop.m_drops)
+        {
+          spawnedGameObjectData.m_characterDrop_dropList.Add(drop.ToDungeonCreatureDataDrop());
+        }
+      }
+
+      var monsterAI = prefab.GetComponent<MonsterAI>();
+      if (monsterAI != null)
+      {
+        spawnedGameObjectData.m_monsterAI_despawnInDay = monsterAI.DespawnInDay();
+        spawnedGameObjectData.m_monsterAI_fleeIfLowHealth = monsterAI.m_fleeIfLowHealth;
+        spawnedGameObjectData.m_monsterAI_jumpInterval = monsterAI.m_jumpInterval;
+        spawnedGameObjectData.m_monsterAI_pathAgentType = monsterAI.m_pathAgentType;
+        monsterAI.GetPatrolPoint(out spawnedGameObjectData.m_monsterAI_patrolPoint);
+      }
+
+      spawnedGameObjectData.m_scaleSize = prefab.transform.localScale;
+      spawnedGameObjectList.Add(spawnedGameObjectData);
+
+      Debug.Log(JsonSerializationProvider.ToJson(spawnedGameObjectData, true));
+
+      return prefab;
+    }
+
+    public static bool IsBoss(this GameObject prefab) => prefab.GetComponent<Character>()?.IsBoss() ?? false;
+
+    public static bool IsDungeonCreature(this GameObject prefab) => prefab.GetComponent<ZNetView>()?.GetZDO()?.GetBool(Common.Utils.IsDungeonCreature, false) ?? false;
+
+    private static Vector3 GetScale(string itemName, Vector3 currentScale)
+    {
+      List<string> names = new()
+      {
+        "shield"
+        , "axe"
+        , "mace"
+      };
+
+      if (names.Contains(itemName.ToLowerInvariant()))
+      {
+        return Vector3.one * 2;
+      }
+
+      return Vector3.one;
+    }
+
+    public static string GetUniqueName(this GameObject prefab)
+    {
+      List<string> paths = new();
+
+      var parent = prefab.transform.GetParent();
+
+      while (parent != null)
+      {
+        paths.Add(parent.name);
+        parent = parent.GetParent();
+      }
+
+      var sb = new StringBuilder();
+      for (var i = paths.Count; i > 0; i--)
+      {
+        sb.Append(paths[i - 1]).Append('.');
+      }
+
+      sb.Append(prefab.name);
+      return sb.ToString();
     }
 
     /// <summary>
@@ -27,13 +124,20 @@ namespace Digitalroot.Valheim.TrapSpawners.Extensions
     /// </summary>
     /// <param name="prefab"></param>
     /// <returns></returns>
-    internal static GameObject ConfigureBaseAI(this GameObject prefab)
+    public static GameObject ConfigureBaseAI(this GameObject prefab)
     {
       var monsterAI = prefab.GetComponent<MonsterAI>();
       if (monsterAI == null) return prefab;
 
       monsterAI.SetDespawnInDay(false);
-      monsterAI.SetPatrolPoint(prefab.transform.parent.transform.position);
+      if (prefab.HasParent())
+      {
+        monsterAI.SetPatrolPoint(prefab.transform.parent.transform.position);
+      }
+      else
+      {
+        monsterAI.SetPatrolPoint();
+      }
 
       if (!monsterAI.m_randomFly)
       {
@@ -45,18 +149,12 @@ namespace Digitalroot.Valheim.TrapSpawners.Extensions
       return prefab;
     }
 
-    internal static GameObject AddLedgeJumping(this GameObject prefab)
-    {
-      prefab.AddComponent<AutoJumpLedge>();
-      return prefab;
-    }
-
     /// <summary>
     /// Configure AI for boss.
     /// </summary>
     /// <param name="prefab"></param>
     /// <returns></returns>
-    internal static GameObject ConfigureBossAI(this GameObject prefab)
+    public static GameObject ConfigureBossAI(this GameObject prefab)
     {
       var monsterAI = prefab.GetComponent<MonsterAI>();
       if (monsterAI == null) return prefab;
@@ -70,12 +168,30 @@ namespace Digitalroot.Valheim.TrapSpawners.Extensions
     }
 
     /// <summary>
+    /// Set the level of the prefab.
+    /// </summary>
+    /// <param name="prefab"></param>
+    /// <param name="levelMin"></param>
+    /// <param name="levelMax"></param>
+    /// <returns></returns>
+    public static GameObject SetLevel(this GameObject prefab, int levelMin, int levelMax)
+    {
+      var level = levelMin == levelMax ? levelMax : Random.Range(levelMin, levelMax + 1);
+      var character = prefab.GetComponent<Character>();
+      character?.SetLevel(level);
+      character?.SetupMaxHealth();
+
+      // prefab.SendMessage("SetLevel", level, SendMessageOptions.RequireReceiver);
+      return prefab;
+    }
+
+    /// <summary>
     /// Set prefab's local position.
     /// </summary>
     /// <param name="prefab"></param>
     /// <param name="i"></param>
     /// <returns></returns>
-    internal static GameObject SetLocalPosition(this GameObject prefab, int i)
+    public static GameObject SetLocalPosition(this GameObject prefab, int i)
     {
       switch (i)
       {
@@ -105,9 +221,25 @@ namespace Digitalroot.Valheim.TrapSpawners.Extensions
     /// <param name="prefab"></param>
     /// <param name="scaleSize"></param>
     /// <returns></returns>
-    internal static GameObject SetLocalScale(this GameObject prefab, float scaleSize)
+    [UsedImplicitly]
+    public static GameObject SetLocalScale(this GameObject prefab, float scaleSize)
     {
-      prefab.transform.localScale = new Vector3(scaleSize, scaleSize, scaleSize);
+      prefab.SetLocalScale(new Vector3(scaleSize, scaleSize, scaleSize));
+      return prefab;
+    }
+
+    /// <summary>
+    /// Set prefab's local scale
+    /// </summary>
+    /// <param name="prefab"></param>
+    /// <param name="scaleSize"></param>
+    /// <returns></returns>
+    [UsedImplicitly]
+    public static GameObject SetLocalScale(this GameObject prefab, Vector3 scaleSize)
+    {
+      var zNetView = prefab.GetComponent<ZNetView>();
+      zNetView.m_syncInitialScale = true;
+      zNetView.SetLocalScale(scaleSize);
       return prefab;
     }
 
@@ -117,13 +249,13 @@ namespace Digitalroot.Valheim.TrapSpawners.Extensions
     /// <param name="prefab"></param>
     /// <param name="quaternion"></param>
     /// <returns></returns>
-    internal static GameObject SetLocalRotation(this GameObject prefab, Quaternion quaternion)
+    public static GameObject SetLocalRotation(this GameObject prefab, Quaternion quaternion)
     {
       prefab.transform.rotation = quaternion;
       return prefab;
     }
 
-    internal static GameObject ScaleEquipment(this GameObject prefab)
+    public static GameObject ScaleEquipment(this GameObject prefab)
     {
       var visEquipment = prefab.GetComponent<VisEquipment>();
       if (visEquipment == null) return prefab;
@@ -148,43 +280,74 @@ namespace Digitalroot.Valheim.TrapSpawners.Extensions
       return prefab;
     }
 
-    private static Vector3 GetScale(string itemName, Vector3 currentScale)
+    public static DungeonCreatureData ToDungeonCreatureData(this GameObject prefab)
     {
-      List<string> names = new()
-      {
-        "shield"
-        , "axe"
-        , "mace"
-      };
 
-      if (names.Contains(itemName.ToLowerInvariant()))
+      var dungeonCreatureData = new DungeonCreatureData();
+
+      var zNetView = prefab.GetComponent<ZNetView>();
+      if (zNetView != null)
       {
-        return Vector3.one * 2;
+        dungeonCreatureData.m_zdo_uid = zNetView.GetZDO().m_uid.ToString();
       }
 
-      return Vector3.one;
+      dungeonCreatureData.m_prefab_hash = prefab.name.GetStableHashCode();
+
+      var humanoid = prefab.GetComponent<Humanoid>();
+      if (humanoid != null)
+      {
+        dungeonCreatureData.m_humanoid_name = humanoid.m_name;
+        dungeonCreatureData.m_humanoid_boss = humanoid.m_boss;
+        dungeonCreatureData.m_humanoid_faction = humanoid.m_faction;
+        // dungeonCreatureData.m_humanoid_health = humanoid.m_health;
+        dungeonCreatureData.m_humanoid_max_health = humanoid.GetMaxHealth();
+        dungeonCreatureData.m_humanoid_jumpForce = humanoid.m_jumpForce;
+        dungeonCreatureData.m_humanoid_jumpForceForward = humanoid.m_jumpForceForward;
+        dungeonCreatureData.m_humanoid_level = humanoid.m_level;
+      }
+
+      var characterDrop = prefab.GetComponent<CharacterDrop>();
+      if (characterDrop != null)
+      {
+        dungeonCreatureData.m_characterDrop_dropList.Clear();
+        foreach (var drop in characterDrop.m_drops)
+        {
+          dungeonCreatureData.m_characterDrop_dropList.Add(drop.ToDungeonCreatureDataDrop());
+        }
+      }
+
+      var monsterAI = prefab.GetComponent<MonsterAI>();
+      if (monsterAI != null)
+      {
+        dungeonCreatureData.m_monsterAI_despawnInDay = monsterAI.m_despawnInDay;
+        dungeonCreatureData.m_monsterAI_fleeIfLowHealth = monsterAI.m_fleeIfLowHealth;
+        dungeonCreatureData.m_monsterAI_jumpInterval = monsterAI.m_jumpInterval;
+        dungeonCreatureData.m_monsterAI_pathAgentType = monsterAI.m_pathAgentType;
+        dungeonCreatureData.m_monsterAI_patrolPoint = monsterAI.m_patrolPoint;
+      }
+
+      dungeonCreatureData.m_scaleSize = prefab.transform.localScale;
+
+      Debug.Log(dungeonCreatureData.ToJson(true));
+
+      return dungeonCreatureData;
     }
 
-    internal static string GetUniqueName(this GameObject prefab)
+    /// <summary>
+    /// Returns the component of Type type. If one doesn't already exist on the GameObject it will be added.
+    /// </summary>
+    /// <remarks>
+    /// Inspired by Jotunn JVL
+    /// Source: https://wiki.unity3d.com/index.php/GetOrAddComponent
+    /// </remarks>
+    /// <typeparam name="T">The type of Component to return.</typeparam>
+    /// <param name="gameObject">The GameObject the Component is attached to.</param>
+    /// <returns>Returns the component of Type T</returns>
+    [UsedImplicitly]
+    public static T GetOrAddMonoBehaviour<T>([NotNull] this GameObject gameObject)
+      where T : MonoBehaviour
     {
-      List<string> paths = new();
-
-      var parent = prefab.transform.GetParent();
-
-      while (parent != null)
-      {
-        paths.Add(parent.name);
-        parent = parent.GetParent();
-      }
-
-      var sb = new StringBuilder();
-      for (var i = paths.Count; i > 0; i--)
-      {
-        sb.Append(paths[i - 1]).Append('.');
-      }
-
-      sb.Append(prefab.name);
-      return sb.ToString();
+      return gameObject.GetComponent<T>() ?? gameObject.AddComponent<T>();
     }
   }
 }

@@ -2,7 +2,7 @@
 
 namespace Digitalroot.Valheim.TrapSpawners.CMB
 {
-  internal class BossAura : MonoBehaviour
+  public class BossAura : MonoBehaviour
   {
     private float _update;
 

@@ -20,7 +20,7 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
       : base(realObject, logger)
     {
       Log.Trace(Logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Creating Trigger ({realObject.name})");
-      realObject.LogEvent += HandleLogEvent;
+      // realObject.LogEvent += HandleLogEvent;
     }
 
     private TrapTriggerProxy([NotNull] GameObject dungeon, [NotNull] string roomName, [NotNull] ITraceableLogging logger, [NotNull] string roomTriggerName = RoomTriggerName)

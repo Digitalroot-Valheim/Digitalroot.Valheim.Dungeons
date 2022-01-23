@@ -4,15 +4,17 @@ using Digitalroot.Valheim.Common;
 using Digitalroot.Valheim.Common.Names.Vanilla;
 using Digitalroot.Valheim.Dungeons.Common;
 using Digitalroot.Valheim.Dungeons.Common.Enums;
-using Digitalroot.Valheim.Dungeons.Common.Logging;
 using Digitalroot.Valheim.Dungeons.Common.SpawnPools;
 using Digitalroot.Valheim.Dungeons.OdinsHollow.Enums;
-using Digitalroot.Valheim.TrapSpawners.Logging;
+using Digitalroot.Valheim.TrapSpawners.CMB;
+using Digitalroot.Valheim.TrapSpawners.Decorators;
 using JetBrains.Annotations;
 using Jotunn.Entities;
 using Jotunn.Managers;
 using Jotunn.Utils;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using UnityEngine;
 
@@ -22,7 +24,7 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
   public class Main : BaseUnityPlugin, ITraceableLogging
   {
     public const string Version = "1.0.0";
-    public const string Name = "Odin's Hollow Dungeon by the Odin Plus Team";
+    public const string Name = "Odin's Hollow Dungeon by the OdinPlus Team";
 
     // ReSharper disable once MemberCanBePrivate.Global
     public const string Guid = "digitalroot.mods.dungeons.odinshollow";
@@ -37,8 +39,9 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
     // ReSharper disable once IdentifierTypo
     private const string OdinsHollow = nameof(OdinsHollow);
     private const string TriggerTest = nameof(TriggerTest);
+
     private Dungeon _dungeon;
-    private readonly EventLogHandler _eventLogHandler;
+    // private readonly EventLogHandler _eventLogHandler;
 
     public Main()
     {
@@ -46,12 +49,12 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
       #if DEBUG
       EnableTrace = true;
       Log.RegisterSource(Instance);
-      Log.SetEnableTraceForAllLoggers(true);
+      // Log.SetEnableTraceForAllLoggers(true);
       #else
-      EnableTrace = false;
+        EnableTrace = false;
       #endif
-      _eventLogHandler = new EventLogHandler(Instance);
-      Log.Trace(Instance, $"{Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}");
+      // _eventLogHandler = new EventLogHandler(Instance);
+      Log.Trace(Instance, $"{Namespace}.{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}");
     }
 
     [UsedImplicitly]
@@ -67,35 +70,21 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
         Log.Trace(Instance, Application.internetReachability);
         Log.Trace(Instance, Application.platform);
 
-        Log.Trace(Instance, $"{Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}");
+        Log.Trace(Instance, $"{Namespace}.{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}");
 
         RepositoryLoader.LoadAssembly("Digitalroot.Valheim.TrapSpawners.dll");
 
         _assetBundle = AssetUtils.LoadAssetBundleFromResources("op_dungeons", typeof(Main).Assembly);
 
-        #if DEBUG2
-
-        foreach (var scene in _assetBundle.GetAllScenePaths())
-        {
-          Log.Trace(Instance, scene);
-          SceneManager.LoadSceneAsync(System.IO.Path.GetFileNameWithoutExtension(scene), LoadSceneMode.Additive);
-        }
-
-        foreach (var assetName in _assetBundle.GetAllAssetNames())
-        {
-          Log.Trace(Instance, assetName);
-        }
-        #endif
-
         var prefab = _assetBundle.LoadAsset<GameObject>(OdinsHollow);
-        // var eventLogCollector = prefab.GetComponent<EventLogCollector>();
-        // eventLogCollector.LogEvent += _eventLogHandler.HandleLogEvent;
         PrefabManager.Instance.AddPrefab(new CustomPrefab(prefab, false));
-        PrefabManager.OnVanillaPrefabsAvailable += OnVanillaPrefabsAvailable;
 
         var prefab2 = _assetBundle.LoadAsset<GameObject>(TriggerTest);
         PrefabManager.Instance.AddPrefab(new CustomPrefab(prefab2, false));
-        
+
+        PrefabManager.OnVanillaPrefabsAvailable += OnVanillaPrefabsAvailable;
+        PrefabManager.OnPrefabsRegistered += OnPrefabsRegistered;
+
         // _harmony = Harmony.CreateAndPatchAll(typeof(Main).Assembly, Guid);
       }
       catch (Exception e)
@@ -116,56 +105,48 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
 
     private void SeedGlobalEnemySpawnPoolIfNecessary()
     {
-      Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Seeding {nameof(_dungeon.GlobalEnemySpawnPool)}");
+      Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}] Seeding {nameof(_dungeon.GlobalEnemySpawnPool)}");
       // Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] _dungeon.GlobalEnemySpawnPool == null : {_dungeon.GlobalEnemySpawnPoolProxy == null}");
 
       if (_dungeon.GlobalEnemySpawnPool == null)
       {
-        Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Skipping Seeding of {nameof(_dungeon.GlobalEnemySpawnPool)}");
+        Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}] Skipping Seeding of {nameof(_dungeon.GlobalEnemySpawnPool)}");
         return;
       }
 
       _dungeon.GlobalEnemySpawnPool?.Clear(); // Remove anything already in the GSP.
-      _dungeon.GlobalEnemySpawnPool?.AddEnemy(EnemyNames.SkeletonPoison);
-      _dungeon.GlobalEnemySpawnPool?.AddEnemy(EnemyNames.Blob);
-      _dungeon.GlobalEnemySpawnPool?.AddEnemy(EnemyNames.BlobElite);
-      _dungeon.GlobalEnemySpawnPool?.AddEnemy(EnemyNames.BlobTar);
-      _dungeon.GlobalEnemySpawnPool?.AddEnemy(EnemyNames.Draugr);
-      _dungeon.GlobalEnemySpawnPool?.AddEnemy(EnemyNames.DraugrElite);
-      _dungeon.GlobalEnemySpawnPool?.AddEnemy(EnemyNames.DraugrRanged);
-      _dungeon.GlobalEnemySpawnPool?.AddEnemy(EnemyNames.SkeletonNoArcher);
-      _dungeon.GlobalEnemySpawnPool?.AddEnemy(EnemyNames.Ghost);
-      _dungeon.GlobalEnemySpawnPool?.AddEnemy(EnemyNames.Wraith);
-      _dungeon.GlobalEnemySpawnPool?.AddEnemy(EnemyNames.Surtling);
+
+      foreach (var enemyBasePrefabName in _enemyBasePrefabNameList)
+      {
+        _dungeon.GlobalEnemySpawnPool?.AddEnemy($"{nameof(OdinsHollow)}_{enemyBasePrefabName}");
+      }
     }
 
     private void SeedGlobalDestructibleSpawnPoolIfNecessary()
     {
-      Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Seeding {nameof(_dungeon.GlobalDestructibleSpawnPool)}");
+      Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}] Seeding {nameof(_dungeon.GlobalDestructibleSpawnPool)}");
 
       if (_dungeon.GlobalDestructibleSpawnPool == null)
       {
-        Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Skipping Seeding of {nameof(_dungeon.GlobalDestructibleSpawnPool)}");
+        Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}] Skipping Seeding of {nameof(_dungeon.GlobalDestructibleSpawnPool)}");
         return;
       }
 
       _dungeon.GlobalDestructibleSpawnPool?.Clear(); // Remove anything already in the GSP.
-      // _dungeon.GlobalLootableSpawnPool?.AddPrefab(PrefabNames.Mudpile);
       _dungeon.GlobalDestructibleSpawnPool?.AddPrefab(PrefabNames.Mudpile2);
       _dungeon.GlobalDestructibleSpawnPool?.AddPrefab(PrefabNames.MineRockTin);
       _dungeon.GlobalDestructibleSpawnPool?.AddPrefab(PrefabNames.MineRockCopper);
-      _dungeon.GlobalDestructibleSpawnPool?.AddPrefab(PrefabNames.Rock3Silver);
-      _dungeon.GlobalDestructibleSpawnPool?.AddPrefab(PrefabNames.PickableBogIronOre);
-      
+      _dungeon.GlobalDestructibleSpawnPool?.AddPrefab(PrefabNames.MineRockIron);
+      _dungeon.GlobalDestructibleSpawnPool?.AddPrefab(PrefabNames.MineRockObsidian);
     }
 
     private void SeedGlobalMiniBossSpawnPoolIfNecessary()
     {
-      Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Seeding {nameof(_dungeon.GlobalMiniBossSpawnPool)}");
+      Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}] Seeding {nameof(_dungeon.GlobalMiniBossSpawnPool)}");
 
       if (_dungeon.GlobalMiniBossSpawnPool == null)
       {
-        Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Skipping Seeding of {nameof(_dungeon.GlobalMiniBossSpawnPool)}");
+        Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}] Skipping Seeding of {nameof(_dungeon.GlobalMiniBossSpawnPool)}");
         return;
       }
 
@@ -179,22 +160,34 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
 
     private void SeedGlobalTreasureSpawnPoolIfNecessary()
     {
-      Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Seeding {nameof(_dungeon.GlobalTreasureSpawnPool)}");
+      Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}] Seeding {nameof(_dungeon.GlobalTreasureSpawnPool)}");
 
       if (_dungeon.GlobalTreasureSpawnPool == null)
       {
-        Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Skipping Seeding of {nameof(_dungeon.GlobalTreasureSpawnPool)}");
+        Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}] Skipping Seeding of {nameof(_dungeon.GlobalTreasureSpawnPool)}");
         return;
       }
 
       _dungeon.GlobalTreasureSpawnPool?.Clear(); // Remove anything already in the GSP.
-      _dungeon.GlobalDestructibleSpawnPool?.AddPrefab(PrefabNames.PickableDolmenTreasure);
-      _dungeon.GlobalDestructibleSpawnPool?.AddPrefab(PrefabNames.PickableForestCryptRandom);
-      _dungeon.GlobalDestructibleSpawnPool?.AddPrefab(PrefabNames.PickableSunkenCryptRandom);
-      _dungeon.GlobalDestructibleSpawnPool?.AddPrefab(PrefabNames.PickableForestCryptRemains01);
-      _dungeon.GlobalDestructibleSpawnPool?.AddPrefab(PrefabNames.PickableForestCryptRemains02);
-      _dungeon.GlobalDestructibleSpawnPool?.AddPrefab(PrefabNames.PickableForestCryptRemains03);
-      _dungeon.GlobalDestructibleSpawnPool?.AddPrefab(PrefabNames.PickableForestCryptRemains04);
+      _dungeon.GlobalTreasureSpawnPool?.AddPrefab(PrefabNames.PickableDolmenTreasure);
+      _dungeon.GlobalTreasureSpawnPool?.AddPrefab(PrefabNames.PickableForestCryptRandom);
+      _dungeon.GlobalTreasureSpawnPool?.AddPrefab(PrefabNames.PickableSunkenCryptRandom);
+      _dungeon.GlobalTreasureSpawnPool?.AddPrefab(PrefabNames.PickableForestCryptRemains01);
+      _dungeon.GlobalTreasureSpawnPool?.AddPrefab(PrefabNames.PickableForestCryptRemains02);
+      _dungeon.GlobalTreasureSpawnPool?.AddPrefab(PrefabNames.PickableForestCryptRemains03);
+      _dungeon.GlobalTreasureSpawnPool?.AddPrefab(PrefabNames.PickableForestCryptRemains04);
+      _dungeon.GlobalTreasureSpawnPool?.AddPrefab(PrefabNames.PickableBogIronOre);
+      _dungeon.GlobalTreasureSpawnPool?.AddPrefab(PrefabNames.PickableFlint);
+      _dungeon.GlobalTreasureSpawnPool?.AddPrefab(PrefabNames.PickableObsidian);
+      _dungeon.GlobalTreasureSpawnPool?.AddPrefab(PrefabNames.PickableMushroom);
+      _dungeon.GlobalTreasureSpawnPool?.AddPrefab(PrefabNames.PickableMushroomBlue);
+      _dungeon.GlobalTreasureSpawnPool?.AddPrefab(PrefabNames.PickableMushroomYellow);
+      _dungeon.GlobalTreasureSpawnPool?.AddPrefab(PrefabNames.PickableTin);
+      _dungeon.GlobalTreasureSpawnPool?.AddPrefab(PrefabNames.PickableStone);
+      _dungeon.GlobalTreasureSpawnPool?.AddPrefab(PrefabNames.PickableSurtlingCoreStand);
+      _dungeon.GlobalTreasureSpawnPool?.AddPrefab(PrefabNames.PickableTar);
+      _dungeon.GlobalTreasureSpawnPool?.AddPrefab(PrefabNames.PickableTarBig);
+      _dungeon.GlobalTreasureSpawnPool?.AddPrefab(PrefabNames.PickableBranch);
     }
 
     // private void SeedSpawnPoolsFor(DungeonBossRoom room)
@@ -240,15 +233,29 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
     #region Events
 
     [UsedImplicitly]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "UsedImplicitly")]
+    private void OnDisable()
+    {
+      try
+      {
+        Log.Trace(Instance, $"{Namespace}.{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}()");
+      }
+      catch (Exception e)
+      {
+        Log.Error(Instance, e);
+      }
+    }
+
+    [UsedImplicitly]
     public void OnDestroy()
     {
       try
       {
-        Log.Trace(Instance, $"{Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}()");
+        Log.Trace(Instance, $"{Namespace}.{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}()");
 
-        var oh = PrefabManager.Cache.GetPrefab<GameObject>(OdinsHollow);
-        var eventLogCollector = oh?.GetComponent<EventLogCollector>();
-        if (eventLogCollector != null) eventLogCollector.LogEvent -= _eventLogHandler.HandleLogEvent;
+        // var oh = PrefabManager.Cache.GetPrefab<GameObject>(OdinsHollow);
+        //var eventLogCollector = oh?.GetComponent<EventLogCollector>();
+        //if (eventLogCollector != null) eventLogCollector.LogEvent -= _eventLogHandler.HandleLogEvent;
 
         // _harmony?.UnpatchSelf();
       }
@@ -258,58 +265,68 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
       }
     }
 
+    private readonly List<string> _enemyBasePrefabNameList = new()
+    {
+      EnemyNames.Draugr
+      , EnemyNames.DraugrElite
+      , EnemyNames.DraugrRanged
+      , EnemyNames.Wraith
+      , EnemyNames.SkeletonNoArcher
+      , EnemyNames.SkeletonPoison
+      , EnemyNames.Surtling
+      , EnemyNames.BlobTar
+      , EnemyNames.Blob
+      , EnemyNames.BlobElite
+      , EnemyNames.Ghost
+    };
+
     private void OnVanillaPrefabsAvailable()
     {
       try
       {
-        Log.Trace(Instance, $"{Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}");
+        Log.Trace(Instance, $"{Namespace}.{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}");
 
-        #if DEBUG
-        var trapTestPrefab = PrefabManager.Instance.GetPrefab(TriggerTest);
+        CreateDungeonCreatures(_enemyBasePrefabNameList);
+      }
+      catch (Exception e)
+      {
+        Log.Error(Instance, e);
+      }
+      finally
+      {
+        PrefabManager.OnVanillaPrefabsAvailable -= OnVanillaPrefabsAvailable;
+      }
+    }
 
-        if (trapTestPrefab == null)
-        {
-          throw new NullReferenceException(nameof(trapTestPrefab) + " is null.");
-        }
+    private void OnPrefabsRegistered()
+    {
+      try
+      {
+        Log.Trace(Instance, $"{Namespace}.{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}");
+        LoadTriggerTest();
+        LoadOdinsHollow();
+      }
+      catch (Exception e)
+      {
+        Log.Error(Instance, e);
+      }
+      finally
+      {
+        PrefabManager.OnPrefabsRegistered -= OnPrefabsRegistered;
+      }
+    }
 
-        var enemySpawnPool = GlobalSpawnPoolFactory.CreateInstance(GlobalSpawnPoolNames.Enemy, trapTestPrefab, Instance);
-        var miniBossSpawnPool = GlobalSpawnPoolFactory.CreateInstance(GlobalSpawnPoolNames.MiniBoss, trapTestPrefab, Instance);
-        var destructibleSpawnPool = GlobalSpawnPoolFactory.CreateInstance(GlobalSpawnPoolNames.Destructible, trapTestPrefab, Instance);
-        var treasureSpawnPool = GlobalSpawnPoolFactory.CreateInstance(GlobalSpawnPoolNames.Treasure, trapTestPrefab, Instance);
-
-        enemySpawnPool.Clear();
-        enemySpawnPool.AddEnemy(EnemyNames.Draugr);
-        miniBossSpawnPool.Clear();
-        miniBossSpawnPool.AddBoss(EnemyNames.DraugrElite);
-        destructibleSpawnPool.Clear();
-        destructibleSpawnPool.AddPrefab(PrefabNames.Mudpile2);
-        destructibleSpawnPool.AddPrefab(PrefabNames.MineRockTin);
-        destructibleSpawnPool.AddPrefab(PrefabNames.MineRockCopper);
-        destructibleSpawnPool.AddPrefab(PrefabNames.Rock3Silver);
-        destructibleSpawnPool.AddPrefab(PrefabNames.PickableBogIronOre);
-        treasureSpawnPool.Clear();
-        treasureSpawnPool.AddPrefab(PrefabNames.Ruby);
-        treasureSpawnPool.AddPrefab(PrefabNames.PickableDolmenTreasure);
-        treasureSpawnPool.AddPrefab(PrefabNames.PickableForestCryptRandom);
-        treasureSpawnPool.AddPrefab(PrefabNames.PickableSunkenCryptRandom);
-        treasureSpawnPool.AddPrefab(PrefabNames.PickableForestCryptRemains01);
-        treasureSpawnPool.AddPrefab(PrefabNames.PickableForestCryptRemains02);
-        treasureSpawnPool.AddPrefab(PrefabNames.PickableForestCryptRemains03);
-        treasureSpawnPool.AddPrefab(PrefabNames.PickableForestCryptRemains04);
+    private void LoadOdinsHollow()
+    {
+      try
+      {
+        Log.Trace(Instance, $"{Namespace}.{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}");
         
-        #endif
-
         var dungeonPrefab = PrefabManager.Instance.GetPrefab(OdinsHollow);
-        // Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] dungeonPrefab == null : {dungeonPrefab == null}");
         if (dungeonPrefab == null)
         {
           throw new NullReferenceException(nameof(dungeonPrefab) + " is null.");
         }
-
-        // for (int i = 0; i < dungeonPrefab.transform.childCount; i++)
-        // {
-        //   Log.Trace(Instance, $"[{Namespace}.{MethodBase.GetCurrentMethod().DeclaringType?.Name}] {dungeonPrefab.transform.GetChild(i).name}");
-        // }
 
         // Configure
         _dungeon = new Dungeon(OdinsHollow, dungeonPrefab, Instance);
@@ -336,10 +353,72 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
       {
         Log.Error(Instance, e);
       }
-      finally
+    }
+
+    [Conditional("DEBUG")]
+    private void LoadTriggerTest()
+    {
+      Log.Trace(Instance, $"{Namespace}.{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}()");
+      var trapTestPrefab = PrefabManager.Instance.GetPrefab(TriggerTest);
+
+      if (trapTestPrefab == null)
       {
-        PrefabManager.OnVanillaPrefabsAvailable -= OnVanillaPrefabsAvailable;
+        throw new NullReferenceException(nameof(trapTestPrefab) + " is null.");
       }
+
+      var enemySpawnPool        = GlobalSpawnPoolFactory.CreateInstance(GlobalSpawnPoolNames.Enemy, trapTestPrefab, Instance);
+      var miniBossSpawnPool     = GlobalSpawnPoolFactory.CreateInstance(GlobalSpawnPoolNames.MiniBoss, trapTestPrefab, Instance);
+      var destructibleSpawnPool = GlobalSpawnPoolFactory.CreateInstance(GlobalSpawnPoolNames.Destructible, trapTestPrefab, Instance);
+      var treasureSpawnPool     = GlobalSpawnPoolFactory.CreateInstance(GlobalSpawnPoolNames.Treasure, trapTestPrefab, Instance);
+
+      enemySpawnPool.Clear();
+
+      Log.Trace(Instance, $"{Namespace}.{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}()");
+
+      foreach (var enemyBasePrefabName in _enemyBasePrefabNameList)
+      {
+        enemySpawnPool.AddEnemy($"{nameof(OdinsHollow)}_{enemyBasePrefabName}");
+      }
+
+      miniBossSpawnPool.Clear();
+      miniBossSpawnPool.AddBoss(EnemyNames.DraugrElite);
+
+      destructibleSpawnPool.Clear();
+      destructibleSpawnPool.AddPrefab(PrefabNames.Mudpile2);
+      destructibleSpawnPool.AddPrefab(PrefabNames.MineRockTin);
+      destructibleSpawnPool.AddPrefab(PrefabNames.MineRockCopper);
+      destructibleSpawnPool.AddPrefab(PrefabNames.MineRockIron);
+      destructibleSpawnPool.AddPrefab(PrefabNames.MineRockObsidian);
+
+      treasureSpawnPool.Clear();
+      treasureSpawnPool.AddPrefab(PrefabNames.PickableDolmenTreasure);
+      treasureSpawnPool.AddPrefab(PrefabNames.PickableForestCryptRandom);
+      treasureSpawnPool.AddPrefab(PrefabNames.PickableSunkenCryptRandom);
+      treasureSpawnPool.AddPrefab(PrefabNames.PickableForestCryptRemains01);
+      treasureSpawnPool.AddPrefab(PrefabNames.PickableForestCryptRemains02);
+      treasureSpawnPool.AddPrefab(PrefabNames.PickableForestCryptRemains03);
+      treasureSpawnPool.AddPrefab(PrefabNames.PickableForestCryptRemains04);
+      treasureSpawnPool.AddPrefab(PrefabNames.PickableBogIronOre);
+    }
+
+    private void CreateDungeonCreatures(List<string> enemyBasePrefabNames)
+    {
+      foreach (var enemyBasePrefabName in enemyBasePrefabNames)
+      {
+        CreateDungeonCreatures(enemyBasePrefabName);
+      }
+    }
+
+    private void CreateDungeonCreatures(string enemyBasePrefabName)
+    {
+      Log.Trace(Instance, $"{Namespace}.{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}({enemyBasePrefabName})");
+      var prefab = PrefabManager.Instance.GetPrefab(enemyBasePrefabName);
+      var customPrefab = new CustomPrefab(prefab, false);
+      customPrefab.Prefab.name = $"{nameof(OdinsHollow)}_{customPrefab.Prefab.name}";
+      var humanoid = customPrefab.Prefab.GetComponent<Humanoid>();
+      humanoid.m_faction = Character.Faction.Undead;
+      customPrefab.Prefab.AddComponent<DungeonCreature>();
+      PrefabManager.Instance.AddPrefab(customPrefab);
     }
 
     #endregion

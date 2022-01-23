@@ -32,9 +32,9 @@
       },
       "Digitalroot.Valheim.Common.Log": {
         "type": "Direct",
-        "requested": "[1.1.16, )",
-        "resolved": "1.1.16",
-        "contentHash": "8T5S2izio6axGNIMJcKo4bfd0ov2S57obpuAxxgNVPCbNWx8aFB3JtUslC3pZNmH9cGHxlJoLfDCTrhm36rNpw==",
+        "requested": "[1.1.17, )",
+        "resolved": "1.1.17",
+        "contentHash": "P3q9Q8nUFKwyW5OnnBjokbz0PmNP97JRwypHEXbPD0ZWuc0dDQA7rQhFNbVr5OD8vFmMJ3SDhiVZKb/P0OTXTQ==",
         "dependencies": {
           "Digitalroot.Valheim.Common.Json": "1.0.15"
         }
@@ -84,11 +84,11 @@
       },
       "HarmonyX": {
         "type": "Direct",
-        "requested": "[2.7.0, )",
-        "resolved": "2.7.0",
-        "contentHash": "lec/SkduQspMa3Pi/nM/NSvA84Za8HCCWA8ybdToKiTqnBZa+JC5g6rxoFQCg/1vNuYcvjy77edePZzIEsRmvw==",
+        "requested": "[2.8.0, )",
+        "resolved": "2.8.0",
+        "contentHash": "B4ClvOIp2vQ+MwUTs7NWb7UYQBg+7xQsEsvOuQhGPTl8mPXe5d9mFPtzFnYtTQ+2HNePXexZYoGO95DIPX9ywQ==",
         "dependencies": {
-          "MonoMod.RuntimeDetour": "21.12.13.1"
+          "MonoMod.RuntimeDetour": "22.1.4.3"
         }
       },
       "ILMerge.Fody": {
@@ -121,6 +121,11 @@
         "resolved": "5.4.17",
         "contentHash": "92N4BKDiF9KO8kXbY2+zp7dHNXZP3WBKhzw7U8orcYncutD7peHtuLfUdMW4PGY/d0SsoA5eOcBeklFuh7OS8A=="
       },
+      "Digitalroot.Unity3d.Log": {
+        "type": "Transitive",
+        "resolved": "1.0.2",
+        "contentHash": "J/bTvq2z5+XEnQoVy3oJ/hzQlT0GAIB34c9HAwhgv3B3BDBweDMgDn1rFCbtqUX3x7VSIY1xm3Kiz9yMjVN5MA=="
+      },
       "Digitalroot.Valheim.Common.Json": {
         "type": "Transitive",
         "resolved": "1.0.15",
@@ -151,17 +156,17 @@
       },
       "MonoMod.RuntimeDetour": {
         "type": "Transitive",
-        "resolved": "21.12.13.1",
-        "contentHash": "65mB+bHjT6UCGCgO+/pYhpuGPf96rQ1Whwkut/x7cqVIW0DTndDFyWc/3bngzhnY/Y6IYtBMlXsU2ATq+CxpHg==",
+        "resolved": "22.1.4.3",
+        "contentHash": "b+Er1cINx9gOZUh65B+0Lm6Bt6U8RHmB03DRtfSopVlbOEstnq5ACpAN+T7jSB0O9qqDIlpP4K2xyvjuy/QHww==",
         "dependencies": {
           "Mono.Cecil": "0.11.4",
-          "MonoMod.Utils": "21.12.13.1"
+          "MonoMod.Utils": "22.1.4.3"
         }
       },
       "MonoMod.Utils": {
         "type": "Transitive",
-        "resolved": "21.12.13.1",
-        "contentHash": "/H+0RMWqx/D1/fSuY5jhY6GFvqhdYdlnI7J3IfL8P6y4nJkoZDxqts6+RxWWOz4pbnJdWnxSjS8XG+Lq6rUi7w==",
+        "resolved": "22.1.4.3",
+        "contentHash": "+lFiiOXbPscwht9rnQbWfUR30+YE0T55iGAoHyUM46sB4eW3HrHWsaY6UQsugdUA3oWVlBQWi7vtdnd1la2u7Q==",
         "dependencies": {
           "Mono.Cecil": "0.11.4"
         }
@@ -169,13 +174,15 @@
       "digitalroot.valheim.dungeons.common": {
         "type": "Project",
         "dependencies": {
-          "Digitalroot.Valheim.Common.Log": "1.1.16",
+          "Digitalroot.Valheim.Common.Log": "1.1.17",
           "Digitalroot.Valheim.TrapSpawners": "1.0.0"
         }
       },
       "digitalroot.valheim.trapspawners": {
         "type": "Project",
         "dependencies": {
+          "Digitalroot.Unity3d.Log": "1.0.2",
+          "Digitalroot.Valheim.Common.Json": "1.0.15",
           "Digitalroot.Valheim.Common.References": "0.205.7"
         }
       }

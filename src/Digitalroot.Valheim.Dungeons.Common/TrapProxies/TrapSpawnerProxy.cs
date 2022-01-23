@@ -29,7 +29,7 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
       : base(realObject, logger)
     {
       Log.Trace(Logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Creating Spawner ({realObject.name})");
-      realObject.LogEvent += HandleLogEvent;
+      // realObject.LogEvent += HandleLogEvent;
     }
 
     private TrapSpawnerProxy([NotNull] GameObject dungeon, [NotNull] string roomName, [NotNull] ITraceableLogging logger, [NotNull] string roomSpawnPointName = RoomSpawnPointName)

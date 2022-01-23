@@ -14,13 +14,16 @@ namespace Digitalroot.Valheim.TrapSpawners.Decorators
       if (humanoid == null) return prefab;
 
       humanoid.m_boss = true;
-      humanoid.m_health *= Convert.ToSingle(Math.Pow(scaleSize, 2));
+      humanoid.SetLevel(levelMin == levelMax ? levelMax : Random.Range(levelMin, levelMax + 1));
+      humanoid.SetMaxHealth(humanoid.GetMaxHealth() * Convert.ToSingle(Math.Pow(scaleSize, 2)));
+      humanoid.SetHealth(humanoid.GetMaxHealth());
       humanoid.m_name = $"{DecoratorUtils.GenerateName(Random.Range(4, 9))} the {humanoid.m_name}";
       humanoid.m_faction = Character.Faction.Boss;
       humanoid.m_jumpForce = Random.Range(8f, 13f);
       humanoid.m_jumpForceForward = Random.Range(8f, 13f);
 
-      prefab.SetLevel(levelMin, levelMax)
+      prefab
+        // .SetLevel(levelMin, levelMax)
             .ConfigureBaseAI()
             .ConfigureBossAI()
             .AddLedgeJumping();

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>Digitalroot.Valheim.Dungeons.Common</AssemblyName>
     <TargetFramework>net462</TargetFramework>
-    <LangVersion>9</LangVersion>
+    <LangVersion>10</LangVersion>
     <RootNamespace>Digitalroot.Valheim.Dungeons.Common</RootNamespace>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
@@ -35,7 +35,7 @@
     <PackageReference Include="BepInEx.Core" Version="5.4.17">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Digitalroot.Valheim.Common.Log" Version="1.1.16" />
+    <PackageReference Include="Digitalroot.Valheim.Common.Log" Version="1.1.17" />
     <PackageReference Include="Digitalroot.Valheim.Common.References" Version="0.205.7">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -43,7 +43,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="HarmonyX" Version="2.7.0">
+    <PackageReference Include="HarmonyX" Version="2.8.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="JotunnLib" Version="2.4.5">

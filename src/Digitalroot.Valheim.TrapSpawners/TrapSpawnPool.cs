@@ -1,4 +1,4 @@
-﻿using Digitalroot.Valheim.TrapSpawners.Logging;
+﻿using Digitalroot.Valheim.TrapSpawners.CMB;
 using JetBrains.Annotations;
 using System.Collections.Generic;
 using UnityEngine;

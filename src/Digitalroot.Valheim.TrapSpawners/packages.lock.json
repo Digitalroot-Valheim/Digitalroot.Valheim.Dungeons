@@ -2,6 +2,22 @@
   "version": 1,
   "dependencies": {
     ".NETFramework,Version=v4.6.2": {
+      "Digitalroot.Unity3d.Log": {
+        "type": "Direct",
+        "requested": "[1.0.2, )",
+        "resolved": "1.0.2",
+        "contentHash": "J/bTvq2z5+XEnQoVy3oJ/hzQlT0GAIB34c9HAwhgv3B3BDBweDMgDn1rFCbtqUX3x7VSIY1xm3Kiz9yMjVN5MA=="
+      },
+      "Digitalroot.Valheim.Common.Json": {
+        "type": "Direct",
+        "requested": "[1.0.15, )",
+        "resolved": "1.0.15",
+        "contentHash": "AHEPM0ApZBBf1H2TINqbNC7+iIzeYPJepxfYrmDwU20p5pwIC88w7Pm4k9A9UQPbnTeFX4qgtrzVKa3v145D1w==",
+        "dependencies": {
+          "UnityEngine.Modules": "[2019.4.31]",
+          "fastJSON": "2.4.0.4"
+        }
+      },
       "Digitalroot.Valheim.Common.References": {
         "type": "Direct",
         "requested": "[0.205.7, )",
@@ -34,6 +50,11 @@
         "requested": "[2019.4.31, 2019.4.31]",
         "resolved": "2019.4.31",
         "contentHash": "xZjdfGGzZw6nnrn4auRNis6WnAlsvqY1XXioEGJnSku+CylESgEt/sTLYlrbrQ0srnLfSCfx80vR8z4SsI1EuQ=="
+      },
+      "fastJSON": {
+        "type": "Transitive",
+        "resolved": "2.4.0.4",
+        "contentHash": "lbxY+miTOvCNbNfOk8HcbmBD9F6wv2dRKZlMjtJBm6rjA5vFKXBYtR6eoIe96HnCHOE1nCJbMsaZDKGNPg5mIA=="
       }
     }
   }
