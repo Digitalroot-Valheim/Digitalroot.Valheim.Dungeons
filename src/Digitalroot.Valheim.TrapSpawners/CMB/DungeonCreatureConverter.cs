@@ -47,7 +47,7 @@ namespace Digitalroot.Valheim.TrapSpawners.CMB
 
     private void TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
     {
-      LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}]");
+      LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}]");
 
       foreach (var dungeonCreature in FindNearByDungeonCreatures())
       {

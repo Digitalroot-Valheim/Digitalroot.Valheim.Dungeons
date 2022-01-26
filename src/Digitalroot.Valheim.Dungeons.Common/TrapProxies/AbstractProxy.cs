@@ -1,5 +1,5 @@
 ﻿using Digitalroot.Valheim.Common;
-using Digitalroot.Valheim.TrapSpawners.Logging;
+// using Digitalroot.Valheim.TrapSpawners.Logging;
 using JetBrains.Annotations;
 using System;
 // ReSharper disable MemberCanBePrivate.Global

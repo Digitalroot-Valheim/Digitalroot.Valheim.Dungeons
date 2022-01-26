@@ -8,6 +8,7 @@ namespace Digitalroot.Valheim.TrapSpawners.Decorators
 {
   public static class BossDecorator
   {
+    [Obsolete("", true)]
     public static GameObject AsBoss(this GameObject prefab, float scaleSize, int levelMin, int levelMax)
     {
       var humanoid = prefab.GetComponent<Humanoid>();

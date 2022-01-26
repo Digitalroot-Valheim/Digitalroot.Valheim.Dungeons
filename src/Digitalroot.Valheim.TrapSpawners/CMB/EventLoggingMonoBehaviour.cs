@@ -42,7 +42,7 @@ namespace Digitalroot.Valheim.TrapSpawners.CMB
       LogTrace(e.StackTrace);
     }
 
-    private protected static void LogTrace(string msg) => _logger.Trace(msg);
+    private protected static void LogTrace(string msg) => _logger?.Trace(msg);
 
     #endregion
   }

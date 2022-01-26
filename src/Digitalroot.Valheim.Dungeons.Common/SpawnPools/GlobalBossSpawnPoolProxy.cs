@@ -10,7 +10,7 @@ namespace Digitalroot.Valheim.Dungeons.Common.SpawnPools
   [Obsolete]
   public class GlobalBossSpawnPoolProxy : TrapSpawnPoolProxy
   {
-    private const string GlobalBossSpawnPoolName = "GlobalBossSpawnPool";
+    private const string GlobalBossSpawnPoolName = "GlobalMiniBossSpawnPool";
 
     /// <inheritdoc />
     private GlobalBossSpawnPoolProxy([NotNull] GameObject dungeon, [NotNull] ITraceableLogging logger)

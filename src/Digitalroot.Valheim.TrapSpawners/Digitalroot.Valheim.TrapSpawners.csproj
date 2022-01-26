@@ -41,11 +41,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Decorators\BossDecorator.cs" />
+    <Compile Remove="Decorators\DestructibleDecorator.cs" />
+    <Compile Remove="Decorators\EnemyDecorator.cs" />
+    <Compile Remove="Decorators\TreasureDecorator.cs" />
     <Compile Remove="Logging\EventLogCollector.cs" />
+    <Compile Remove="Logging\IEventLogger.cs" />
+    <Compile Remove="Logging\LogEventArgs.cs" />
+    <Compile Remove="Logging\LoggingUtils.cs" />
+    <Compile Remove="Logging\LogLevel.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Digitalroot.Unity3d.Log" Version="1.0.2" />
+    <PackageReference Include="Digitalroot.Unity3d.Log" Version="1.0.3" />
+    <PackageReference Include="Digitalroot.Valheim.Common.Extensions" Version="1.0.10" />
     <PackageReference Include="Digitalroot.Valheim.Common.Json" Version="1.0.15" />
     <PackageReference Include="Digitalroot.Valheim.Common.References" Version="0.205.7" />
     <PackageReference Include="ErrorProne.NET.CoreAnalyzers" Version="0.1.2">
@@ -63,6 +72,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>compile</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Logging\" />
   </ItemGroup>
 
   <Target Name="RefreshVars" AfterTargets="PostBuildEvent" Label="MyRefreshVars">

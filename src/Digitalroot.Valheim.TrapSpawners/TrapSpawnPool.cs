@@ -1,6 +1,7 @@
 ﻿using Digitalroot.Valheim.TrapSpawners.CMB;
 using JetBrains.Annotations;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 // ReSharper disable InconsistentNaming
@@ -26,9 +27,9 @@ namespace Digitalroot.Valheim.TrapSpawners
 
     public void AddEnemy(string prefabName) => AddEnemy(ZNetScene.instance.GetPrefab(prefabName.GetStableHashCode()));
 
-    public void AddBoss(GameObject prefab) => m_spawnPoolPrefabs.Add(prefab);
+    public void AddMiniBoss(GameObject prefab) => m_spawnPoolPrefabs.Add(prefab);
 
-    public void AddBoss(string prefabName) => AddBoss(ZNetScene.instance.GetPrefab(prefabName.GetStableHashCode()));
+    public void AddMiniBoss(string prefabName) => AddMiniBoss(ZNetScene.instance.GetPrefab(prefabName.GetStableHashCode()));
 
     public void AddPrefab(GameObject prefab) => m_spawnPoolPrefabs.Add(prefab);
 

@@ -4,9 +4,18 @@
     ".NETFramework,Version=v4.6.2": {
       "Digitalroot.Unity3d.Log": {
         "type": "Direct",
-        "requested": "[1.0.2, )",
-        "resolved": "1.0.2",
-        "contentHash": "J/bTvq2z5+XEnQoVy3oJ/hzQlT0GAIB34c9HAwhgv3B3BDBweDMgDn1rFCbtqUX3x7VSIY1xm3Kiz9yMjVN5MA=="
+        "requested": "[1.0.3, )",
+        "resolved": "1.0.3",
+        "contentHash": "Sr6HGXqTVpvqNsYnBwetcZko8hXtQJ61KX0lzGWWFXpWBWyOAvRfUs+teceToJKfaQMudoB+XbqVr93uhIJbeA=="
+      },
+      "Digitalroot.Valheim.Common.Extensions": {
+        "type": "Direct",
+        "requested": "[1.0.10, )",
+        "resolved": "1.0.10",
+        "contentHash": "WszoEmBzVigEFVlHcMFotrD+huIVAz5AAb4uhqTtivbAdDw10Ic9/7+q1Y2AYv53Lk0gKrDxl4QgcGSkEbr7EA==",
+        "dependencies": {
+          "Digitalroot.Valheim.Common.References": "0.204.5"
+        }
       },
       "Digitalroot.Valheim.Common.Json": {
         "type": "Direct",

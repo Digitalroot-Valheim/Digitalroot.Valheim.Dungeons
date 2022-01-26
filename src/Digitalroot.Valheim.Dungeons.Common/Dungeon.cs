@@ -32,7 +32,7 @@ namespace Digitalroot.Valheim.Dungeons.Common
       try
       {
         _logger = logger;
-        Log.Trace(logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Creating Dungeon ({name}) from {dungeonPrefab.name}");
+        Log.Trace(logger, $"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}] Creating Dungeon ({name}) from {dungeonPrefab.name}");
         Name = name;
         DungeonPrefab = dungeonPrefab;
         GlobalDestructibleSpawnPool = GlobalSpawnPoolFactory.CreateInstance(GlobalSpawnPoolNames.Destructible, DungeonPrefab, _logger);
@@ -50,7 +50,7 @@ namespace Digitalroot.Valheim.Dungeons.Common
 
     public void AddDungeonRoom([NotNull] DungeonRoom dungeonRoom)
     {
-      // Log.Trace(_logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Adding {dungeonRoom}");
+      // Log.Trace(_logger, $"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}] Adding {dungeonRoom}");
       DungeonRooms.Add(dungeonRoom);
     }
 
@@ -58,7 +58,7 @@ namespace Digitalroot.Valheim.Dungeons.Common
 
     public void AddDungeonBossRoom([NotNull] DungeonBossRoom dungeonRoom)
     {
-      // Log.Trace(_logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Adding {dungeonRoom}");
+      // Log.Trace(_logger, $"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}] Adding {dungeonRoom}");
       DungeonBossRooms.Add(dungeonRoom);
     }
   }

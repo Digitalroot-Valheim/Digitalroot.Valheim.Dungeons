@@ -13,14 +13,26 @@ namespace Digitalroot.Valheim.Dungeons.Common.SpawnPools
                                             , [NotNull] GameObject dungeon
                                             , [NotNull] ITraceableLogging logger)
     {
-      return globalSpawnPoolNames switch
+      switch (globalSpawnPoolNames)
       {
-        GlobalSpawnPoolNames.MiniBoss => GlobalSpawnPoolProxy.CreateInstance(dungeon, logger, "GlobalMiniBossSpawnPool")
-        , GlobalSpawnPoolNames.Destructible => GlobalSpawnPoolProxy.CreateInstance(dungeon, logger, "GlobalDestructibleSpawnPool")
-        , GlobalSpawnPoolNames.Enemy => GlobalSpawnPoolProxy.CreateInstance(dungeon, logger, "GlobalEnemySpawnPool")
-        , GlobalSpawnPoolNames.Treasure => GlobalSpawnPoolProxy.CreateInstance(dungeon, logger, "GlobalTreasureSpawnPool")
-        , _ => throw new ArgumentOutOfRangeException(nameof(globalSpawnPoolNames), globalSpawnPoolNames, null)
-      };
+        case GlobalSpawnPoolNames.MiniBoss:
+        case GlobalSpawnPoolNames.Destructible:
+        case GlobalSpawnPoolNames.Enemy:
+        case GlobalSpawnPoolNames.Treasure:
+          return GlobalSpawnPoolProxy.CreateInstance(dungeon, logger, $"Global{globalSpawnPoolNames}SpawnPool");
+
+        default:
+          throw new ArgumentOutOfRangeException(nameof(globalSpawnPoolNames), globalSpawnPoolNames, null);
+      }
+
+      // return globalSpawnPoolNames switch
+      // {
+      //   GlobalSpawnPoolNames.MiniBoss => GlobalSpawnPoolProxy.CreateInstance(dungeon, logger, $"Global{}MiniBossSpawnPool")
+      //   , GlobalSpawnPoolNames.Destructible => GlobalSpawnPoolProxy.CreateInstance(dungeon, logger, "GlobalDestructibleSpawnPool")
+      //   , GlobalSpawnPoolNames.Enemy => GlobalSpawnPoolProxy.CreateInstance(dungeon, logger, "GlobalEnemySpawnPool")
+      //   , GlobalSpawnPoolNames.Treasure => GlobalSpawnPoolProxy.CreateInstance(dungeon, logger, "GlobalTreasureSpawnPool")
+      //   , _ => throw new ArgumentOutOfRangeException(nameof(globalSpawnPoolNames), globalSpawnPoolNames, null)
+      // };
     }
   }
 }

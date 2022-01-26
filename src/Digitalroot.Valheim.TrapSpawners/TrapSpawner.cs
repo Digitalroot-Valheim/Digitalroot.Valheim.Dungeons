@@ -1,5 +1,4 @@
 ﻿using Digitalroot.Valheim.TrapSpawners.CMB;
-using Digitalroot.Valheim.TrapSpawners.Decorators;
 using Digitalroot.Valheim.TrapSpawners.Enums;
 using Digitalroot.Valheim.TrapSpawners.Extensions;
 using Digitalroot.Valheim.TrapSpawners.Models;
@@ -8,7 +7,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using Random = UnityEngine.Random;

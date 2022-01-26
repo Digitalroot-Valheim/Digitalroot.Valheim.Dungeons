@@ -7,6 +7,7 @@ namespace Digitalroot.Valheim.TrapSpawners.Decorators
 {
   public static class EnemyDecorator
   {
+    [Obsolete("", true)]
     public static GameObject AsEnemy(this GameObject prefab, float scaleSize, int levelMin, int levelMax)
     {
       try

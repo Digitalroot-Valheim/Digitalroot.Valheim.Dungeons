@@ -20,7 +20,7 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
     private protected TrapSpawnPoolProxy([NotNull] TrapSpawnPool realObject, [NotNull] ITraceableLogging logger)
       : base(realObject, logger)
     {
-      Log.Trace(Logger, $"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}] Creating Spawn Pool ({realObject.name})");
+      Log.Trace(Logger, $"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}] Creating Spawn Pool ({realObject.name})");
       // realObject.LogEvent += HandleLogEvent;
     }
 
@@ -45,22 +45,40 @@ namespace Digitalroot.Valheim.Dungeons.Common.TrapProxies
     public void Clear() => RealObject.Clear();
 
     /// <inheritdoc />
-    public void AddEnemy(GameObject prefab) => AddPrefab(prefab);
+    public void AddEnemy([NotNull] GameObject prefab) => AddPrefab(prefab);
 
     /// <inheritdoc />
-    public void AddEnemy(string prefabName) => AddPrefab(prefabName);
+    public void AddEnemy([NotNull] string prefabName) => AddPrefab(prefabName);
 
     /// <inheritdoc />
-    public void AddBoss(GameObject prefab) => AddPrefab(prefab);
+    public void AddMiniBoss([NotNull] GameObject prefab) => AddPrefab(prefab);
 
     /// <inheritdoc />
-    public void AddBoss(string prefabName) => AddPrefab(prefabName);
+    public void AddMiniBoss([NotNull] string prefabName) => AddPrefab(prefabName);
 
     /// <inheritdoc />
-    public void AddPrefab(GameObject prefab) => RealObject.AddPrefab(prefab);
+    public void AddPrefab([NotNull] GameObject prefab)
+    {
+      // Log.Trace(Logger, $"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}] prefab.name : {prefab.name}");
+      // Log.Trace(Logger, $"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}] RealObject == null : {RealObject == null}");
+      // Log.Trace(Logger, $"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}] prefab == null : {prefab == null}");
+      
+      if (RealObject == null) return;
+      // Log.Trace(Logger, $"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}] RealObject : {RealObject}");
+      // Log.Trace(Logger, $"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}] RealObject.GetType().Name : {RealObject.GetType().Name}");
+      RealObject.AddPrefab(prefab);
+    }
 
     /// <inheritdoc />
-    public void AddPrefab(string prefabName) => AddPrefab(PrefabManager.Cache.GetPrefab<GameObject>(prefabName));
+    public void AddPrefab([NotNull] string prefabName)
+    {
+      // Log.Trace(Logger, $"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}] prefabName : {prefabName}");
+      var prefab = PrefabManager.Cache.GetPrefab<GameObject>(prefabName);
+      // Log.Trace(Logger, $"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}] prefab == null : {prefab == null}");
+      if (prefab == null) return;
+      
+      AddPrefab(prefab);
+    }
 
     /// <inheritdoc />
     public int Count => RealObject.Count;

@@ -12,11 +12,20 @@
           "HarmonyX": "2.5.5"
         }
       },
+      "Digitalroot.Valheim.Common.Extensions": {
+        "type": "Direct",
+        "requested": "[1.0.10, )",
+        "resolved": "1.0.10",
+        "contentHash": "WszoEmBzVigEFVlHcMFotrD+huIVAz5AAb4uhqTtivbAdDw10Ic9/7+q1Y2AYv53Lk0gKrDxl4QgcGSkEbr7EA==",
+        "dependencies": {
+          "Digitalroot.Valheim.Common.References": "0.204.5"
+        }
+      },
       "Digitalroot.Valheim.Common.Log": {
         "type": "Direct",
-        "requested": "[1.1.17, )",
-        "resolved": "1.1.17",
-        "contentHash": "P3q9Q8nUFKwyW5OnnBjokbz0PmNP97JRwypHEXbPD0ZWuc0dDQA7rQhFNbVr5OD8vFmMJ3SDhiVZKb/P0OTXTQ==",
+        "requested": "[1.1.19, )",
+        "resolved": "1.1.19",
+        "contentHash": "s1yZbS+w0zgKAsfHzAWzHkBLJvtUGspgVuajqdvTaLe9wG6l772rj+WaL/0wTTkgRu0GcOq9jE+ozg7wTTZQzQ==",
         "dependencies": {
           "Digitalroot.Valheim.Common.Json": "1.0.15"
         }
@@ -44,9 +53,9 @@
       },
       "JotunnLib": {
         "type": "Direct",
-        "requested": "[2.4.5, )",
-        "resolved": "2.4.5",
-        "contentHash": "63xSYrrUmkBpzPXhGrxhYA34W2A5yVYDtdFHOJ4yQBH+4UZvf+4kR9RP1RwQGALtx68HlpK5oxCalfvPvTndUQ==",
+        "requested": "[2.4.8, )",
+        "resolved": "2.4.8",
+        "contentHash": "V1ReALzwJQDT7ek53DeKyWUIz8BC/6Io3Y4+Eza6nUJjs0zJOxr4VQkLZQCeNnYUo6ytVA9SkxM1BpAN8ZHYyg==",
         "dependencies": {
           "HarmonyX": "2.5.5",
           "MonoMod": "21.9.19.1"
@@ -65,8 +74,8 @@
       },
       "Digitalroot.Unity3d.Log": {
         "type": "Transitive",
-        "resolved": "1.0.2",
-        "contentHash": "J/bTvq2z5+XEnQoVy3oJ/hzQlT0GAIB34c9HAwhgv3B3BDBweDMgDn1rFCbtqUX3x7VSIY1xm3Kiz9yMjVN5MA=="
+        "resolved": "1.0.3",
+        "contentHash": "Sr6HGXqTVpvqNsYnBwetcZko8hXtQJ61KX0lzGWWFXpWBWyOAvRfUs+teceToJKfaQMudoB+XbqVr93uhIJbeA=="
       },
       "Digitalroot.Valheim.Common.Json": {
         "type": "Transitive",
@@ -116,7 +125,8 @@
       "digitalroot.valheim.trapspawners": {
         "type": "Project",
         "dependencies": {
-          "Digitalroot.Unity3d.Log": "1.0.2",
+          "Digitalroot.Unity3d.Log": "1.0.3",
+          "Digitalroot.Valheim.Common.Extensions": "1.0.10",
           "Digitalroot.Valheim.Common.Json": "1.0.15",
           "Digitalroot.Valheim.Common.References": "0.205.7"
         }

@@ -22,13 +22,13 @@ namespace Digitalroot.Valheim.TrapSpawners
     /// Adds a prefab and configures it as trash.
     /// </summary>
     /// <param name="prefab"></param>
-    void AddBoss(GameObject prefab);
+    void AddMiniBoss(GameObject prefab);
 
     /// <summary>
     /// Adds a prefab and configures it as trash.
     /// </summary>
     /// <param name="prefabName"></param>
-    void AddBoss(string prefabName);
+    void AddMiniBoss(string prefabName);
 
     /// <summary>
     /// Adds a prefab without configuration.
