@@ -15,9 +15,9 @@ namespace Digitalroot.Valheim.TrapSpawners.CMB
   // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
   public class DungeonCreature : EventLoggingMonoBehaviour
   {
-    private DungeonCreatureData _dungeonCreatureData;
-    private ZNetView m_netView;
-    private IEnumerator _coroutine;
+    protected DungeonCreatureData _dungeonCreatureData;
+    protected ZNetView m_netView;
+    protected IEnumerator _coroutine;
 
     static DungeonCreature()
     {
@@ -35,8 +35,7 @@ namespace Digitalroot.Valheim.TrapSpawners.CMB
     }
 
     [UsedImplicitly]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "UsedImplicitly")]
-    private void Awake()
+    protected virtual void Awake()
     {
       LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{gameObject.name}]");
       m_netView = gameObject.GetComponent<ZNetView>();
@@ -49,7 +48,7 @@ namespace Digitalroot.Valheim.TrapSpawners.CMB
     }
 
     [UsedImplicitly]
-    private void Start()
+    protected virtual void Start()
     {
       LogTrace($"**************************************************");
       LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{gameObject.name}] {gameObject.IsDungeonCreature()}");
@@ -61,8 +60,7 @@ namespace Digitalroot.Valheim.TrapSpawners.CMB
     }
 
     [UsedImplicitly]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "UsedImplicitly")]
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
       LogTrace($"+++++++++++++++++++++++++++++++++++++++++++++++++");
       LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{gameObject.name}] {gameObject.IsDungeonCreature()}");
@@ -78,15 +76,12 @@ namespace Digitalroot.Valheim.TrapSpawners.CMB
           gameObject.AddLedgeJumping();
           gameObject.ConfigureBaseAI();
         }
-
-        // _coroutine = ScaleEquipmentCoroutine(gameObject);
-        // StartCoroutine(_coroutine);
       }
     }
 
     [UsedImplicitly]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "UsedImplicitly")]
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
       LogTrace($"-------------------------------------------------");
       LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{gameObject.name}] {gameObject.IsDungeonCreature()}");
@@ -98,7 +93,7 @@ namespace Digitalroot.Valheim.TrapSpawners.CMB
       }
     }
 
-    private void Dehydrate()
+    protected virtual void Dehydrate()
     {
       LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{gameObject.name}]");
 
@@ -121,7 +116,7 @@ namespace Digitalroot.Valheim.TrapSpawners.CMB
       m_netView.GetZDO().Set(Common.Utils.DungeonCreatureDataKey, json?.ToJson());
     }
 
-    private void Hydrate()
+    protected virtual void Hydrate()
     {
       LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{gameObject.name}]");
       if (m_netView.GetZDO().m_uid.ToString() != _dungeonCreatureData.m_zdo_uid)
@@ -173,7 +168,6 @@ namespace Digitalroot.Valheim.TrapSpawners.CMB
       }
 
       gameObject.SetLocalScale(GetDungeonCreatureScaleSize());
-      // gameObject.transform.localScale = _dungeonCreatureData.m_scaleSize;
     }
 
     protected virtual Vector3 GetDungeonCreatureScaleSize()
@@ -208,8 +202,7 @@ namespace Digitalroot.Valheim.TrapSpawners.CMB
 
     protected virtual int GetDungeonCreatureLevel()
     {
-      return 3;
-      // return _dungeonCreatureData.m_humanoid_level;
+      return _dungeonCreatureData.m_humanoid_level;
     }
 
     protected virtual float GetDungeonCreatureJumpForceForward()
@@ -255,7 +248,7 @@ namespace Digitalroot.Valheim.TrapSpawners.CMB
       return _dungeonCreatureData.m_humanoid_name;
     }
 
-    private static IEnumerator ScaleEquipmentCoroutine(GameObject prefab)
+    protected static IEnumerator ScaleEquipmentCoroutine(GameObject prefab)
     {
       yield return new WaitForSeconds(5);
       prefab.ScaleEquipment();

@@ -7,6 +7,7 @@ using Digitalroot.Valheim.Dungeons.Common.Enums;
 using Digitalroot.Valheim.Dungeons.Common.SpawnPools;
 using Digitalroot.Valheim.Dungeons.OdinsHollow.Enums;
 using Digitalroot.Valheim.TrapSpawners.CMB;
+using Digitalroot.Valheim.TrapSpawners.Extensions;
 using JetBrains.Annotations;
 using Jotunn.Entities;
 using Jotunn.Managers;
@@ -14,8 +15,11 @@ using Jotunn.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Digitalroot.Valheim.Dungeons.OdinsHollow
 {
@@ -68,11 +72,11 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
 
     private readonly List<string> _miniBossBasePrefabNameList = new()
     {
-      EnemyNames.Draugr
-      , EnemyNames.DraugrElite
-      , EnemyNames.DraugrRanged
-      , EnemyNames.SkeletonNoArcher
-      , EnemyNames.SkeletonPoison
+      EnemyNames.BlobElite
+      // , EnemyNames.DraugrElite
+      // , EnemyNames.DraugrRanged
+      // , EnemyNames.SkeletonNoArcher
+      // , EnemyNames.SkeletonPoison
     };
 
     private readonly List<string> _treasureBasePrefabNameList = new()
@@ -271,6 +275,20 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
       var customPrefab = new CustomPrefab(prefab, false);
       var humanoid = customPrefab.Prefab.GetComponent<Humanoid>();
       humanoid.m_faction = Character.Faction.Undead;
+      humanoid.m_jumpForce = Random.Range(6f, 11f);
+      humanoid.m_jumpForceForward = Random.Range(6f, 11f);
+
+      var characterDrop = customPrefab.Prefab.GetComponent<CharacterDrop>();
+      if (characterDrop != null)
+      {
+        foreach (var drop in characterDrop.m_drops.Where(d => d.m_prefab.IsCreature() && !d.m_prefab.IsDungeonCreature()))
+        {
+          Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.Name}] Found {drop.m_prefab.name}");
+          drop.m_prefab = PrefabManager.Instance.GetPrefab($"{nameof(OdinsHollow)}_{drop.m_prefab.name}") ?? throw new Exception($"{nameof(OdinsHollow)}_{drop.m_prefab.name} prefab not found.");
+          Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.Name}] Replaced with {drop.m_prefab.name}");
+        }
+      }
+
       customPrefab.Prefab.AddComponent<DungeonCreature>();
 
       PrefabManager.Instance.AddPrefab(customPrefab);
@@ -320,8 +338,21 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
 
       // customPrefab.Prefab.name = $"{nameof(OdinsHollow)}_MiniBoss_{customPrefab.Prefab.name}";
       var humanoid = customPrefab.Prefab.GetComponent<Humanoid>();
-      humanoid.m_faction = Character.Faction.Undead;
-      customPrefab.Prefab.AddComponent<DungeonCreature>();
+      humanoid.m_faction = Character.Faction.Boss;
+      humanoid.m_jumpForce = Random.Range(8f, 13f);
+      humanoid.m_jumpForceForward = Random.Range(8f, 13f);
+      var dungeonMiniBoss = customPrefab.Prefab.AddComponent<DungeonMiniBoss>();
+
+      var characterDrop = customPrefab.Prefab.GetComponent<CharacterDrop>();
+      if (characterDrop != null)
+      {
+        foreach (var drop in characterDrop.m_drops.Where(d => d.m_prefab.IsCreature() && !d.m_prefab.IsDungeonCreature()))
+        {
+          Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.Name}] Found {drop.m_prefab.name}");
+          drop.m_prefab = PrefabManager.Instance.GetPrefab($"{nameof(OdinsHollow)}_{basePrefabName}") ?? throw new Exception($"{nameof(OdinsHollow)}_{drop.m_prefab.name} prefab not found.");
+          Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.Name}] Replaced with {drop.m_prefab.name}");
+        }
+      }
 
       PrefabManager.Instance.AddPrefab(customPrefab);
       Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.Name}] Added {customPrefab.Prefab.name}");
@@ -418,9 +449,9 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
       enemySpawnPool.Clear();
       foreach (var basePrefabName in _enemyBasePrefabNameList)
       {
-        Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.Name}] Trying to add {basePrefabName}");
+        // Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.Name}] Trying to add {basePrefabName}");
         enemySpawnPool.AddEnemy($"{nameof(OdinsHollow)}_{basePrefabName}");
-        Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.Name}] Added {nameof(OdinsHollow)}_{basePrefabName}");
+        // Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.Name}] Added {nameof(OdinsHollow)}_{basePrefabName}");
       }
 
       Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.Name}] Seeding miniBossSpawnPool");
@@ -436,18 +467,18 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
       destructibleSpawnPool.Clear();
       foreach (var basePrefabName in _destructibleBasePrefabNameList)
       {
-        Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.Name}] Trying to add {basePrefabName}");
+        // Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.Name}] Trying to add {basePrefabName}");
         destructibleSpawnPool.AddPrefab($"{nameof(OdinsHollow)}_{basePrefabName}");
-        Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.Name}] Added {nameof(OdinsHollow)}_{basePrefabName}");
+        // Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.Name}] Added {nameof(OdinsHollow)}_{basePrefabName}");
       }
 
       Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.Name}] Seeding treasureSpawnPool");
       treasureSpawnPool.Clear();
       foreach (var basePrefabName in _treasureBasePrefabNameList)
       {
-        Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.Name}] Trying to add {basePrefabName}");
+        // Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.Name}] Trying to add {basePrefabName}");
         treasureSpawnPool.AddPrefab($"{nameof(OdinsHollow)}_{basePrefabName}");
-        Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.Name}] Added {nameof(OdinsHollow)}_{basePrefabName}");
+        // Log.Trace(Instance, $"[{MethodBase.GetCurrentMethod()?.Name}] Added {nameof(OdinsHollow)}_{basePrefabName}");
       }
     }
 
@@ -475,7 +506,7 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
     }
 
     [UsedImplicitly]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "UsedImplicitly")]
+    [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "UsedImplicitly")]
     private void OnDisable()
     {
       try

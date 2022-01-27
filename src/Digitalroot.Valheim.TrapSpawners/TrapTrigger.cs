@@ -117,13 +117,13 @@ namespace Digitalroot.Valheim.TrapSpawners
 
       foreach (var trapSpawner in m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>()))
       {
-        if (!trapSpawner.enabled)
+        if (trapSpawner.enabled)
         {
-          LogTrace($"{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name} Skipping: {trapSpawner.name}");
+          trapSpawner.DoSpawn();
           continue;
         }
-
-        trapSpawner.DoSpawn();
+        LogTrace($"{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name} Skipping: {trapSpawner.name}");
+        
       }
     }
 

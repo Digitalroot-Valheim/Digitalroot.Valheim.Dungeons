@@ -91,6 +91,18 @@ namespace Digitalroot.Valheim.TrapSpawners
     [HideInInspector]
     public float m_scaleSize = 1;
 
+    /// <summary>
+    /// Scale health to spawn prefabs at. m_health =* m_level * m_healthMultiplier * (m_level ^ m_healthExponent)
+    /// </summary>
+    [HideInInspector]
+    public float m_healthMultiplier = 1;
+
+    /// <summary>
+    /// Scale health exponentially. m_health =* m_level * m_healthMultiplier * (m_level ^ m_healthExponent)
+    /// </summary>
+    [HideInInspector]
+    public int m_healthExponent  = 1;
+
     private ZNetView m_nview;
 
     private bool IsCreatureSpawner => m_spawnerType is SpawnerType.Enemy or SpawnerType.MiniBoss;
@@ -219,8 +231,10 @@ namespace Digitalroot.Valheim.TrapSpawners
           return;
         }
 
-        // var quantity = GetQuantity(quantityMin, quantityMax);
-        var quantity = 1;
+        var quantity = GetQuantity(quantityMin, quantityMax);
+
+        if (levelMin == -1) levelMin = m_levelMin;
+        if (levelMax == -1) levelMax = m_levelMax;
 
         for (var i = 0; i < quantity; i++)
         {
@@ -242,7 +256,7 @@ namespace Digitalroot.Valheim.TrapSpawners
           switch (m_spawnerType)
           {
             case SpawnerType.MiniBoss:
-              // SpawnBoss(spawnPoolPrefabs, rnd, levelMin, levelMax, i);
+              SpawnMiniBoss(spawnPoolPrefabs, rnd, levelMin, levelMax, i);
               break;
 
             case SpawnerType.Enemy:
@@ -274,6 +288,14 @@ namespace Digitalroot.Valheim.TrapSpawners
       if (quantityMax == -1) quantityMax = m_quantityMax;
       var quantity = quantityMin == quantityMax ? quantityMax : Random.Range(quantityMin, quantityMax + 1);
       return quantity;
+    }
+
+    private int GetLevel(int levelMin, int levelMax)
+    {
+      if (levelMin == -1) levelMin = m_levelMin;
+      if (levelMax == -1) levelMax = m_levelMax;
+      var level = levelMin == levelMax ? levelMax : Random.Range(levelMin, levelMax + 1);
+      return level;
     }
 
     //public static IEnumerator Pulse(GameObject gameObject)
@@ -327,19 +349,20 @@ namespace Digitalroot.Valheim.TrapSpawners
       prefab.ScaleEquipment();
     }
 
-    //private void SpawnBoss(IReadOnlyList<GameObject> spawnPoolPrefabs, int rnd, int levelMin, int levelMax, int i)
-    //{
-    //  var prefab = SpawnPrefab(spawnPoolPrefabs[rnd], i)
-    //    .AsBoss(m_scaleSize, levelMin, levelMax);
+    private void SpawnMiniBoss(IReadOnlyList<GameObject> spawnPoolPrefabs, int rnd, int levelMin, int levelMax, int i)
+    {
+      LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] {levelMin}/{levelMax}");
+      var prefab = SpawnPrefab(spawnPoolPrefabs[rnd], i);
+      prefab.SetLevel(levelMin, levelMax);
+      prefab.SetMaxHealth(m_healthMultiplier, m_healthExponent);
 
-    //  prefab.AddComponent<DungeonCreature>();
-    //  var humanoid = prefab.GetComponent<Humanoid>();
+      var humanoid = prefab.GetComponent<Humanoid>();
 
-    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] ***************************************************************");
-    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] Spawning: {prefab.name} [{humanoid?.m_name}] @ {prefab.transform.position}, Scale: {prefab.transform.localScale}, Level: {humanoid?.GetLevel()}, isBoss : {humanoid?.m_boss}, Health {humanoid?.m_health}");
-    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] Spawning: {prefab.name} [{humanoid?.m_name}] parent == null : {prefab.transform.parent == null}, parent?.name: {prefab.transform.parent?.name}");
-    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] ***************************************************************");
-    //}
+      LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] ***************************************************************");
+      LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] Spawning: {prefab.name} [{humanoid?.m_name}] @ {prefab.transform.position}, Scale: {prefab.transform.localScale}, Level: {humanoid?.GetLevel()}, isBoss : {humanoid?.m_boss}, Health {humanoid?.m_health}");
+      LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] Spawning: {prefab.name} [{humanoid?.m_name}] parent == null : {prefab.transform.parent == null}, parent?.name: {prefab.transform.parent?.name}");
+      LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] ***************************************************************");
+    }
 
     private void SpawnDestructible(IReadOnlyList<GameObject> spawnPoolPrefabs, int rnd, int i)
     {
@@ -354,14 +377,10 @@ namespace Digitalroot.Valheim.TrapSpawners
 
     private void SpawnEnemy(IReadOnlyList<GameObject> spawnPoolPrefabs, int rnd, int levelMin, int levelMax, int i)
     {
+      LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] {levelMin}/{levelMax}");
       var prefab = SpawnPrefab(spawnPoolPrefabs[rnd], i);
-      prefab.SetLevel(3, 3);
-
-      // humanoid.m_level = levelMin == levelMax ? levelMax : Random.Range(levelMin, levelMax + 1);
-      // humanoid.m_health *= humanoid.m_level *= 2;
-      // .AsEnemy(m_scaleSize, levelMin, levelMax)
-
-      // prefab.AddComponent<DungeonCreature>();
+      prefab.SetLevel(levelMin, levelMax);
+      prefab.SetMaxHealth(m_healthMultiplier, m_healthExponent);
 
       var humanoid = prefab.GetComponent<Humanoid>();
       LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");

@@ -1,9 +1,11 @@
 ﻿using Digitalroot.Valheim.Common.Json;
 using Digitalroot.Valheim.TrapSpawners.Models;
 using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 // ReSharper disable InconsistentNaming
 
@@ -154,7 +156,7 @@ namespace Digitalroot.Valheim.TrapSpawners.Extensions
     /// </summary>
     /// <param name="prefab"></param>
     /// <returns></returns>
-    public static GameObject ConfigureBossAI(this GameObject prefab)
+    public static GameObject ConfigureMiniBossAI(this GameObject prefab)
     {
       var monsterAI = prefab.GetComponent<MonsterAI>();
       if (monsterAI == null) return prefab;
@@ -255,6 +257,44 @@ namespace Digitalroot.Valheim.TrapSpawners.Extensions
       return prefab;
     }
 
+    /// <summary>
+    /// Set prefab's max health
+    /// </summary>
+    /// <param name="prefab"></param>
+    /// <param name="healthMultiplier"></param>
+    /// <param name="healthExponent"></param>
+    /// <returns></returns>
+    /// <exception cref="NullReferenceException"></exception>
+    public static GameObject SetMaxHealth(this GameObject prefab, float healthMultiplier = 1f, int healthExponent = 1)
+    {
+      if (healthMultiplier < 1f) healthMultiplier = 1f;
+      if (healthExponent < 1) healthExponent = 1;
+
+      var zNetView = prefab.GetComponent<ZNetView>();
+
+      if (zNetView.GetZDO() == null) throw new NullReferenceException($"zNetView is null for {prefab.name}");
+
+      var character = prefab.GetComponent<Character>();
+
+      float health = character.m_health * (float)character.GetLevel() * healthMultiplier * Convert.ToSingle(Math.Pow(character.GetLevel(), healthExponent));
+
+      if (zNetView.IsOwner() && Math.Abs(character.GetHealth() - health) > 1 && Math.Abs(character.GetMaxHealth() - health) > 1)
+      {
+        if (zNetView.GetZDO() != null)
+        {
+          zNetView.GetZDO().Set("max_health", health);
+        }
+
+        character.SetHealth(health);
+      }
+
+      return prefab;
+    }
+
+    public static bool IsItem(this GameObject prefab) => prefab.GetComponent<ItemDrop>() != null;
+
+    public static bool IsCreature(this GameObject prefab) => prefab.GetComponent<ItemDrop>() == null;
+
     public static GameObject ScaleEquipment(this GameObject prefab)
     {
       var visEquipment = prefab.GetComponent<VisEquipment>();
@@ -282,7 +322,6 @@ namespace Digitalroot.Valheim.TrapSpawners.Extensions
 
     public static DungeonCreatureData ToDungeonCreatureData(this GameObject prefab)
     {
-
       var dungeonCreatureData = new DungeonCreatureData();
 
       var zNetView = prefab.GetComponent<ZNetView>();

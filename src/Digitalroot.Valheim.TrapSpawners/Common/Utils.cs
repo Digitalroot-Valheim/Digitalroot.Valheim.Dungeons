@@ -8,8 +8,6 @@ namespace Digitalroot.Valheim.TrapSpawners.Common
   {
     public const string Namespace = "Digitalroot.Valheim.TrapSpawners";
     public const string EnemyNamePrefix = "Dark";
-    public const string DestructibleNamePrefix = "Dark";
-    public const string TreasureNamePrefix = "Dark";
     public static string IsDungeonCreature = $"{Namespace}_{nameof(IsDungeonCreature)}";
     public static string DungeonCreatureDataKey = $"{Namespace}_{nameof(DungeonCreatureDataKey)}";
 
