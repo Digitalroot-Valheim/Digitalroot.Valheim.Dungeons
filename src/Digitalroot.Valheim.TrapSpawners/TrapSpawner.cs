@@ -137,12 +137,12 @@ namespace Digitalroot.Valheim.TrapSpawners
       DisableMarkerMesh();
     }
 
-    private void OnEnable()
-    {
-      LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}]");
-      // _coroutine = Pulse(gameObject); // Pulse to find mobs.
-      // StartCoroutine(_coroutine);
-    }
+    //private void OnEnable()
+    //{
+    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}]");
+    //  // _coroutine = Pulse(gameObject); // Pulse to find mobs.
+    //  // StartCoroutine(_coroutine);
+    //}
 
     #endregion
 
