@@ -470,8 +470,8 @@ namespace Digitalroot.Valheim.Dungeons.OdinsHollow
           case "EnemySpawnPoint":
           case "DestructibleSpawnPoint":
           case "TreasureSpawnPoint":
-            trapSpawner.SetActive(false);
-            break;
+            // trapSpawner.SetActive(false);
+            // break;
 
           case "MiniBossSpawnPoint":
             break;
