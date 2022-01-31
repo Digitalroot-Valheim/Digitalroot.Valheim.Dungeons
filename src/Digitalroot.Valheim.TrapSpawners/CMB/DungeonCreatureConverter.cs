@@ -53,7 +53,7 @@ namespace Digitalroot.Valheim.TrapSpawners.CMB
       {
         if (dungeonCreature.gameObject.IsDungeonCreature())
         {
-          dungeonCreature.gameObject.GetOrAddMonoBehaviour<DungeonCreature>();
+          dungeonCreature.gameObject.GetOrAddMonoBehaviour<AbstractDungeonCreature>();
         }
       }
     }

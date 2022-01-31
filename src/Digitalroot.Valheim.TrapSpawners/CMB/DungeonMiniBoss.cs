@@ -1,58 +1,80 @@
 ﻿using Digitalroot.Valheim.TrapSpawners.Decorators;
 using Digitalroot.Valheim.TrapSpawners.Extensions;
+using JetBrains.Annotations;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 namespace Digitalroot.Valheim.TrapSpawners.CMB
 {
-  public class DungeonMiniBoss : DungeonCreature
+  /// <inheritdoc />
+  [UsedImplicitly]
+  public class DungeonMiniBoss : AbstractDungeonCreature
   {
-    #region Overrides of DungeonCreature
+    private bool IsDungeonMiniBoss
+    {
+      get => m_zdo?.GetBool(Common.Utils.IsDungeonMiniBossKey) ?? false;
+      set => m_zdo?.Set(Common.Utils.IsDungeonMiniBossKey, value);
+    }
+
+    #region Overrides of AbstractDungeonCreature
 
     /// <inheritdoc />
     protected override void Awake()
     {
       base.Awake();
-
-      var humanoid = gameObject.GetComponent<Humanoid>();
-      if (humanoid == null) return;
-
-      humanoid.m_boss = true;
-      humanoid.m_name = $"{DecoratorUtils.GenerateName(Random.Range(4, 9))} the {humanoid.m_name}";
-
-      var characterDrop = gameObject.GetComponent<CharacterDrop>();
-      if (characterDrop == null) return;
-
-      foreach (var drop in characterDrop.m_drops.Where(d => d.m_levelMultiplier))
-      {
-        drop.m_levelMultiplier = false;
-        drop.m_amountMax = humanoid.GetLevel() * 2;
-      }
-
-      // humanoid.SetMaxHealth(humanoid.GetMaxHealth() * Convert.ToSingle(Math.Pow(scaleSize, 2)));
-      // humanoid.SetHealth(humanoid.GetMaxHealth());
-
-      m_netView.GetZDO().Set(Common.Utils.DungeonCreatureDataKey, gameObject.ToDungeonCreatureData().ToJson());
+      LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{gameObject.name}]");
     }
 
+    /// <inheritdoc />
+    protected override void Start()
+    {
+      base.Start();
+      LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{gameObject.name}] IsDungeonMiniBoss : {IsDungeonMiniBoss}");
+      if (m_zNetView.IsValid() && m_zNetView.IsOwner() && !IsDungeonMiniBoss)
+      {
+        LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{gameObject.name}] Init MiniBoss-DungeonCreatureData");
+        IsDungeonMiniBoss = true;
+        m_humanoid.m_boss = true;
+        if (m_characterDrop != null)
+        {
+          foreach (var drop in m_characterDrop.m_drops.Where(d => d.m_levelMultiplier))
+          {
+            drop.m_levelMultiplier = false;
+            drop.m_amountMax = m_humanoid.GetLevel() * 2;
+          }
+        }
+
+        Save();
+      }
+    }
 
     /// <inheritdoc />
     protected override void OnEnable()
     {
+      LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{gameObject.name}] IsDungeonMiniBoss : {IsDungeonMiniBoss} 1");
       base.OnEnable();
-
-      if (gameObject.IsDungeonCreature())
+      LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{gameObject.name}] IsDungeonMiniBoss : {IsDungeonMiniBoss} 2");
+      if (m_zNetView.IsValid() && m_zNetView.IsOwner() && IsDungeonMiniBoss)
       {
         gameObject.ConfigureMiniBossAI();
+      }
+    }
 
+    /// <inheritdoc />
+    protected override string GetDungeonCreatureName()
+    {
+      LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{gameObject.name}]");
 
-        _coroutine = ScaleEquipmentCoroutine(gameObject);
-        StartCoroutine(_coroutine);
+      if (m_humanoid == null || m_humanoid.m_name.Contains(" the "))
+      {
+        return m_humanoid?.m_name;
       }
 
-
+      return $"{DecoratorUtils.GenerateName(Random.Range(4, 9))} the {m_humanoid?.m_name}";
     }
 
     #endregion
+
   }
 }

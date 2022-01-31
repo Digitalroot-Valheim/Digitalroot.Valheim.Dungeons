@@ -111,9 +111,9 @@
       },
       "JotunnLib": {
         "type": "Direct",
-        "requested": "[2.4.8, )",
-        "resolved": "2.4.8",
-        "contentHash": "V1ReALzwJQDT7ek53DeKyWUIz8BC/6Io3Y4+Eza6nUJjs0zJOxr4VQkLZQCeNnYUo6ytVA9SkxM1BpAN8ZHYyg==",
+        "requested": "[2.4.9, )",
+        "resolved": "2.4.9",
+        "contentHash": "7yrOcuxxwzxhivgnI9M7bXRxEticIn0j/z7tEuzzglyfnsWaBvs0t6tSQk7YvcXVmOKudHlxNxofa7BlmmwK4g==",
         "dependencies": {
           "HarmonyX": "2.5.5",
           "MonoMod": "21.9.19.1"

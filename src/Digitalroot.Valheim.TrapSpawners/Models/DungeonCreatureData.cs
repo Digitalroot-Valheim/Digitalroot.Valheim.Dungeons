@@ -1,6 +1,10 @@
 ﻿using Digitalroot.Valheim.Common.Json;
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 // ReSharper disable InconsistentNaming
@@ -28,7 +32,7 @@ namespace Digitalroot.Valheim.TrapSpawners.Models
     public Pathfinding.AgentType m_monsterAI_pathAgentType;
     public Vector3 m_monsterAI_patrolPoint;
     public List<Drop> m_characterDrop_dropList = new();
-    public Vector3 m_scaleSize;
+    public float m_spawnerScale;
     #pragma warning restore CS0649
 
     public string ToJson(bool pretty = false) => JsonSerializationProvider.ToJson(this, pretty);

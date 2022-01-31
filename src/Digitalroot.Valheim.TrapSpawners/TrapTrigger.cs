@@ -117,7 +117,7 @@ namespace Digitalroot.Valheim.TrapSpawners
 
       foreach (var trapSpawner in m_trapSpawners.Select(spawner => spawner.GetComponent<TrapSpawner>()))
       {
-        if (trapSpawner.enabled)
+        if (trapSpawner.enabled && trapSpawner.gameObject.activeInHierarchy)
         {
           trapSpawner.DoSpawn();
           continue;

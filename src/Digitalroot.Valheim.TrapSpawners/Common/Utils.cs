@@ -8,7 +8,10 @@ namespace Digitalroot.Valheim.TrapSpawners.Common
   {
     public const string Namespace = "Digitalroot.Valheim.TrapSpawners";
     public const string EnemyNamePrefix = "Dark";
-    public static string IsDungeonCreature = $"{Namespace}_{nameof(IsDungeonCreature)}";
+    public static string IsDungeonCreatureKey = $"{Namespace}_{nameof(IsDungeonCreatureKey)}";
+    public static string IsDungeonMonsterKey = $"{Namespace}_{nameof(IsDungeonMonsterKey)}";
+    public static string IsDungeonMiniBossKey = $"{Namespace}_{nameof(IsDungeonMiniBossKey)}";
+    public static string DungeonCreatureScaleKey = $"{Namespace}_{nameof(DungeonCreatureScaleKey)}";
     public static string DungeonCreatureDataKey = $"{Namespace}_{nameof(DungeonCreatureDataKey)}";
 
     public static IEnumerable<Collider> FindNearByDungeonCreaturesByOverlapSphereNonAlloc(Vector3 pos, float radius)

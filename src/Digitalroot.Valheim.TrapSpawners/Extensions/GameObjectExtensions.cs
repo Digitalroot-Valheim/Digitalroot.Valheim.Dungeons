@@ -1,8 +1,10 @@
-﻿using Digitalroot.Valheim.Common.Json;
+﻿using Digitalroot.Unity3d.Log;
+using Digitalroot.Valheim.Common.Json;
 using Digitalroot.Valheim.TrapSpawners.Models;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -13,6 +15,20 @@ namespace Digitalroot.Valheim.TrapSpawners.Extensions
 {
   public static class GameObjectExtensions
   {
+    #region Logging
+
+    private static TraceLogger _logger = new(Common.Utils.Namespace, true);
+
+    private static void LogError(Exception e)
+    {
+      LogTrace(e.Message);
+      LogTrace(e.StackTrace);
+    }
+
+    private static void LogTrace(string msg) => _logger?.Trace(msg);
+
+    #endregion
+
     public static GameObject AddLedgeJumping(this GameObject prefab)
     {
       prefab.GetOrAddMonoBehaviour<AutoJumpLedge>();
@@ -23,64 +39,64 @@ namespace Digitalroot.Valheim.TrapSpawners.Extensions
 
     public static GameObject GetParent(this GameObject prefab) => prefab.HasParent() ? prefab.transform.GetParent().gameObject : null;
 
-    public static GameObject AddToSpawnedGameObjectDataCollection(this GameObject prefab, List<DungeonCreatureData> spawnedGameObjectList)
-    {
-      if (spawnedGameObjectList == null) return prefab;
+    //public static GameObject AddToSpawnedGameObjectDataCollection(this GameObject prefab, List<DungeonCreatureData> spawnedGameObjectList)
+    //{
+    //  if (spawnedGameObjectList == null) return prefab;
 
-      var spawnedGameObjectData = new DungeonCreatureData();
+    //  var spawnedGameObjectData = new DungeonCreatureData();
 
-      var zNetView = prefab.GetComponent<ZNetView>();
-      if (zNetView != null)
-      {
-        spawnedGameObjectData.m_zdo_uid = zNetView.GetZDO().m_uid.ToString();
-      }
+    //  var zNetView = prefab.GetComponent<ZNetView>();
+    //  if (zNetView != null)
+    //  {
+    //    spawnedGameObjectData.m_zdo_uid = zNetView.GetZDO().m_uid.ToString();
+    //  }
 
-      spawnedGameObjectData.m_prefab_hash = prefab.name.GetStableHashCode();
+    //  spawnedGameObjectData.m_prefab_hash = prefab.name.GetStableHashCode();
 
-      var humanoid = prefab.GetComponent<Humanoid>();
-      if (humanoid != null)
-      {
-        spawnedGameObjectData.m_humanoid_name = humanoid.m_name;
-        spawnedGameObjectData.m_humanoid_boss = humanoid.m_boss;
-        spawnedGameObjectData.m_humanoid_faction = humanoid.m_faction;
-        spawnedGameObjectData.m_humanoid_health = humanoid.GetHealth();
-        spawnedGameObjectData.m_humanoid_max_health = humanoid.GetMaxHealth();
-        spawnedGameObjectData.m_humanoid_jumpForce = humanoid.m_jumpForce;
-        spawnedGameObjectData.m_humanoid_jumpForceForward = humanoid.m_jumpForceForward;
-        spawnedGameObjectData.m_humanoid_level = humanoid.m_level;
-      }
+    //  var humanoid = prefab.GetComponent<Humanoid>();
+    //  if (humanoid != null)
+    //  {
+    //    spawnedGameObjectData.m_humanoid_name = humanoid.m_name;
+    //    spawnedGameObjectData.m_humanoid_boss = humanoid.m_boss;
+    //    spawnedGameObjectData.m_humanoid_faction = humanoid.m_faction;
+    //    spawnedGameObjectData.m_humanoid_health = humanoid.GetHealth();
+    //    spawnedGameObjectData.m_humanoid_max_health = humanoid.GetMaxHealth();
+    //    spawnedGameObjectData.m_humanoid_jumpForce = humanoid.m_jumpForce;
+    //    spawnedGameObjectData.m_humanoid_jumpForceForward = humanoid.m_jumpForceForward;
+    //    spawnedGameObjectData.m_humanoid_level = humanoid.m_level;
+    //  }
 
-      var characterDrop = prefab.GetComponent<CharacterDrop>();
-      if (characterDrop != null)
-      {
-        spawnedGameObjectData.m_characterDrop_dropList.Clear();
-        foreach (var drop in characterDrop.m_drops)
-        {
-          spawnedGameObjectData.m_characterDrop_dropList.Add(drop.ToDungeonCreatureDataDrop());
-        }
-      }
+    //  var characterDrop = prefab.GetComponent<CharacterDrop>();
+    //  if (characterDrop != null)
+    //  {
+    //    spawnedGameObjectData.m_characterDrop_dropList.Clear();
+    //    foreach (var drop in characterDrop.m_drops)
+    //    {
+    //      spawnedGameObjectData.m_characterDrop_dropList.Add(drop.ToDungeonCreatureDataDrop());
+    //    }
+    //  }
 
-      var monsterAI = prefab.GetComponent<MonsterAI>();
-      if (monsterAI != null)
-      {
-        spawnedGameObjectData.m_monsterAI_despawnInDay = monsterAI.DespawnInDay();
-        spawnedGameObjectData.m_monsterAI_fleeIfLowHealth = monsterAI.m_fleeIfLowHealth;
-        spawnedGameObjectData.m_monsterAI_jumpInterval = monsterAI.m_jumpInterval;
-        spawnedGameObjectData.m_monsterAI_pathAgentType = monsterAI.m_pathAgentType;
-        monsterAI.GetPatrolPoint(out spawnedGameObjectData.m_monsterAI_patrolPoint);
-      }
+    //  var monsterAI = prefab.GetComponent<MonsterAI>();
+    //  if (monsterAI != null)
+    //  {
+    //    spawnedGameObjectData.m_monsterAI_despawnInDay = monsterAI.DespawnInDay();
+    //    spawnedGameObjectData.m_monsterAI_fleeIfLowHealth = monsterAI.m_fleeIfLowHealth;
+    //    spawnedGameObjectData.m_monsterAI_jumpInterval = monsterAI.m_jumpInterval;
+    //    spawnedGameObjectData.m_monsterAI_pathAgentType = monsterAI.m_pathAgentType;
+    //    monsterAI.GetPatrolPoint(out spawnedGameObjectData.m_monsterAI_patrolPoint);
+    //  }
 
-      spawnedGameObjectData.m_scaleSize = prefab.transform.localScale;
-      spawnedGameObjectList.Add(spawnedGameObjectData);
+    //  spawnedGameObjectData.m_scaleSize = prefab.transform.localScale;
+    //  spawnedGameObjectList.Add(spawnedGameObjectData);
 
-      Debug.Log(JsonSerializationProvider.ToJson(spawnedGameObjectData, true));
+    //  // Debug.Log(JsonSerializationProvider.ToJson(spawnedGameObjectData, true));
 
-      return prefab;
-    }
+    //  return prefab;
+    //}
 
     public static bool IsBoss(this GameObject prefab) => prefab.GetComponent<Character>()?.IsBoss() ?? false;
 
-    public static bool IsDungeonCreature(this GameObject prefab) => prefab.GetComponent<ZNetView>()?.GetZDO()?.GetBool(Common.Utils.IsDungeonCreature, false) ?? false;
+    public static bool IsDungeonCreature(this GameObject prefab) => prefab.GetComponent<ZNetView>()?.GetZDO()?.GetBool(Common.Utils.IsDungeonCreatureKey, false) ?? false;
 
     private static Vector3 GetScale(string itemName, Vector3 currentScale)
     {
@@ -226,7 +242,13 @@ namespace Digitalroot.Valheim.TrapSpawners.Extensions
     [UsedImplicitly]
     public static GameObject SetLocalScale(this GameObject prefab, float scaleSize)
     {
-      prefab.SetLocalScale(new Vector3(scaleSize, scaleSize, scaleSize));
+      var zNetView = prefab.GetComponent<ZNetView>();
+      if (zNetView != null)
+      {
+        zNetView.m_syncInitialScale = true;
+        zNetView.GetZDO()?.Set(Common.Utils.DungeonCreatureScaleKey, scaleSize); 
+      }
+
       return prefab;
     }
 
@@ -237,11 +259,16 @@ namespace Digitalroot.Valheim.TrapSpawners.Extensions
     /// <param name="scaleSize"></param>
     /// <returns></returns>
     [UsedImplicitly]
+    [Obsolete("Do not use", true)]
     public static GameObject SetLocalScale(this GameObject prefab, Vector3 scaleSize)
     {
       var zNetView = prefab.GetComponent<ZNetView>();
-      zNetView.m_syncInitialScale = true;
-      zNetView.SetLocalScale(scaleSize);
+      if (zNetView != null)
+      {
+        zNetView.m_syncInitialScale = true;
+        zNetView.GetZDO()?.Set(Common.Utils.DungeonCreatureScaleKey, scaleSize); 
+      }
+
       return prefab;
     }
 
@@ -320,57 +347,80 @@ namespace Digitalroot.Valheim.TrapSpawners.Extensions
       return prefab;
     }
 
-    public static DungeonCreatureData ToDungeonCreatureData(this GameObject prefab)
-    {
-      var dungeonCreatureData = new DungeonCreatureData();
+    //public static DungeonCreatureData ToDungeonCreatureData(this GameObject prefab)
+    //{
+    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}]");
+    //  var dungeonCreatureData = new DungeonCreatureData();
 
-      var zNetView = prefab.GetComponent<ZNetView>();
-      if (zNetView != null)
-      {
-        dungeonCreatureData.m_zdo_uid = zNetView.GetZDO().m_uid.ToString();
-      }
+    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] A");
+    //  var zNetView = prefab.GetComponent<ZNetView>();
+    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] A.1");
+    //  if (zNetView != null)
+    //  {
+    //    LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] A.2 {dungeonCreatureData.m_zdo_uid}");
+    //    dungeonCreatureData.m_zdo_uid = zNetView.GetZDO()?.m_uid.ToString() ?? dungeonCreatureData.m_zdo_uid;
+    //    LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] A.3 {dungeonCreatureData.m_zdo_uid}");
+    //  }
+    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] A.4");
 
-      dungeonCreatureData.m_prefab_hash = prefab.name.GetStableHashCode();
+    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] B");
+    //  dungeonCreatureData.m_prefab_hash = prefab.name.GetStableHashCode();
+    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] B.1");
+    //  var humanoid = prefab.GetComponent<Humanoid>();
+    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] B.2");
+    //  if (humanoid != null)
+    //  {
+    //    LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] B.3");
+    //    dungeonCreatureData.m_humanoid_name = humanoid.m_name;
+    //    dungeonCreatureData.m_humanoid_boss = humanoid.m_boss;
+    //    dungeonCreatureData.m_humanoid_faction = humanoid.m_faction;
+    //    dungeonCreatureData.m_humanoid_health = humanoid.GetHealth();
+    //    dungeonCreatureData.m_humanoid_max_health = humanoid.GetMaxHealth();
+    //    dungeonCreatureData.m_humanoid_jumpForce = humanoid.m_jumpForce;
+    //    dungeonCreatureData.m_humanoid_jumpForceForward = humanoid.m_jumpForceForward;
+    //    dungeonCreatureData.m_humanoid_level = humanoid.m_level;
+    //    LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] B.4");
+    //  }
+    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] B.5");
+      
+    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] C");
+    //  var characterDrop = prefab.GetComponent<CharacterDrop>();
+    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] C.1");
+    //  if (characterDrop != null)
+    //  {
+    //    LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] C.2");
+    //    dungeonCreatureData.m_characterDrop_dropList.Clear();
+    //    LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] C.3");
+    //    foreach (var drop in characterDrop.m_drops)
+    //    {
+    //      dungeonCreatureData.m_characterDrop_dropList.Add(drop.ToDungeonCreatureDataDrop());
+    //    }
+    //    LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] C.4");
+    //  }
+    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] C.5");
 
-      var humanoid = prefab.GetComponent<Humanoid>();
-      if (humanoid != null)
-      {
-        dungeonCreatureData.m_humanoid_name = humanoid.m_name;
-        dungeonCreatureData.m_humanoid_boss = humanoid.m_boss;
-        dungeonCreatureData.m_humanoid_faction = humanoid.m_faction;
-        // dungeonCreatureData.m_humanoid_health = humanoid.m_health;
-        dungeonCreatureData.m_humanoid_max_health = humanoid.GetMaxHealth();
-        dungeonCreatureData.m_humanoid_jumpForce = humanoid.m_jumpForce;
-        dungeonCreatureData.m_humanoid_jumpForceForward = humanoid.m_jumpForceForward;
-        dungeonCreatureData.m_humanoid_level = humanoid.m_level;
-      }
+    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] D");
+    //  var monsterAI = prefab.GetComponent<MonsterAI>();
+    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] D.1");
+    //  if (monsterAI != null)
+    //  {
+    //    LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] D.2");
+    //    dungeonCreatureData.m_monsterAI_despawnInDay = monsterAI.m_despawnInDay;
+    //    dungeonCreatureData.m_monsterAI_fleeIfLowHealth = monsterAI.m_fleeIfLowHealth;
+    //    dungeonCreatureData.m_monsterAI_jumpInterval = monsterAI.m_jumpInterval;
+    //    dungeonCreatureData.m_monsterAI_pathAgentType = monsterAI.m_pathAgentType;
+    //    dungeonCreatureData.m_monsterAI_patrolPoint = monsterAI.m_patrolPoint;
+    //    LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] D.3");
+    //  }
+    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] D.4");
 
-      var characterDrop = prefab.GetComponent<CharacterDrop>();
-      if (characterDrop != null)
-      {
-        dungeonCreatureData.m_characterDrop_dropList.Clear();
-        foreach (var drop in characterDrop.m_drops)
-        {
-          dungeonCreatureData.m_characterDrop_dropList.Add(drop.ToDungeonCreatureDataDrop());
-        }
-      }
+    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] E");
+    //  dungeonCreatureData.m_scaleSize = prefab.transform.localScale;
+    //  LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] E.1");
+    //  // LogTrace($"[{MethodBase.GetCurrentMethod()?.Name}.{prefab.name}] \n{dungeonCreatureData.ToJson(true)}");
 
-      var monsterAI = prefab.GetComponent<MonsterAI>();
-      if (monsterAI != null)
-      {
-        dungeonCreatureData.m_monsterAI_despawnInDay = monsterAI.m_despawnInDay;
-        dungeonCreatureData.m_monsterAI_fleeIfLowHealth = monsterAI.m_fleeIfLowHealth;
-        dungeonCreatureData.m_monsterAI_jumpInterval = monsterAI.m_jumpInterval;
-        dungeonCreatureData.m_monsterAI_pathAgentType = monsterAI.m_pathAgentType;
-        dungeonCreatureData.m_monsterAI_patrolPoint = monsterAI.m_patrolPoint;
-      }
-
-      dungeonCreatureData.m_scaleSize = prefab.transform.localScale;
-
-      Debug.Log(dungeonCreatureData.ToJson(true));
-
-      return dungeonCreatureData;
-    }
+    //  return dungeonCreatureData;
+    //}
 
     /// <summary>
     /// Returns the component of Type type. If one doesn't already exist on the GameObject it will be added.

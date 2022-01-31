@@ -54,7 +54,7 @@
     <PackageReference Include="HarmonyX" Version="2.8.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="JotunnLib" Version="2.4.8">
+    <PackageReference Include="JotunnLib" Version="2.4.9">
       <PrivateAssets>all</PrivateAssets>
       <ExcludeAssets>runtime</ExcludeAssets>
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

@@ -144,46 +144,6 @@ namespace Digitalroot.Valheim.TrapSpawners
       // StartCoroutine(_coroutine);
     }
 
-    [Obsolete("Disabled", true)]
-    private void OnDisableOld()
-    {
-      LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}]");
-      LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] gameObject.transform.childCount : {gameObject.transform.childCount}");
-      if (!IsCreatureSpawner) return;
-
-      _spawnedGameObjectList.Clear();
-      for (var i = 0; i < gameObject.transform.childCount; i++)
-      {
-        var prefab = gameObject.transform.GetChild(i)?.gameObject;
-        LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] {prefab?.name}, {prefab}, {prefab == null}");
-        if (!prefab) continue;
-        if (prefab == null || prefab.name == "Marker") continue;
-
-        prefab.AddToSpawnedGameObjectDataCollection(_spawnedGameObjectList);
-      }
-
-      LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] m_nview != null : {m_nview != null}");
-      LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] _spawnedGameObjectList.Count : {_spawnedGameObjectList.Count}");
-
-      if (_spawnedGameObjectList.Count > 0 && m_nview != null)
-      {
-        var zdo = m_nview.GetZDO();
-        LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] zdo != null : {zdo != null}");
-        LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] zdo?.IsValid() : {zdo?.IsValid()}");
-        LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] zdo?.IsOwner() : {zdo?.IsOwner()}");
-        if (zdo != null && zdo.IsValid() && zdo.IsOwner())
-        {
-          foreach (var spawnedGameObjectData in _spawnedGameObjectList)
-          {
-            LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] {m_uniqueName}.{spawnedGameObjectData.m_zdo_uid}.{nameof(spawnedGameObjectData.m_humanoid_name)}, {spawnedGameObjectData.m_humanoid_name}");
-            LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] ");
-
-            m_nview.GetZDO().Set($"{m_uniqueName}.{spawnedGameObjectData.m_zdo_uid}.{nameof(spawnedGameObjectData.m_humanoid_name)}", spawnedGameObjectData.m_humanoid_name);
-          }
-        }
-      }
-    }
-
     #endregion
 
     private void DisableMarkerMesh()
@@ -215,13 +175,9 @@ namespace Digitalroot.Valheim.TrapSpawners
     {
       try
       {
-        //LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] spawnPoolPrefabs == null : {spawnPoolPrefabs == null}");
-        //LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] spawnPoolPrefabs.Count : {spawnPoolPrefabs?.Count}");
         if (spawnPoolPrefabs == null || spawnPoolPrefabs.Count < 1)
         {
           LogTrace($"[{MethodBase.GetCurrentMethod()?.DeclaringType?.Name}.{MethodBase.GetCurrentMethod()?.Name}.{name}] Using {m_spawnPool.name} Spawn Pool.");
-          // LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] m_spawnPool.m_spawnPoolPrefabs == null : {m_spawnPool.m_spawnPoolPrefabs == null}");
-          // LogTrace($"[{MethodBase.GetCurrentMethod().DeclaringType?.Name}.{MethodBase.GetCurrentMethod().Name}.{name}] m_spawnPool.m_spawnPoolPrefabs.Count : {m_spawnPool.m_spawnPoolPrefabs?.Count}");
           spawnPoolPrefabs = m_spawnPool.m_spawnPoolPrefabs;
         }
 
